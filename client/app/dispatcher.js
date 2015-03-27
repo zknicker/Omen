@@ -2,7 +2,7 @@
 
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
-var PayloadSources = require('../constants/payload-sources');
+var PayloadSources = require('./constants/payload-sources');
 
 var DefaultDispatcher = assign(new Dispatcher(), {
   handleViewAction: function(action) {

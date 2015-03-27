@@ -1,7 +1,7 @@
 'use strict';
 
-var routes = require('./routes/routes.jsx');
-var Dispatcher = require('./dispatchers/default');
+var routes = require('./routes.jsx');
+var Dispatcher = require('./dispatcher');
 var pageConstants = require('./constants/page');
 var routesConstants = require('./constants/routes');
 var userActions = require('./actions/user');

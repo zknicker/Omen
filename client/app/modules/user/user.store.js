@@ -1,9 +1,9 @@
 'use strict';
 
-var Store = require('./default');
-var Dispatcher = require('../dispatchers/default');
-var userConstants = require('../constants/user');
-var userDefaults = require('../constants/defaults').user;
+var Store = require('../../lib/store');
+var Dispatcher = require('../../dispatcher');
+var userConstants = require('./user.constants');
+var userDefaults = require('../../constants').user;
 
 var _user;
 

@@ -1,9 +1,9 @@
 'use strict';
 
-var Store = require('./default');
-var Dispatcher = require('../dispatchers/default');
+var Store = require('../lib/store');
+var Dispatcher = require('../dispatcher');
 var pageConstants = require('../constants/page');
-var pageDefaults = require('../constants/defaults').page;
+var pageDefaults = require('../constants').page;
 
 var _page;
 

@@ -2,9 +2,8 @@
 
 var React = require('react');
 var Navbar = require('../modules/navbar.jsx');
-var Messages = require('../modules/messages.jsx');
 var pageStore = require('../../stores/page');
-var userStore = require('../../stores/user');
+var userStore = require('../../modules/user/user.store');
 
 var getState = function() {
   return {

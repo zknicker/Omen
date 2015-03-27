@@ -1,6 +1,6 @@
 'use strict';
 
-var Defaults = {
+var GlobalConstants = {
 
   route: '/',
 
@@ -22,4 +22,4 @@ var Defaults = {
 
 };
 
-module.exports = Defaults;
+module.exports = GlobalConstants;

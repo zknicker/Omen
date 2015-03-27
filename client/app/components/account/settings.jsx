@@ -3,9 +3,8 @@
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
-var userStore = require('../../stores/user');
+var userStore = require('../../modules/user/user.store');
 var userActions = require('../../actions/user');
-var routeActions = require('../../actions/routes');
 
 var getState = function() {
     return {

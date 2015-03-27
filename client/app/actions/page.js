@@ -1,8 +1,8 @@
 'use strict';
 
-var Dispatcher = require('../dispatchers/default');
+var Dispatcher = require('../dispatcher');
 var pageConstants = require('../constants/page');
-var pageDefaults = require('../constants/defaults').page;
+var pageDefaults = require('../constants').page;
 var assign = require('object-assign');
 
 module.exports = {

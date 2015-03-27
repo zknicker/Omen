@@ -3,13 +3,13 @@ var Router = require('react-router');
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
-var App = React.createFactory(require('../components/app.jsx'));
-var IndexPage = React.createFactory(require('../components/index.jsx'));
-var LoginPage = React.createFactory(require('../components/account/login.jsx'));
-var ForgotPage = React.createFactory(require('../components/account/forgot.jsx'));
-var SignupPage = React.createFactory(require('../components/account/signup.jsx'));
-var SettingsPage = React.createFactory(require('../components/account/settings.jsx'));
-var ChatPage = React.createFactory(require('../components/chat/chat.jsx'));
+var App = React.createFactory(require('./components/app.jsx'));
+var IndexPage = React.createFactory(require('./components/index.jsx'));
+var LoginPage = React.createFactory(require('./components/account/login.jsx'));
+var ForgotPage = React.createFactory(require('./components/account/forgot.jsx'));
+var SignupPage = React.createFactory(require('./components/account/signup.jsx'));
+var SettingsPage = React.createFactory(require('./components/account/settings.jsx'));
+var ChatPage = React.createFactory(require('./chat/chat.jsx'));
 
 var routes = (
   <Route name="app" path="/" handler={App}>

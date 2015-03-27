@@ -2,7 +2,7 @@
 
 var React = require('react/addons');
 var Router = require('react-router');
-var userStore = require('../../stores/user');
+var userStore = require('../modules/user/user.store');
 var Link = Router.Link;
 
 var getState = function() {
