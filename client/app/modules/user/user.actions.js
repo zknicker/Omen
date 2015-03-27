@@ -1,8 +1,8 @@
 'use strict';
 
-var Dispatcher = require('../dispatcher');
-var userConstants = require('../modules/user/user.constants');
-var userDefaults = require('../constants').user;
+var Dispatcher = require('../../dispatcher');
+var userConstants = require('./user.constants');
+var userDefaults = require('../../constants').user;
 var request = require('superagent');
 var serialize = require('form-serialize');
 var cookie = require('cookie');

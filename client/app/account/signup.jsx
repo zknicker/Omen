@@ -1,8 +1,7 @@
 'use strict';
 
 var React = require('react');
-var DefaultLayout = require('../layouts/default.jsx');
-var userActions = require('../../actions/user');
+var userActions = require('../modules/user/user.actions');
 
 var SignupComponent = React.createClass({
   render: function() {

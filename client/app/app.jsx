@@ -3,21 +3,19 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-var Navbar = require('./modules/navbar.jsx');
-var pageStore = require('../stores/page');
-var userStore = require('../modules/user/user.store');
+var Navbar = require('./navbar/navbar.jsx');
+var userStore = require('./modules/user/user.store');
 
 var getState = function () {
     return {
-        title: pageStore.get().title,
+        title: 'Omen',
         user: userStore.get()
     };
 };
 
 var App = React.createClass({
-    mixins: [pageStore.mixin, userStore.mixin],
+    mixins: [userStore.mixin],
     componentDidMount: function () {
-        pageStore.emitChange();
         userStore.emitChange();
     },
     getInitialState: function () {

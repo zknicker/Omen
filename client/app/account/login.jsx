@@ -4,8 +4,7 @@ var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
 var Navigation = Router.Navigation;
-var DefaultLayout = require('../layouts/default.jsx');
-var userActions = require('../../actions/user');
+var userActions = require('../modules/user/user.actions');
 
 
 var LoginComponent = React.createClass({

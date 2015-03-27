@@ -2,24 +2,26 @@
 
 var GlobalConstants = {
 
-  route: '/',
+    route: '/',
 
-  page: {
-    title: 'Home',
-    description: 'A React + Flux application',
-    keywords: null
+    page: {
+        title: 'Home',
+        description: 'A React + Flux application',
+        keywords: null
 
-  },
+    },
 
-  user: {
-    loggedIn: false,
-    firstName: 'John',
-    lastName: 'Doe'
-  },
+    user: {
+        loggedIn: false,
+        firstName: 'John',
+        lastName: 'Doe'
+    },
 
-  messages: {}
+    messages: {},
 
-
+    dispatcherPayloadSources: {
+        VIEW_ACTION: 'VIEW_ACTION'
+    },
 };
 
 module.exports = GlobalConstants;
