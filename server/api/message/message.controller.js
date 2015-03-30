@@ -1,63 +1,27 @@
 'use strict';
 
-var _ = require('lodash');
-var Message = require('./message.model');
+var db = require('../../config/database');
+var Message = db.message;
 
-// Get list of messages
-exports.index = function(req, res) {
-  Message.loadRecent(function (err, messages) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, messages);
-  });
-};
+var createMessage = function (req, res, next) {
+    //req.assert('content', 'Message content is not valid.').isAlpha();
 
-// Get a single message
-exports.show = function(req, res) {
-  Message.findById(req.params.id, function (err, message) {
-    if(err) { return handleError(res, err); }
-    if(!message) { return res.send(404); }
-    return res.json(message);
-  });
-};
-
-// Creates a new message in the DB.
-exports.create = function(message, socket) {
-    
-    // The date will be automatically added.
-    delete message.date;
-    message.author = socket.user._id;
-
-    Message.create(message, function(err, newMessage) {
-        if(err) { console.log("Error creating message:" + err); }
+    res.status(200).json({
+        token: token,
+        user: user,
+        success: [{
+            msg: 'Create account'
+        }]
     });
 };
 
-// Updates an existing message in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Message.findById(req.params.id, function (err, message) {
-    if (err) { return handleError(res, err); }
-    if(!message) { return res.send(404); }
-    var updated = _.merge(message, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, message);
-    });
-  });
+var readMessage = function (req, res, next) {
+    //req.assert('content', 'Message content is not valid.').isAlpha();
+
+    res.send('yo');
 };
 
-// Deletes a message from the DB.
-exports.destroy = function(req, res) {
-  Message.findById(req.params.id, function (err, message) {
-    if(err) { return handleError(res, err); }
-    if(!message) { return res.send(404); }
-    message.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
-  });
+module.exports = {
+    createMessage: createMessage,
+    readMessage: readMessage
 };
-
-function handleError(res, err) {
-  return res.send(500, err);
-}

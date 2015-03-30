@@ -1,120 +1,199 @@
+/**
+ * Main Controller
+ */
+
 'use strict';
 
-var User = require('./user.model');
-var passport = require('passport');
-var config = require('../../config/environment');
-var jwt = require('jsonwebtoken');
-var util = require('util');
-var formidable = require('formidable');
-var fs = require('fs-extra');
-var avatarHelper = require('../../helpers/avatar.helper');
-var _ = require('lodash');
-
-var validationError = function(res, err) {
-    return res.json(422, err);
-};
+var db = require('../../config/database');
+var User = db.user;
+var auth = require('../../auth');
 
 /**
- * Get list of users
+ * GET /user
+ * Read user data.
  */
-exports.index = function(req, res) {
-    User.find({}, '-salt -hashedPassword', function (err, users) {
-        if(err) return res.send(500, err);
-        res.json(200, users);
+var readAccount = function(req, res, next) {
+  User.find(req.user.id).success(function(user) {
+    if (!user) {
+      return res.status(400).json({
+        errors: [{
+          msg: 'Failed to authenticate'
+        }]
+      });
+    }
+    res.status(200).json({
+      user: user
     });
-};
-
-/**
- * Creates a new user
- */
-exports.create = function (req, res, next) {
-    var newUser = new User(req.body);
-    newUser.provider = 'local';
-    newUser.role = 'user';
-    newUser.save(function(err, user) {
-    if (err) return validationError(res, err);
-        var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
-        res.json({ token: token });
-    });
-};
-
-/**
- * Get a single user
- */
-exports.show = function (req, res, next) {
-    var userId = req.params.id;
-
-    User.findById(userId, function (err, user) {
-        if (err) return next(err);
-        if (!user) return res.send(401);
-        res.json(user.profile);
-    });
-};
-
-/**
- * Deletes a user
- * restriction: 'admin'
- */
-exports.destroy = function(req, res) {
-  User.findByIdAndRemove(req.params.id, function(err, user) {
-    if(err) return res.send(500, err);
-    return res.send(204);
+  }).error(function(err) {
+    return next(err);
   });
 };
 
 /**
- * Change a users password
+ * POST /user
+ * Create a new local account.
+ * @param email
+ * @param password
+ * @param confirmPassword
  */
-exports.changePassword = function(req, res, next) {
-    var userId = req.user._id;
-    var oldPass = String(req.body.oldPassword);
-    var newPass = String(req.body.newPassword);
 
-    // Update the user's password info in the DB.
-    User.findById(userId, function (err, user) {
-        if(user.authenticate(oldPass)) {
-            user.password = newPass;
-            user.save(function(err) {
-                if (err) return validationError(res, err);
-                res.send(200);
-            });
-        } else {
-            res.send(403);
-        }
-    });
-};
+var createAccount = function(req, res, next) {
+  req.assert('email', 'Email is not valid').isEmail();
+  req.assert('password', 'Password must be at least 6 characters long').len(6);
+  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
 
-exports.changeAvatar = function(req, res, next) {
-    avatarHelper.uploadAvatar(req, res, function(fileName, fileExtension) {
-        
-        // Update the user's avatar record in the DB.
-        User.findById(req.user._id, function (err, user) {
-            if (err) return validationError(res, err);
-            user.avatar = fileName;
-            user.avatarExtension = fileExtension;
-            user.save(function(err) {
-                if (err) return validationError(res, err);
-                res.send(200);
-            });
-        });
+  var errors = req.validationErrors();
+
+  if (errors) {
+    return res.status(400).json({
+      errors: errors
     });
+  }
+
+  var user = {
+    email: req.body.email,
+    password: req.body.password
+  };
+
+  User.find({
+    where: {
+      email: req.body.email
+    }
+  }).success(function(existingUser) {
+    if (existingUser) {
+      res.status(409).json({
+        errors: [{
+          param: 'email',
+          msg: 'Account with that email address already exists.'
+        }]
+      });
+    }
+    User.create(user).success(function(user) {
+      // Send user and authentication token
+      var token = auth.signToken(user.id, user.role);
+      res.status(200).json({
+        token: token,
+        user: user,
+        success: [{
+          msg: 'Account created successfully.'
+        }]
+      });
+    }).error(function(err) {
+      if (err) {
+        return next(err);
+      }
+    });
+  }).error(function(err) {
+    if (err) {
+      return next(err);
+    }
+  });
 };
 
 /**
- * Get my info
+ * PUT /user
+ * Update profile information.
  */
-exports.me = function(req, res, next) {
-    var userId = req.user._id;
-    User.findOne({ _id: userId }, '-salt -hashedPassword', function(err, user) {
-        if (err) return next(err);
-        if (!user) return res.json(401);
-        res.json(user);
+
+var updateProfile = function(req, res, next) {
+  req.assert('email', 'Email is not valid').isEmail();
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    return res.status(400).json({
+      errors: errors
     });
+  }
+
+  User.find(req.user.id).success(function(user) {
+    user.email = req.body.email || '';
+    user.firstName = req.body.firstName || '';
+    user.lastName = req.body.lastName || '';
+
+    user.save().success(function() {
+      res.status(200).json({
+        success: [{
+          msg: 'Profile information updated.'
+        }],
+        user: user
+      });
+
+    }).error(function(err) {
+      if (err) {
+        return next(err);
+      }
+    });
+  }).error(function(err) {
+    if (err) {
+      return next(err);
+    }
+  });
 };
 
 /**
- * Authentication callback
+ * PUT /user/password
+ * Update current password.
+ * @param password
+ * @param confirmPassword
  */
-exports.authCallback = function(req, res, next) {
-    res.redirect('/');
+
+var updatePassword = function(req, res, next) {
+  req.assert('password', 'Password must be at least 6 characters long').len(6);
+  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    return res.status(400).json({
+      errors: errors
+    });
+  }
+
+  User.find(req.user.id).success(function(user) {
+    user.password = req.body.password;
+
+    user.save().success(function() {
+      res.status(200).json({
+        success: [{
+          msg: 'Password has been changed.'
+        }]
+      });
+    }).error(function(err) {
+      if (err) {
+        return next(err);
+      }
+    });
+  }).error(function(err) {
+    if (err) {
+      return next(err);
+    }
+  });
+};
+
+/**
+ * DELETE /user
+ * Delete current user account.
+ */
+
+var deleteAccount = function(req, res, next) {
+  User.destroy(req.user.id).success(function() {
+    res.status(200).json({
+      info: [{
+        msg: 'Your account has been deleted.'
+      }]
+    });
+  }).error(function(err) {
+    if (err) {
+      return next(err);
+    }
+  });
+};
+
+module.exports = {
+  readAccount: readAccount,
+  createAccount: createAccount,
+  updateProfile: updateProfile,
+  updatePassword: updatePassword,
+  deleteAccount: deleteAccount
 };

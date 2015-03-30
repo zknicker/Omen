@@ -13,7 +13,8 @@ module.exports = function (app) {
     //app.use('/api/avatar', require('./api/avatar'));
 
     require('./routes/account')(app);
-    require('./routes/user')(app);
+    require('./api/user/user.routes')(app);
+    require('./api/message/message.routes')(app);
 
     // All undefined asset or api routes should return a 404
     app.route('/:url(api|auth|components|app|bower_components|assets)/*')

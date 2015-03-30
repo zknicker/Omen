@@ -13,18 +13,14 @@ var db = {};
 var sequelize = new Sequelize(settings.database.url, settings.database.options);
 
 // Import all database models
-fs
-  .readdirSync(path.join(__dirname, '../models'))
-  .forEach(function(file) {
-    var model = sequelize['import'](path.join(__dirname, '../models' , file));
-    db[model.name] = model;
-  });
+var userModel = sequelize['import'](path.join(__dirname, '../api/user/user.model.js'));
+db[userModel.name] = userModel;
 
 // Associate models if `associate` method is found within model's `classMethods` object
-Object.keys(db).forEach(function(modelName) {
-  if ('associate' in db[modelName]) {
-    db[modelName].associate(db);
-  }
+Object.keys(db).forEach(function (modelName) {
+    if ('associate' in db[modelName]) {
+        db[modelName].associate(db);
+    }
 });
 
 db.sequelize = sequelize;

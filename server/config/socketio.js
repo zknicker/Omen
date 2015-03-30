@@ -15,6 +15,10 @@ module.exports = function (io) {
         console.info('[SocketIO] Client connected: ' + socket.id);
         sockets[socket.id] = socket;
 
+        socket.on('message:create', function(data) {
+            io.emit('message:create', data);
+        });
+        
         /*
         if (socket.handshake.address !== null) {
             socket.address = socket.handshake.address.address + ':' + socket.handshake.address.port;

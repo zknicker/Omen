@@ -4,8 +4,8 @@
 
 'use strict';
 
-var userController = require('../controllers/user');
-var auth = require('../auth');
+var userController = require('./user.controller');
+var auth = require('../../auth');
 
 var routes = function(app) {
 
