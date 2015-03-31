@@ -2,7 +2,17 @@
 
 var MessageModel = function (sequelize, DataTypes) {
     var Message = sequelize.define('message', {
-        content: DataTypes.STRING
+        
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        
+        content: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     });
 
     return Message;

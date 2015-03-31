@@ -15,6 +15,8 @@ var sequelize = new Sequelize(settings.database.url, settings.database.options);
 // Import all database models
 var userModel = sequelize['import'](path.join(__dirname, '../api/user/user.model.js'));
 db[userModel.name] = userModel;
+var messageModel = sequelize['import'](path.join(__dirname, '../api/message/message.model.js'));
+db[messageModel.name] = messageModel;
 
 // Associate models if `associate` method is found within model's `classMethods` object
 Object.keys(db).forEach(function (modelName) {

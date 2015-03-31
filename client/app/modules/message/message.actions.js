@@ -5,7 +5,7 @@ var socket = require('../../sockets');
 
 module.exports = {
 
-    createMessage: function (message) {
-        socket.emit('message:create', { message: message });
+    createMessage: function (messageContent) {
+        socket.emit('message:create', { content: messageContent });
     }
 };

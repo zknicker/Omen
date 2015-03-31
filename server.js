@@ -30,8 +30,8 @@ database.sequelize.authenticate().complete(function (err) {
         database.sequelize.sync()
             .success(function () {
                 console.log('✔ Database Synced!'.green);
-            }).error(function () {
-                throw '✗ Database Not Synced!'.red;
+            }).error(function (err) {
+                throw ('✗ Database Not Synced! Error: ' + err).red;
             });
     }
 });
