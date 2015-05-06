@@ -85,8 +85,15 @@ var defaults = {
             language: 'en'
         }
     },
+    cache: {
+        globalKeyPrefix: "omen",
+        messageKeyPrefix: "message",
+        messageKeyCacheKey: "messageKeys"
+    },
     root: path.normalize(__dirname + '/../../..'),
     staticAssets: 'client',
+    avatarsStorage: 'client/images/avatars',
+    avatarsURL: '/images',
     security: {
         // Arrays of URLs to whitelist from security policies
         whitelists: {

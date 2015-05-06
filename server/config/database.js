@@ -1,8 +1,9 @@
 /**
- * Database Configuration
+ * Database Configuration (MySQL)
  */
 
 'use strict';
+
 var settings = require('./env/default');
 var Sequelize = require('sequelize');
 var fs = require('fs');

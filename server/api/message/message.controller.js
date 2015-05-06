@@ -1,25 +1,25 @@
 'use strict';
 
 var db = require('../../config/database');
+var cache = require('../../config/cache');
 var Message = db.message;
 
-var createMessage = function (data, socket) {
-    
+var createMessage = function(data, socket) {
     var message = {
-        content: data.content
+        message: data.message
     };
 
     Message.create(message).success(function (message) {
         return true;  
-    }).error(function (err) {
+    }).error(function(err) {
         return err; 
     });
 };
 
-var readMessage = function (req, res, next) {
-    //req.assert('content', 'Message content is not valid.').isAlpha();
-
-    res.send('yo');
+var readLatestMessages = function (req, res, next) {
+    cache.getRecentMessages(function(messages) {
+        res.send(messages);
+    });
 };
 
 function handleError(err, next) {
@@ -30,5 +30,5 @@ function handleError(err, next) {
 
 module.exports = {
     createMessage: createMessage,
-    readMessage: readMessage
+    readLatestMessages: readLatestMessages
 };

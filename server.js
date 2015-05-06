@@ -17,6 +17,9 @@ var io = require('socket.io').listen(server);
 // Database configuration
 var database = require('./server/config/database');
 
+// Cache configuration
+var cache = require('./server/config/cache');
+
 // Express & SocketIO configuration
 require('./server/config/socketio')(io);
 require('./server/config/express')(app, express, database);

@@ -9,7 +9,7 @@ var MessageModel = function (sequelize, DataTypes) {
             primaryKey: true
         },
         
-        content: {
+        message: {
             type: DataTypes.STRING,
             allowNull: false
         }

@@ -6,10 +6,10 @@ var auth = require('../../auth');
 var routes = function (app) {
 
     // Create
-    app.post('/message', messageController.createMessage);
+    app.post('/message', auth.isAuthenticated, messageController.createMessage);
 
     // Read
-    app.get('/message', messageController.readMessage);
+    app.get('/messages/latest', messageController.readLatestMessages);
 };
 
 module.exports = routes;
