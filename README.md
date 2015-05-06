@@ -1,4 +1,3 @@
-# Omen readme
+# Omen
 
-This is an example readme file.
-Describe your site/app here.
+A little chat application I'm working on for some React + NodeJS fun.
