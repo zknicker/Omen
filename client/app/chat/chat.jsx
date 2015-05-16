@@ -8,11 +8,13 @@ var messageStore = require('../modules/message/message.store');
 var Link = Router.Link;
 
 var getState = function () {
+    console.log(messageStore.getAll());
     return {
         text: "Chat",
         message: "New message?",
-        messages: messageStore.getAll(),
-        user: userStore.get()
+        messages: messageStore.getAll().messages,
+        user: userStore.get(),
+        loading: messageStore.getAll().loading
     };
 };
 
@@ -23,26 +25,20 @@ var getStateChatMessage = function () {
 };
 
 var ChatMessageComponent = React.createClass({
-    mixins: [userStore.mixin],
-
     getInitialState: function () {
         return getStateChatMessage();
     },
-
+    
     render: function () {
         return (
             /* jshint ignore:start */
-            < li > {
+            <li> {
                 this.state.user.firstName
             }: {
                 this.props.message
-            } < /li>
+            } </li>
             /* jshint ignore:end */
         );
-    },
-
-    _onChange: function () {
-        this.setState(getState());
     }
 });
 
@@ -53,15 +49,20 @@ var ChatComponent = React.createClass({
         return getState();
     },
 
+    componentDidMount: function() {
+        messageActions.loadRecentMessages();  
+    },
+
     render: function () {
         return (
           /* jshint ignore:start */
           <div>
             <h3>{this.state.text} Page</h3>
+            <b>{this.state.loading ? "Loading messages..." : ""}</b>
             <ul>
             {
-                this.state.messages.map(function(message) {
-                    return <ChatMessageComponent key={message} message={message} />
+                this.state.messages.map(function(message, index) {
+                    return <ChatMessageComponent key={index} message={message} />
                 })
             }
             </ul>
@@ -87,7 +88,8 @@ var ChatComponent = React.createClass({
 
     _onChange: function () {
         this.setState({
-            messages: messageStore.getAll()
+            messages: messageStore.getAll().messages,
+            loading: messageStore.getAll().loading
         });
     }
 });

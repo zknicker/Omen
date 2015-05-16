@@ -22,7 +22,6 @@ UserStore.dispatcherToken = Dispatcher.register(function (payload) {
 
     if (action.actionType === userConstants.SET_CURRENT_USER) {
         _user = action.user;
-
         UserStore.emitChange();
     }
 

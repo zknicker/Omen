@@ -18,7 +18,7 @@ var createMessage = function(data, socket) {
 
 var readLatestMessages = function (req, res, next) {
     cache.getRecentMessages(function(messages) {
-        res.send(messages);
+        res.send({ messages: messages });
     });
 };
 

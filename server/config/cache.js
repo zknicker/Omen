@@ -45,7 +45,7 @@ module.exports = {
                 async.each(messageKeys, function(key, callback) {
                     client.get(key, function(err, value) {
                         if (!err) {
-                            messages.push(value);
+                            messages.push(JSON.parse(value));
                             callback();
                         } else {
                             callback(err);
