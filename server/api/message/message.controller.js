@@ -2,29 +2,34 @@
 
 var db = require('../../config/database');
 var cache = require('../../config/cache');
-var Message = db.models.message;
+var CachedMessage = db.models.cachedmessage;
 
-var createMessage = function(data, socket) {
+var createMessage = function (data, socket) {
     var message = {
         message: data.message
     };
 
-    Message.create(message).then(function (message) {
+    CachedMessage.create(message).then(function (message) {
         return true;
-    }).error(function(err) {
-        return err; 
+    }).error(function (err) {
+        return err;
     });
 };
 
 var readLatestMessages = function (req, res, next) {
-    cache.getRecentMessages(function(messages) {
-        res.send(messages);
-    });
+    CachedMessage.find({
+            limit: 10,
+            sort: 'id ASC'
+        }).then(function (messages) {
+            res.send(messages);
+        }).catch(function (err) {
+            return next(err);
+        });
 };
 
 function handleError(err, next) {
     if (err) {
-        return next(err);   
+        return next(err);
     }
 }
 

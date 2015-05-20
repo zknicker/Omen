@@ -33,11 +33,13 @@ var config = {
             collation: 'utf8_general_ci'
         },
 
-        //localRedis: {
-        //    adapter: 'mysql',
-        //    host: 'localhost',
-        //    database: 'foobar'
-        //}
+        localRedis: {
+            adapter: 'redis',
+            port: 6379,
+            host: 'localhost',
+            password: null,
+            database: null,
+        }
     },
 
     defaults: {
@@ -51,11 +53,13 @@ var User = require('../api/user/user.model');
 orm.loadCollection(User);
 var Message = require('../api/message/message.model');
 orm.loadCollection(Message);
+var CachedMessage = require('../api/message/cachedMessage.model');
+orm.loadCollection(CachedMessage);
 
 module.exports.models = null;
-module.exports.initialize = function(cb) {
+module.exports.initialize = function (cb) {
 
-    orm.initialize(config, function(err, models) {
+    orm.initialize(config, function (err, models) {
         module.exports.models = models.collections;
         cb(err);
     });

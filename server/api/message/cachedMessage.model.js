@@ -2,11 +2,11 @@
 
 var Waterline = require('Waterline');
 
-var Message = Waterline.Collection.extend({
+var CachedMessage = Waterline.Collection.extend({
 
-    identity: 'message',
+    identity: 'cachedMessage',
     tableName: 'messages',
-    connection: 'localMysql',
+    connection: 'localRedis',
 
     attributes: {
         id: {
@@ -23,4 +23,4 @@ var Message = Waterline.Collection.extend({
     }
 });
 
-module.exports = Message;
+module.exports = CachedMessage;
