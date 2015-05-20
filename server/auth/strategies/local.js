@@ -9,11 +9,11 @@ var strategy = function (User) {
     passport.use(new LocalStrategy({
         usernameField: 'email'
     }, function (username, password, done) {
-        User.find({
+        User.findOne({
             where: {
                 email: username
             }
-        }).success(function (user) {
+        }).then(function (user) {
             if (!user) {
                 return done(null, false, {
                     message: 'Invalid email or password.'
@@ -28,7 +28,7 @@ var strategy = function (User) {
                     });
                 }
             });
-        }).error(function (err) {
+        }).catch(function (err) {
             if (err) {
                 return done(err);
             }

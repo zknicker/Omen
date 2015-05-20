@@ -20,28 +20,26 @@ var database = require('./server/config/database');
 // Cache configuration
 var cache = require('./server/config/cache');
 
-// Express & SocketIO configuration
-require('./server/config/socketio')(io);
-require('./server/config/express')(app, express, database);
-
 // Verify database connection and sync tables
-database.sequelize.authenticate().complete(function (err) {
-    if (!!err) {
-        throw '✗ Database Connection Error: '.red + err;
+database.initialize(function(err) {
+    if (err) {
+        throw ('✗ Database Connect Error: ' + err).red;
     } else {
-        console.log('✔ Database Connection Success!'.green);
-        database.sequelize.sync()
-            .success(function () {
-                console.log('✔ Database Synced!'.green);
-            }).error(function (err) {
-                throw ('✗ Database Not Synced! Error: ' + err).red;
-            });
-    }
-});
+        console.log('✔ Database Connected!'.green);
 
-// Start Express server.
-server.listen(app.get('port'), function () {
-    console.log('✔ Express server listening on port '.green + '%d'.blue + ' in '.green + '%s'.blue + ' mode'.green, app.get('port'), app.get('env'));
+        // Express & SocketIO configuration
+        require('./server/config/socketio')(io);
+        require('./server/config/express')(app, express, database);
+        
+        // Start routing.
+        require('./server/routes')(app);
+        console.log('✔ Starting routing. '.green);
+        
+        // Start Express server.
+        server.listen(app.get('port'), function () {
+            console.log('✔ Express server listening on port '.green + '%d'.blue + ' in '.green + '%s'.blue + ' mode'.green, app.get('port'), app.get('env'));
+        });
+    };
 });
 
 module.exports = app;

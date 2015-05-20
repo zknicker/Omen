@@ -2,15 +2,15 @@
 
 var db = require('../../config/database');
 var cache = require('../../config/cache');
-var Message = db.message;
+var Message = db.models.message;
 
 var createMessage = function(data, socket) {
     var message = {
         message: data.message
     };
 
-    Message.create(message).success(function (message) {
-        return true;  
+    Message.create(message).then(function (message) {
+        return true;
     }).error(function(err) {
         return err; 
     });
@@ -18,7 +18,7 @@ var createMessage = function(data, socket) {
 
 var readLatestMessages = function (req, res, next) {
     cache.getRecentMessages(function(messages) {
-        res.send({ messages: messages });
+        res.send(messages);
     });
 };
 

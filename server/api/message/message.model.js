@@ -1,21 +1,25 @@
 'use strict';
 
-var MessageModel = function (sequelize, DataTypes) {
-    var Message = sequelize.define('message', {
-        
+var Waterline = require('Waterline');
+
+var Message = Waterline.Collection.extend({
+
+    identity: 'message',
+    connection: 'localMysql',
+
+    attributes: {
         id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
+            type: 'integer',
+            primaryKey: true,
+            unique: true,
+            autoIncrement: true
         },
-        
+
         message: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: 'string',
+            notNull: true
         }
-    });
+    }
+});
 
-    return Message;
-};
-
-module.exports = MessageModel;
+module.exports = Message;

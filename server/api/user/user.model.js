@@ -1,71 +1,90 @@
 'use strict';
 var bcrypt = require('bcrypt-nodejs');
+var Waterline = require('Waterline');
+var SALT_WORK_FACTOR = 10;
 
-var UserModel = function(sequelize, DataTypes) {
-  var User = sequelize.define('user', {
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        isLowercase: true
-      }
-    },
-    role: {
-      type: DataTypes.STRING,
-      defaultValue: 'user'
-    },
-    password: DataTypes.STRING,
+var User = Waterline.Collection.extend({
 
-    // Profile info
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    identity: 'user',
+    tableName: 'users',
+    connection: 'localMysql',
 
-    // Reset token
-    resetPasswordToken: DataTypes.STRING,
-    resetPasswordExpires: DataTypes.DATE
-  }, {
-    instanceMethods: {
-      /**
-       * Validate user's password.
-       * Used by Passport-Local Strategy for password validation.
-       */
-      comparePassword: function(candidatePassword, done) {
-        bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-          if (err) {
-            return done(err);
-          }
-          done(null, isMatch);
-        });
-      }
-    }
-  });
+    attributes: {
+        id: {
+            type: 'integer',
+            primaryKey: true,
+            unique: true,
+            autoIncrement: true
+        },
 
-  // Run before validating any data
-  User.hook('beforeValidate', function(user, done) {
+        email: {
+            type: 'string',
+            notNull: true,
+            unique: true,
+            lowercase: true
+        },
 
-    // Check to see if password has changed
-    if (!user.changed('password')) {
-      return done(null, user);
-    }
+        role: {
+            type: 'string',
+            defaultsTo: 'user'
+        },
 
-    // Salt and Hash password
-    bcrypt.genSalt(5, function(err, salt) {
-      if (err) {
-        return done(err);
-      }
+        password: {
+            type: 'string',
+        },
 
-      bcrypt.hash(user.password, salt, null, function(err, hash) {
-        if (err) {
-          return done(err);
+        firstName: {
+            type: 'string',
+        },
+
+        lastName: {
+            type: 'string',
+        },
+
+        resetPasswordToken: {
+            type: 'string',
+        },
+
+        resetPasswordExpires: {
+            type: 'date',
+        },
+
+        verifyPassword: function (password) {
+            return bcrypt.compareSync(password, this.password);
+        },
+
+        changePassword: function (newPassword, cb) {
+            this.newPassword = newPassword;
+            this.save(function (err, user) {
+                return cb(err, user);
+            });
         }
-        user.password = hash;
-        return done(null, user);
-      });
-    });
-  });
+    },
 
-  return User;
-};
+    beforeCreate: function (attrs, cb) {
+        bcrypt.hash(attrs.password, SALT_WORK_FACTOR, function (err, hash) {
+            attrs.password = hash;
+            return cb();
+        });
+    },
 
-module.exports = UserModel;
+    beforeUpdate: function (attrs, cb) {
+        if (attrs.newPassword) {
+            bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+                if (err) return cb(err);
+
+                bcrypt.hash(attrs.newPassword, salt, null, function (err, crypted) {
+                    if (err) return cb(err);
+
+                    delete attrs.newPassword;
+                    attrs.password = crypted;
+                    return cb();
+                });
+            });
+        } else {
+            return cb();
+        }
+    }
+});
+
+module.exports = User;

@@ -4,12 +4,6 @@ var Store = require('../../lib/store');
 var Dispatcher = require('../../dispatcher');
 var constants = require('./message.constants');
 
-// Messages for a given chatroom.
-var _messages = [];
-
-// True when new messages are being retrieved.
-var _loading = true;
-
 var MessageStore = new Store({
 
     initialize: function() {
@@ -17,32 +11,23 @@ var MessageStore = new Store({
         this.loading = true;
     },
     
-    // Returns all messages in the store.
-    getAll: function () {
-        return { 
-            messages: this.messages, 
-            loading: this.loading 
-        };
-    },
-    
-    // Latest messages are being requested via AJAX.
     onLatestMessagesLoading: function() {
         this.loading = true;
+        this.emitChange();
     },
     
-    // Latest messages loaded.
     onLatestMessagesSuccess: function(retrievedMessages) {
         this.messages.length = 0;
         var messages = this.messages;
-        (retrievedMessages.messages).forEach(function(message) {
+        (retrievedMessages).forEach(function(message) {
             messages.push(message.message);
         });
         this.loading = false;
         this.emitChange();
     },
     
-    // Latest messages were requested via AJAX, but request errored.
     onLatestMessagesError: function() {
+    
     },
     
     onCreateMessage: function(message) {

@@ -5,28 +5,58 @@
 'use strict';
 
 var settings = require('./env/default');
-var Sequelize = require('sequelize');
+var Waterline = require('waterline');
 var fs = require('fs');
 var path = require('path');
 var db = {};
 
-// Connect to database
-var sequelize = new Sequelize(settings.database.url, settings.database.options);
+var orm = new Waterline();
 
-// Import all database models
-var userModel = sequelize['import'](path.join(__dirname, '../api/user/user.model.js'));
-db[userModel.name] = userModel;
-var messageModel = sequelize['import'](path.join(__dirname, '../api/message/message.model.js'));
-db[messageModel.name] = messageModel;
+// Waterline config.
+var mysqlAdapter = require('sails-mysql');
+var redisAdapter = require('sails-redis');
+var config = {
+    adapters: {
+        mysql: mysqlAdapter,
+        redis: redisAdapter
+    },
 
-// Associate models if `associate` method is found within model's `classMethods` object
-Object.keys(db).forEach(function (modelName) {
-    if ('associate' in db[modelName]) {
-        db[modelName].associate(db);
+    connections: {
+        localMysql: {
+            adapter: 'mysql',
+            host: 'localhost',
+            port: 3306,
+            user: 'zknicker',
+            password: 'zknicker',
+            database: 'omen_db',
+            charset: 'utf8',
+            collation: 'utf8_general_ci'
+        },
+
+        //localRedis: {
+        //    adapter: 'mysql',
+        //    host: 'localhost',
+        //    database: 'foobar'
+        //}
+    },
+
+    defaults: {
+        migrate: 'alter'
     }
-});
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+};
 
-module.exports = db;
+// Loading models into Waterline.
+var User = require('../api/user/user.model');
+orm.loadCollection(User);
+var Message = require('../api/message/message.model');
+orm.loadCollection(Message);
+
+module.exports.models = null;
+module.exports.initialize = function(cb) {
+
+    orm.initialize(config, function(err, models) {
+        module.exports.models = models.collections;
+        cb(err);
+    });
+};

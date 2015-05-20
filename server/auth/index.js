@@ -8,7 +8,7 @@ var validateJwt = expressJwt({
     secret: secrets.sessionSecret
 });
 var db = require('../config/database');
-var User = db.user;
+var User = db.models.user;
 var localStrategy = require('./strategies/local');
 
 /**
@@ -20,9 +20,9 @@ var init = function (User) {
     });
 
     passport.deserializeUser(function (id, done) {
-        User.find(id).success(function (user) {
+        User.findOne(id).then(function (user) {
             done(null, user);
-        }).error(function (err) {
+        }).catch(function (err) {
             done(err);
         });
     });

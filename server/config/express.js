@@ -64,7 +64,7 @@ module.exports = function (app, express, database) {
     }));
 
     // Authentication middleware.
-    auth.init(database.user);
+    auth.init(database.models.user);
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -72,9 +72,6 @@ module.exports = function (app, express, database) {
     app.use(flash());
     app.use(security);
     app.use(logger(settings.server.logLevel));
-
-    // Load routes
-    require(path.join(settings.root, './server/routes'))(app);
 
     if ('development' === env) {
         app.use(function noCache(req, res, next) {

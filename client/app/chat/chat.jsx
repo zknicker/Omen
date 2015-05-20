@@ -8,13 +8,12 @@ var messageStore = require('../modules/message/message.store');
 var Link = Router.Link;
 
 var getState = function () {
-    console.log(messageStore.getAll());
     return {
         text: "Chat",
         message: "New message?",
-        messages: messageStore.getAll().messages,
+        messages: messageStore.messages,
         user: userStore.get(),
-        loading: messageStore.getAll().loading
+        loading: messageStore.loading
     };
 };
 
@@ -88,8 +87,8 @@ var ChatComponent = React.createClass({
 
     _onChange: function () {
         this.setState({
-            messages: messageStore.getAll().messages,
-            loading: messageStore.getAll().loading
+            messages: messageStore.messages,
+            loading: messageStore.loading
         });
     }
 });

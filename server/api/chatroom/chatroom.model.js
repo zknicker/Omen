@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     User = require('../user/user.model');
@@ -50,3 +50,4 @@ ChatroomSchema.methods.removeUser = function(user, callback) {
 };
 
 module.exports = mongoose.model('Chatroom', ChatroomSchema);
+*/
