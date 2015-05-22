@@ -19,15 +19,13 @@ var strategy = function (User) {
                     message: 'Invalid email or password.'
                 });
             }
-            user.comparePassword(password, function (err, isMatch) {
-                if (isMatch) {
-                    return done(null, user);
-                } else {
-                    return done(null, false, {
-                        message: 'Invalid email or password.'
-                    });
-                }
-            });
+            if (user.verifyPassword(password)) {
+                return done(null, user);
+            } else {
+                return done(null, false, {
+                    message: 'Invalid email or password.'
+                });
+            }
         }).catch(function (err) {
             if (err) {
                 return done(err);

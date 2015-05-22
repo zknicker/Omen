@@ -4,21 +4,16 @@ var React = require('react');
 
 var IndexComponent = React.createClass({
     render: function () {
+        var definitionUnderline = {
+            textDecoration: 'underline'
+        };
+        
         return (
           /* jshint ignore:start */
             <div className="main-container">
-              <div className="yeogurt-info">
-                <h1>Welcome to Yeogurt!</h1>
-                <p>
-                  Take a look at the <a href="https://github.com/larsonjj/generator-yeogurt#yeogurt-generator">documentation</a> and start mixing up something awesome.
-                </p>
-                <p>
-                  <img src="/images/yeogurt-swirl.png" width="75px" className="logo" />
-                </p>
-                <p className="links">
-                  <a href="/docs/api/index.html">API</a>
-                </p>
-              </div>
+                <h1>Omen</h1>
+                <h3>A next generation chat platform.</h3>
+                <p><span style={definitionUnderline}>omen</span>: something that is believed to be a sign or warning of something that will happen in the future</p>
             </div>
           /* jshint ignore:end */
         );
