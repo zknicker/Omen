@@ -1,3 +1,5 @@
 = Cache =
     * Move cache functions from Config to elsewhere.
     
+= APIs =
+    * Rewrite route logic to use /api/ in the path automatically. e.g. "app.use('/api/sockets', require('./api/sockets'));"

@@ -10,10 +10,10 @@ var async = require('async');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
-var db = require('../config/database');
+var db = require('../../config/database');
 var User = db.user;
-var settings = require('../config/env/default');
-var auth = require('../auth');
+var settings = require('../../config/env/default');
+var auth = require('../../auth');
 
 /**
  * GET /login

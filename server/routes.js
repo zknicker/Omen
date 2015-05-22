@@ -5,14 +5,7 @@ var errors = require('./errors');
 
 module.exports = function (app) {
 
-    // Insert routes below
-    //app.use('/api/sockets', require('./api/sockets'));
-    //app.use('/api/chatrooms', require('./api/chatroom'));
-    //app.use('/api/messages', require('./api/message'));
-    //app.use('/api/users', require('./api/user'));
-    //app.use('/api/avatar', require('./api/avatar'));
-
-    require('./routes/account')(app);
+    require('./api/account/account.routes')(app);
     require('./api/user/user.routes')(app);
     require('./api/message/message.routes')(app);
     require('./api/avatar/avatar.routes')(app);
