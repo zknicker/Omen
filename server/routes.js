@@ -1,6 +1,5 @@
 'use strict';
 
-var indexController = require('./controllers/index');
 var errors = require('./errors');
 
 module.exports = function (app) {
