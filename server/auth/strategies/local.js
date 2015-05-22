@@ -1,9 +1,10 @@
+/**
+ * Logic for signing in locally using Email and Password.
+ */
 'use strict';
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
-// Sign in using Email and Password.
 
 var strategy = function (User) {
     passport.use(new LocalStrategy({

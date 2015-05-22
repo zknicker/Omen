@@ -12,14 +12,16 @@ var User = db.models.user;
 var localStrategy = require('./strategies/local');
 
 /**
- * Initialize passport serialization/deserialization
+ * Define Passport serialization implementations.
  */
 var init = function (User) {
     passport.serializeUser(function (user, done) {
+        // Serialize the user in the session cookie by his ID.
         done(null, user.id);
     });
 
     passport.deserializeUser(function (id, done) {
+        // To deserialize the user, find him by his ID.
         User.findOne(id).then(function (user) {
             done(null, user);
         }).catch(function (err) {
@@ -27,12 +29,12 @@ var init = function (User) {
         });
     });
 
-    // Setup Passport strategies
+    // Setup the local Passport strategy.
     localStrategy(User);
 };
 
 /**
- * Check to see if user is authenticated
+ * Check to see if user is authenticated.
  */
 var isAuthenticated = function (req, res, next) {
     // allow access_token to be passed through query parameter as well
@@ -40,12 +42,11 @@ var isAuthenticated = function (req, res, next) {
         req.headers.authorization = 'Bearer ' + req.body.access_token;
     }
     // Validate jwt token
-    // TODO: Why is this console logging "undefined"?
     return validateJwt(req, res, next);
 };
 
 /**
- * Checks if the user role meets the minimum requirements of the route
+ * Checks if the user role meets the minimum requirements of the route.
  */
 var hasRole = function (roleRequired) {
     if (!roleRequired) {
@@ -73,23 +74,9 @@ var signToken = function (id) {
     });
 };
 
-/**
- * Set token cookie directly for oAuth strategies
- */
-var setTokenCookie = function (req, res) {
-    if (!req.user) {
-        return res.status(404).json({
-            message: 'Something went wrong, please try again.'
-        });
-    }
-    var token = signToken(req.user.id, req.user.role);
-    res.cookie('token', JSON.stringify(token));
-};
-
 module.exports = {
     init: init,
     isAuthenticated: isAuthenticated,
     hasRole: hasRole,
-    signToken: signToken,
-    setTokenCookie: setTokenCookie
+    signToken: signToken
 };
