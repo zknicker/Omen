@@ -4,16 +4,12 @@ var db = require('../../config/database');
 var cache = require('../../config/cache');
 var CachedMessage = db.models.cachedmessage;
 
-var createMessage = function (data, socket) {
-    var message = {
+var createMessage = function (data, handleError) {
+    var newMessage = {
         message: data.message
     };
 
-    CachedMessage.create(message).then(function (message) {
-        return true;
-    }).error(function (err) {
-        return err;
-    });
+    CachedMessage.create(newMessage).catch(handleError);
 };
 
 var readLatestMessages = function (req, res, next) {

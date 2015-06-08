@@ -2,13 +2,13 @@
 
 var keyMirror = require('keymirror');
 
-var messageConstants = keyMirror({
+var messageConstants = {
 
     // Message AJAX Constants
-    MESSAGE_LATEST_LOADING: null,
-    MESSAGE_LATEST_SUCCESS: null,
-    MESSAGE_LATEST_ERROR: null,
-    CREATE_MESSAGE: null
-});
+    MESSAGE_LATEST_LOADING: 'MESSAGE_LATEST_LOADING',
+    MESSAGE_LATEST_SUCCESS: 'MESSAGE_LATEST_SUCCESS',
+    MESSAGE_LATEST_ERROR: 'MESSAGE_LATEST_ERROR',
+    CREATE_MESSAGE: 'CREATE_MESSAGE'
+};
 
 module.exports = messageConstants;

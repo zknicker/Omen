@@ -16,12 +16,10 @@ var localStrategy = require('./strategies/local');
  */
 var init = function (User) {
     passport.serializeUser(function (user, done) {
-        // Serialize the user in the session cookie by his ID.
         done(null, user.id);
     });
 
     passport.deserializeUser(function (id, done) {
-        // To deserialize the user, find him by his ID.
         User.findOne(id).then(function (user) {
             done(null, user);
         }).catch(function (err) {
@@ -34,13 +32,11 @@ var init = function (User) {
 };
 
 /**
- * Check to see if user is authenticated.
+ * Middleware to require authentication for a route.
+ * TODO: Support roles?
  */
 var isAuthenticated = function (req, res, next) {
-    // allow access_token to be passed through query parameter as well
-    if (req.body && req.body.hasOwnProperty('access_token')) {
-        req.headers.authorization = 'Bearer ' + req.body.access_token;
-    }
+    
     // Validate jwt token
     return validateJwt(req, res, next);
 };

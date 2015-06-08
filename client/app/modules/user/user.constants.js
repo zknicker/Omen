@@ -1,12 +1,16 @@
 'use strict';
 
-var keyMirror = require('keymirror');
+var userConstants = {
 
-var userConstants = keyMirror({
+    // Action types.
+    SET_CURRENT_USER: 'SET_CURRENT_USER',
 
-  // User action types
-  SET_CURRENT_USER: null,
-
-});
+    // Unauthenticated user settings.
+    unauthenticatedUser: {
+        loggedIn: false,
+        firstName: 'Guest',
+        lastName: 'Pants'
+    }
+};
 
 module.exports = userConstants;

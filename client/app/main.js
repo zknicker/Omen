@@ -4,7 +4,7 @@ var routes = require('./routes.jsx');
 var userActions = require('./modules/user/user.actions');
 var socket = require('./sockets');
 
-// Check user authentication prior to app startup.
+// Get the current user (we can't do anything without a user).
 userActions.isAuthenticated({
 
     complete: function () {

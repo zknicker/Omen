@@ -4,6 +4,7 @@
 
 'use strict';
 
+var events = require('../../config/events');
 var Message = require('../../config/database').message;
 var cache = require('../../config/cache');
 var MessageController = require('./message.controller');
@@ -13,13 +14,20 @@ var socketHelpers = require('../../helpers/socket.helpers');
 exports.register = function(io, socket) {
     
     socket.on('message:create', function(data) {
-        MessageController.createMessage(data, socket);
-        cache.storeNewMessage(data);
-        io.emit('message:create', data);
+        console.log(socket);
+        MessageController.createMessage(data, function(err) {
+            if (err) {
+                socket.emit('message:create:error');
+            } else {
+                io.emit('message:create', { message: message });   
+            }
+        });
     });
 }
 
 // Socket listeners that register once in app lifetime.
 exports.registerOnce = function(io) {
-
+    events.on('server:message:created', function(message) {
+        io.emit('message:create', { message: message }); 
+    });
 }

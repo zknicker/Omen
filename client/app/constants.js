@@ -11,14 +11,6 @@ var GlobalConstants = {
 
     },
 
-    user: {
-        loggedIn: false,
-        firstName: 'John',
-        lastName: 'Doe'
-    },
-
-    messages: {},
-
     dispatcherPayloadSources: {
         VIEW_ACTION: 'VIEW_ACTION'
     },

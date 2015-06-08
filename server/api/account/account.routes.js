@@ -3,14 +3,12 @@ var auth = require('../../auth');
 
 var routes = function (app) {
 
-    app.get('/login', accountController.login);
-    app.post('/login', accountController.postLogin);
+    app.post('/login', accountController.login);
     app.get('/forgot', accountController.forgot);
     app.post('/forgot', accountController.postForgot);
     app.get('/reset/:token', accountController.reset);
     app.post('/reset/:token', accountController.postReset);
     app.get('/signup', accountController.signup);
-    app.get('/settings', accountController.settings);
 };
 
 module.exports = routes;

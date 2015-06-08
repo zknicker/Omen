@@ -2,13 +2,15 @@
 
 var Dispatcher = require('../../dispatcher');
 var userConstants = require('./user.constants');
-var userDefaults = require('../../constants').user;
 var request = require('superagent');
 var serialize = require('form-serialize');
 var cookie = require('cookie');
 
 module.exports = {
 
+    /**
+     * Dispatch an event to the set the app's user.
+     */
     setUser: function (user) {
         Dispatcher.handleViewAction({
             actionType: userConstants.SET_CURRENT_USER,
@@ -16,6 +18,11 @@ module.exports = {
         });
     },
 
+    /**
+     * Requests the current user from the server, and dispatches an event 
+     * to set the app's user to it. If no user is authenticated, the default 
+     * user (i.e. a "guest") is dispatched as the current user.
+     */
     isAuthenticated: function (callback) {
         var self = this;
         var token = self.getToken();
@@ -62,18 +69,17 @@ module.exports = {
             .post(postUrl)
             .type('form')
             .set({
-                'authorization': 'Bearer ' + token,
+                //'authorization': 'Bearer ' + token,
                 'X-Requested-With': 'XMLHttpRequest'
             })
             .send(postData)
             .end(function (res) {
                 if (res.ok) {
                     var userData;
-                    // If auth token needs to be stored
-                    if (options.setToken) {
-                        // Store token in cookie that expires in a week
-                        self.setToken(res.body.token, 7);
-                    }
+
+                    // Store the new token.
+                    localStorage.token = res.body.token;
+                    
                     // If user needs to be updated
                     if (options.updateUser) {
                         userData = res.body.user;
@@ -98,9 +104,7 @@ module.exports = {
     },
 
     getToken: function () {
-        var cookies = cookie.parse(document.cookie);
-
-        return cookies.token;
+        return localStorage.token;
     },
 
     setToken: function (token, duration) {
@@ -115,7 +119,6 @@ module.exports = {
     login: function (form, callback) {
         var cb = callback || function () {};
         cb.options = {
-            setToken: true,
             updateUser: true
         };
         this.postForm(form, cb);
@@ -126,7 +129,8 @@ module.exports = {
         this.setToken('', -1);
 
         // Reset user to defaults
-        this.setUser(userDefaults);
+        console.log(userConstants.unauthenticatedUser);
+        this.setUser(userConstants.unauthenticatedUser);
 
         // Redirect to homepage [todo: replace this]
         //routeActions.setRoute('/');
@@ -135,7 +139,6 @@ module.exports = {
     signup: function (form, callback) {
         var cb = callback || function () {};
         cb.options = {
-            setToken: true,
             updateUser: true
         };
         this.postForm(form, cb);

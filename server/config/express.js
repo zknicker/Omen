@@ -18,7 +18,6 @@ var auth = require('../auth');
 var session = require('express-session');
 var secrets = require('./secrets');
 var settings = require('./env/default');
-var security = require('./security');
 
 module.exports = function (app, express, database) {
     var env = app.get('env');
@@ -51,26 +50,13 @@ module.exports = function (app, express, database) {
     app.use(favicon(path.join(settings.root, settings.staticAssets, '/favicon.ico')));
     app.use(express.static(path.join(settings.root, settings.staticAssets)));
 
-    // Session related middleware.
-    app.use(cookieParser());
-    app.use(session({
-        secret: secrets.sessionSecret,
-        saveUninitialized: true,
-        resave: true,
-        cookie: {
-            httpOnly: true, // Only server can manipulate cookies
-            maxAge: settings.auth.sessionMaxAge
-        }
-    }));
-
     // Authentication middleware.
     auth.init(database.models.user);
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // Flash messages, security middleware, logging.
+    // Peon middleware.
     app.use(flash());
-    app.use(security);
     app.use(logger(settings.server.logLevel));
 
     if ('development' === env) {

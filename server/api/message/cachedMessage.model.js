@@ -1,6 +1,7 @@
 'use strict';
 
 var Waterline = require('Waterline');
+var events = require('../../config/events');
 
 var CachedMessage = Waterline.Collection.extend({
 
@@ -19,8 +20,22 @@ var CachedMessage = Waterline.Collection.extend({
         message: {
             type: 'string',
             notNull: true
+        },
+        
+        user: {
+            model: 'user'   
         }
-    }
+    },
+
+    afterCreate: messageCreated,
 });
+
+/**
+ * Called when a message entry has been created in the cache.
+ */
+function messageCreated(record, next) {
+    events.emit('server:message:created', record.message);
+    next();
+}
 
 module.exports = CachedMessage;
