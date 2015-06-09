@@ -4,12 +4,8 @@
 
 'use strict';
 
-var socketioJwt = require('socketio-jwt');
-var secrets = require('./secrets');
-
 var messageSocketFunctions = require('../api/message/message.socket');
-
-var sockets = {};
+var jwtHelper = require('../helpers/jwt.helper');
 
 // Executed when the client socket connects.
 function onConnect(io, socket) {
@@ -19,6 +15,19 @@ function onConnect(io, socket) {
     messageSocketFunctions.register(io, socket);
 }
 
+// Executed when the client authenticates over socket.
+function onAuthenticate(socket, token) {
+    jwtHelper.getDecodedToken(token, function (err, decodedToken) {
+        if (err) {
+            socket.emit('authenticate:error', 'Could not authenticate.');
+        } else {
+            socket.authenticated = true;
+            socket.userId = decodedToken.id;
+            console.log(socket);
+        }
+    });
+}
+
 module.exports = function (io) {
 
     // Register global listeners.
@@ -26,31 +35,24 @@ module.exports = function (io) {
 
     io.on('connection', function (socket) {
         console.info('[SocketIO] Client connected: ' + socket.id);
-        sockets[socket.id] = socket;
-        
-        /*
+
         if (socket.handshake.address !== null) {
             socket.address = socket.handshake.address.address + ':' + socket.handshake.address.port;
-        } else {
-            socket.address = process.env.DOMAIN;
         }
 
-        socket.connectedAt = new Date();
-
         // Disconnect any existing session for user. Set the user's new socket.
-        socketsHelper.disconnectExistingSocketForUser(socket.user._id);
-        socketsHelper.setSocketForUser(socket.user._id, socket);
+        //socketsHelper.disconnectExistingSocketForUser(socket.user._id);
+        //socketsHelper.setSocketForUser(socket.user._id, socket);
 
-        
-
-        */
-        
         onConnect(io, socket);
-        
+
+        socket.authenticated = false;
+        socket.on('authenticate', function(token) {
+            onAuthenticate(socket, token);   
+        });
+
         socket.on('disconnect', function () {
-            //socketsHelper.forgetSocketForUser(socket.user._id);
-            //onDisconnect(io, socket);
-            sockets[socket.id].delete;
+            //socketsHelper.removeSocketForUser(socket.user._id);
             console.info('[SocketIO] Client disconnected: ' + socket.id);
         });
     });

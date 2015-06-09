@@ -15,6 +15,11 @@ var socketFunctions = {
         messageSocketListeners(_socket);
     },
     
+    authenticate: function(token) {
+        console.log('sending token to socket server...');
+        _socket.emit('authenticate', token);
+    },
+    
     on: function(event, func) {
         // registering on event/func
         _socket.on(event, func);   

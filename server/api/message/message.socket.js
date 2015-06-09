@@ -14,14 +14,7 @@ var socketHelpers = require('../../helpers/socket.helpers');
 exports.register = function(io, socket) {
     
     socket.on('message:create', function(data) {
-        console.log(socket);
-        MessageController.createMessage(data, function(err) {
-            if (err) {
-                socket.emit('message:create:error');
-            } else {
-                io.emit('message:create', { message: message });   
-            }
-        });
+        MessageController.createMessage(data, socket);
     });
 }
 

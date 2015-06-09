@@ -6,6 +6,7 @@ var userConstants = require('./user.constants');
 var userDefaults = require('../../constants').user;
 
 var _user;
+var _socket;
 
 var UserStore = new Store({
 
@@ -22,6 +23,11 @@ UserStore.dispatcherToken = Dispatcher.register(function (payload) {
 
     if (action.actionType === userConstants.SET_CURRENT_USER) {
         _user = action.user;
+        UserStore.emitChange();
+    }
+    
+    if (action.actionType === userConstants.SET_CURRENT_USER_SOCKET) {
+        _socket = action.socket;
         UserStore.emitChange();
     }
 

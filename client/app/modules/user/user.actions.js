@@ -5,6 +5,7 @@ var userConstants = require('./user.constants');
 var request = require('superagent');
 var serialize = require('form-serialize');
 var cookie = require('cookie');
+var socket = require('../../sockets');
 
 module.exports = {
 
@@ -17,13 +18,22 @@ module.exports = {
             user: user
         });
     },
+    
+    setSocket: function(socket) {
+        Dispatcher.handleViewAction({
+            actionType: userConstants.SET_CURRENT_USER_SOCKET,
+            socket: socket
+        });
+    },
 
     /**
+     * CALL ONCE WHEN THE APP IS STARTED.
+     *
      * Requests the current user from the server, and dispatches an event 
      * to set the app's user to it. If no user is authenticated, the default 
      * user (i.e. a "guest") is dispatched as the current user.
      */
-    isAuthenticated: function (callback) {
+    bootstrap: function (callback) {
         var self = this;
         var token = self.getToken();
         request
@@ -78,7 +88,10 @@ module.exports = {
                     var userData;
 
                     // Store the new token.
-                    localStorage.token = res.body.token;
+                    if (res.body.token) {
+                        localStorage.token = res.body.token;
+                        socket.authenticate(res.body.token);
+                    }
                     
                     // If user needs to be updated
                     if (options.updateUser) {

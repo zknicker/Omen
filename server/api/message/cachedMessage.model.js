@@ -22,8 +22,9 @@ var CachedMessage = Waterline.Collection.extend({
             notNull: true
         },
         
-        user: {
-            model: 'user'   
+        userId: {
+            type: 'integer',
+            notNull: true
         }
     },
 
