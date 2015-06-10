@@ -7,7 +7,7 @@ var CachedMessage = db.models.cachedmessage;
 var createMessage = function (data, socket) {
     var newMessage = {
         message: data.message,
-        userId: 1
+        userId: socket.userId
     };
 
     CachedMessage.create(newMessage).catch(function() {

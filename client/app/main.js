@@ -20,8 +20,7 @@ userActions.bootstrap({
         // If the user is authenticated, authenticate the socket.
         var token = userActions.getToken();
         if (token) {
-            console.log('authenticating...');
-            setTimeout(function() { socket.authenticate(token); }, 1000); 
+            socket.authenticate(token); 
         }
     }
 });

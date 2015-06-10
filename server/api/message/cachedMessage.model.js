@@ -35,7 +35,7 @@ var CachedMessage = Waterline.Collection.extend({
  * Called when a message entry has been created in the cache.
  */
 function messageCreated(record, next) {
-    events.emit('server:message:created', record.message);
+    events.emit('server:message:created', record);
     next();
 }
 

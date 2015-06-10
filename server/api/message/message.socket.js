@@ -21,6 +21,6 @@ exports.register = function(io, socket) {
 // Socket listeners that register once in app lifetime.
 exports.registerOnce = function(io) {
     events.on('server:message:created', function(message) {
-        io.emit('message:create', { message: message }); 
+        io.emit('message:create', message); 
     });
 }

@@ -23,7 +23,6 @@ function onAuthenticate(socket, token) {
         } else {
             socket.authenticated = true;
             socket.userId = decodedToken.id;
-            console.log(socket);
         }
     });
 }

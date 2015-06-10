@@ -16,7 +16,6 @@ var socketFunctions = {
     },
     
     authenticate: function(token) {
-        console.log('sending token to socket server...');
         _socket.emit('authenticate', token);
     },
     

@@ -20,7 +20,7 @@ var MessageStore = new Store({
         this.messages.length = 0;
         var messages = this.messages;
         (retrievedMessages).forEach(function(message) {
-            messages.push(message.message);
+            messages.push(message);
         });
         this.loading = false;
         this.emitChange();

@@ -55,6 +55,8 @@ var Message = require('../api/message/message.model');
 orm.loadCollection(Message);
 var CachedMessage = require('../api/message/cachedMessage.model');
 orm.loadCollection(CachedMessage);
+var Room = require('../api/room/room.model');
+orm.loadCollection(Room);
 
 module.exports.models = null;
 module.exports.initialize = function (cb) {
