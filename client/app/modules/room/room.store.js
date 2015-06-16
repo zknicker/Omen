@@ -4,6 +4,8 @@ var Store = require('../../lib/store');
 var Dispatcher = require('../../dispatcher');
 var constants = require('./room.constants');
 
+
+
 var RoomStore = new Store({
 
     initialize: function() {
@@ -12,6 +14,15 @@ var RoomStore = new Store({
             users: []
         };
         this.loading = true;
+    },
+    
+    getUser: function(userId) {
+        this.room.users.forEach(function(user) {
+            if (user.id === userId) {
+                return user;   
+            }
+        });
+        return null;
     },
     
     onRoomLoading: function() {
