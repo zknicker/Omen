@@ -1,6 +1,7 @@
 'use strict';
 
 var Waterline = require('Waterline');
+var events = require('../../config/events');
 
 var Room = Waterline.Collection.extend({
 
@@ -20,10 +21,17 @@ var Room = Waterline.Collection.extend({
             type: 'string',
             notNull: true
         },
-
+        
         users: {
-            type: 'array',
-            notNull: true
+            collection: 'user',
+            via: 'rooms'
+        },
+        
+        toJSON: function() {
+            var obj = this.toObject();
+            delete obj.createdAt;
+            delete obj.updatedAt;
+            return obj;
         }
     }
 });

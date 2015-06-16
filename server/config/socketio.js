@@ -5,6 +5,7 @@
 'use strict';
 
 var messageSocketFunctions = require('../api/message/message.socket');
+var roomSocketFunctions = require('../api/room/room.socket');
 var jwtHelper = require('../helpers/jwt.helper');
 
 // Executed when the client socket connects.
@@ -13,6 +14,7 @@ function onConnect(io, socket) {
     // Register per-socket listeners.
     socket.removeAllListeners();
     messageSocketFunctions.register(io, socket);
+    roomSocketFunctions.register(io, socket);
 }
 
 // Executed when the client authenticates over socket.
@@ -31,6 +33,7 @@ module.exports = function (io) {
 
     // Register global listeners.
     messageSocketFunctions.registerOnce(io);
+    roomSocketFunctions.registerOnce(io);
 
     io.on('connection', function (socket) {
         console.info('[SocketIO] Client connected: ' + socket.id);

@@ -48,6 +48,12 @@ var User = Waterline.Collection.extend({
         resetPasswordExpires: {
             type: 'date',
         },
+        
+        rooms: {
+            collection: 'room',
+            via: 'users',
+            dominant: true
+        },
 
         verifyPassword: function (password) {
             return bcrypt.compareSync(password, this.password);
@@ -58,6 +64,17 @@ var User = Waterline.Collection.extend({
             this.save(function (err, user) {
                 return cb(err, user);
             });
+        },
+        
+        toJSON: function() {
+            var obj = this.toObject();
+            delete obj.password;
+            delete obj.email;
+            delete obj.resetPasswordToken;
+            delete obj.resetPasswordExpires;
+            delete obj.createdAt;
+            delete obj.updatedAt;
+            return obj;
         }
     },
 

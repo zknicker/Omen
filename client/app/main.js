@@ -10,9 +10,6 @@ userActions.bootstrap({
 
     complete: function () {
         
-        // Start routing & rendering pages.
-        routes.startRouting();
-        
         // Connect to the socket server.
         socket.connect();
         userActions.setSocket(socket);
@@ -22,5 +19,8 @@ userActions.bootstrap({
         if (token) {
             socket.authenticate(token); 
         }
+        
+        // Start routing & rendering pages.
+        routes.startRouting();
     }
 });

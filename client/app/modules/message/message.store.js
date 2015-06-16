@@ -27,7 +27,8 @@ var MessageStore = new Store({
     },
     
     onLatestMessagesError: function() {
-    
+        this.loading = false;
+        this.emitChange();
     },
     
     onCreateMessage: function(message) {

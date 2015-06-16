@@ -20,12 +20,15 @@ var RoomStore = new Store({
     },
     
     onRoomSuccess: function(room) {
-        this.room = room.room;
+        this.room = room;
+        console.log(room);
         this.loading = false;
         this.emitChange();
     },
     
     onRoomError: function() {
+        this.loading = false;
+        this.emitChange();
     }
 });
 

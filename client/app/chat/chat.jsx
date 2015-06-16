@@ -5,6 +5,7 @@ var Router = require('react-router');
 var userStore = require('../modules/user/user.store');
 var roomStore = require('../modules/room/room.store');
 var roomActions = require('../modules/room/room.actions');
+var roomActions = require('../modules/room/room.actions');
 var messageActions = require('../modules/message/message.actions');
 var messageStore = require('../modules/message/message.store');
 var Message = require('./message.jsx');
@@ -28,6 +29,7 @@ var ChatComponent = React.createClass({
     },
 
     componentDidMount: function() {
+        roomActions.joinRoom(1);
         messageActions.loadRecentMessages(); 
     },
 

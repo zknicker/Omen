@@ -16,7 +16,7 @@ var UserListUserComponent = React.createClass({
     render: function () {
         return (
             /* jshint ignore:start */
-            <li>{this.props.user}</li>
+            <li>{this.props.user.firstName} {this.props.user.lastName}</li>
             /* jshint ignore:end */
         );
     }

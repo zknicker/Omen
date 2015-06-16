@@ -19,6 +19,13 @@ var Message = Waterline.Collection.extend({
         message: {
             type: 'string',
             notNull: true
+        },
+        
+        toJSON: function() {
+            var obj = this.toObject();
+            delete obj.createdAt;
+            delete obj.updatedAt;
+            return obj;
         }
     }
 });

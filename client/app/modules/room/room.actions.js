@@ -4,6 +4,7 @@ var Dispatcher = require('../../dispatcher');
 var socket = require('../../sockets');
 var roomAjax = require('./room.ajax');
 var roomConstants = require('./room.constants');
+var userStore = require('../user/user.store');
 
 module.exports = {
     
@@ -16,5 +17,12 @@ module.exports = {
         }.bind(this), function() {
             Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
         }.bind(this));
+    },
+    
+    joinRoom: function(roomId) {
+        var data = {
+            roomId: roomId
+        };
+        socket.emit('ROOM_JOIN', data);   
     }
 };
