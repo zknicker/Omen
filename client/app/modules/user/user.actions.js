@@ -47,7 +47,6 @@ module.exports = {
                     if (res.body && res.body.user) {
                         var userData = res.body.user;
                         userData.loggedIn = true;
-console.log(userData);
                         self.setUser(userData);
                     } else {
                         self.logout();

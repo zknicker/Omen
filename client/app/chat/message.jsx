@@ -18,12 +18,20 @@ var Message = React.createClass({
     },
     
     render: function () {
-        var user = this.props.message.user;
+        // If this message is from the cache (i.e. the user just created it)
+        // then we need to go to the user store for user data. The user is 
+        // only on the message object when the message comes from the persistent
+        // store.
+        var user = this.props.message.user || userStore.get();
         var message = this.props.message;
+        
         return (
             /* jshint ignore:start */
             <li> 
-                {user.firstName}: {message.message}
+                <dl>
+                    <dt>{user.firstName}: {message.message}</dt>
+                    <dd>{message.datetime}</dd>
+                </dl>
             </li>
             /* jshint ignore:end */
         );

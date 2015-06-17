@@ -30,7 +30,8 @@ var writeBackMessageCache = function() {
             cachedMessages.forEach(function (cachedMessage) {
                 Message.create({
                     message: cachedMessage.message,
-                    user: cachedMessage.userId
+                    user: cachedMessage.userId,
+                    datetime: cachedMessage.datetime
                 }).exec(error.log);
                 CachedMessage.destroy({ 
                     id: cachedMessage.id 

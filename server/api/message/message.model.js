@@ -20,6 +20,14 @@ var Message = Waterline.Collection.extend({
             type: 'string',
             notNull: true
         },
+        
+        datetime: {
+            type: 'datetime',
+            notNull: true,
+            defaultsTo: function () {
+                return new Date();
+            }
+        },
 
         user: {
             model: 'user'

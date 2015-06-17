@@ -22,6 +22,14 @@ var CachedMessage = Waterline.Collection.extend({
             notNull: true
         },
         
+        datetime: {
+            type: 'datetime',
+            notNull: true,
+            defaultsTo: function () {
+                return new Date();
+            }
+        },
+        
         userId: {
             type: 'integer',
             notNull: true
