@@ -41,7 +41,7 @@ var login = function (req, res, next) {
             return next(err);
         }
         if (!user) {
-            return res.status(404).json({
+            return res.status(400).json({
                 info: [{
                     msg: info.message
                 }]
