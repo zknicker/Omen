@@ -2,28 +2,39 @@
 
 var React = require('react/addons');
 var userStore = require('../modules/user/user.store');
+var roomStore = require('../modules/room/room.store');
 
 var getState = function () {
     return {
-        user: userStore.get()
+        roomUsers: roomStore.room.users
     };
 };
 
 var Message = React.createClass({
+    mixins: [roomStore.mixin],
+    
     getInitialState: function () {
         return getState();
     },
     
     render: function () {
+        var user = this.props.message.user;
+        var message = this.props.message;
         return (
             /* jshint ignore:start */
             <li> {
-                this.state.user.firstName
+                "hey" || user.firstName
             }: {
-                this.props.message.message
-            } (created by: { this.props.message.userId })</li>
+                message.message
+            } (created by: { user })</li>
             /* jshint ignore:end */
         );
+    },
+    
+    _onChange: function () {
+        this.setState({
+            roomUsers: roomStore.room.users,
+        });
     }
 });
 

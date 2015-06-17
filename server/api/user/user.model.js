@@ -54,6 +54,11 @@ var User = Waterline.Collection.extend({
             via: 'users',
             dominant: true
         },
+        
+        messages: {
+            collection: 'message',
+            via: 'user'
+        },
 
         verifyPassword: function (password) {
             return bcrypt.compareSync(password, this.password);

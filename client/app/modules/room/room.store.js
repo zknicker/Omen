@@ -16,15 +16,6 @@ var RoomStore = new Store({
         this.loading = true;
     },
     
-    getUser: function(userId) {
-        this.room.users.forEach(function(user) {
-            if (user.id === userId) {
-                return user;   
-            }
-        });
-        return null;
-    },
-    
     onRoomLoading: function() {
         this.loading = true;
         this.emitChange();

@@ -17,9 +17,6 @@ var io = require('socket.io').listen(server);
 // Database configuration
 var database = require('./server/config/database');
 
-// Cache configuration
-var cache = require('./server/config/cache');
-
 // Verify database connection and sync tables
 database.initialize(function(err) {
     if (err) {
@@ -34,6 +31,10 @@ database.initialize(function(err) {
         // Start routing.
         require('./server/routes')(app);
         console.log('✔ Starting routing. '.green);
+        
+        // Start message cache writeback job.
+        require('./server/helpers/writeback.helper');
+        console.log('✔ Starting message cache writeback job. '.green);
         
         // Start Express server.
         server.listen(app.get('port'), function () {

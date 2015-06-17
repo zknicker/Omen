@@ -88,7 +88,8 @@ var defaults = {
     cache: {
         globalKeyPrefix: "omen",
         messageKeyPrefix: "message",
-        messageKeyCacheKey: "messageKeys"
+        messageKeyCacheKey: "messageKeys",
+        writeBackIntervalMilliseconds: 1000
     },
     root: path.normalize(__dirname + '/../../..'),
     staticAssets: 'client',

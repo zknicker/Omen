@@ -13,10 +13,10 @@ module.exports = {
     },
     
     // Loads all of the recent messages for a chat room.
-    loadRecentMessages: function(chatRoomId) {
+    getRecentMessagesForRoom: function(roomId) {
         Dispatcher.handleViewAction({ actionType: messageConstants.MESSAGE_LATEST_LOADING });
         
-        messageAjax.loadRecent(function(messages) {
+        messageAjax.loadRecentMessagesForRoom(roomId, function(messages) {
             Dispatcher.handleViewAction({ actionType: messageConstants.MESSAGE_LATEST_SUCCESS, messages: messages });
         }.bind(this), function() {
             Dispatcher.handleViewAction({ actionType: messageConstants.MESSAGE_LATEST_ERROR });

@@ -20,8 +20,12 @@ var Message = Waterline.Collection.extend({
             type: 'string',
             notNull: true
         },
-        
-        toJSON: function() {
+
+        user: {
+            model: 'user'
+        },
+
+        toJSON: function () {
             var obj = this.toObject();
             delete obj.createdAt;
             delete obj.updatedAt;

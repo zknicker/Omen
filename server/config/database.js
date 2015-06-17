@@ -4,12 +4,7 @@
 
 'use strict';
 
-var settings = require('./env/default');
 var Waterline = require('waterline');
-var fs = require('fs');
-var path = require('path');
-var db = {};
-
 var orm = new Waterline();
 
 // Waterline config.

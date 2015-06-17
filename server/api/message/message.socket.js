@@ -8,7 +8,7 @@ var events = require('../../config/events');
 var Message = require('../../config/database').message;
 var cache = require('../../config/cache');
 var MessageController = require('./message.controller');
-var socketHelpers = require('../../helpers/socket.helpers');
+var socketHelpers = require('../../helpers/socket.helper');
 
 // Socket listeners to react to client messages for each user.
 exports.register = function(io, socket) {

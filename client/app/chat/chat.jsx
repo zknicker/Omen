@@ -14,7 +14,7 @@ var ChatComponent = React.createClass({
 
     componentDidMount: function() {
         roomActions.joinRoom(1);
-        messageActions.loadRecentMessages(); 
+        messageActions.getRecentMessagesForRoom(1); 
     },
 
     render: function () {

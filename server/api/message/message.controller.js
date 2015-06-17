@@ -1,7 +1,7 @@
 'use strict';
 
 var db = require('../../config/database');
-var cache = require('../../config/cache');
+var Message = db.models.message;
 var CachedMessage = db.models.cachedmessage;
 
 var createMessage = function (data, socket) {
@@ -16,14 +16,11 @@ var createMessage = function (data, socket) {
 };
 
 var readLatestMessages = function (req, res, next) {
-    CachedMessage.find({
-            limit: 10,
-            sort: 'id ASC'
-        }).then(function (messages) {
+    Message.find({ limit: 10, sort: 'id ASC' })
+        .populate('user')
+        .then(function (messages) {
             res.send(messages);
-        }).catch(function (err) {
-            return next(err);
-        });
+        }).catch(next);
 };
 
 function handleError(err, next) {

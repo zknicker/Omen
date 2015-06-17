@@ -6,3 +6,13 @@
     
 = Auth =
     * Understand why validateJwt(...) logs "undefined" in the consoel.
+    
+Navigate to chat.
+(automatically select room 1 for the user)
+Join room 1.
+    - Server responds (1) OK, (2) all users in room, (3) recent messages
+    = OR =
+    - Server responds OK. (more React style)
+        - Query for users in room.
+        - Query for recent messages.
+    
