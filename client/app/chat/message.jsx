@@ -22,11 +22,9 @@ var Message = React.createClass({
         var message = this.props.message;
         return (
             /* jshint ignore:start */
-            <li> {
-                "hey" || user.firstName
-            }: {
-                message.message
-            } (created by: { user })</li>
+            <li> 
+                {user.firstName}: {message.message}
+            </li>
             /* jshint ignore:end */
         );
     },
