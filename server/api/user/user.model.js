@@ -71,14 +71,26 @@ var User = Waterline.Collection.extend({
             });
         },
         
+        // Set a flag that enables toJSON to return sensitive data (e.g. email).
+        // Do not save this value as true to the model (that would defeat the purpose).
+        setSensitiveDataOnJSON: function() {
+            this.sensitiveDataIsOk = true;
+        },
+        
         toJSON: function() {
             var obj = this.toObject();
             delete obj.password;
-            delete obj.email;
             delete obj.resetPasswordToken;
             delete obj.resetPasswordExpires;
             delete obj.createdAt;
             delete obj.updatedAt;
+            
+            if (!obj.sensitiveDataIsOk) {
+                delete obj.email;
+            }
+            
+            delete obj.sensitiveDataIsOk;
+            
             return obj;
         }
     },

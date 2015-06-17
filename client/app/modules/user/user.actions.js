@@ -47,7 +47,7 @@ module.exports = {
                     if (res.body && res.body.user) {
                         var userData = res.body.user;
                         userData.loggedIn = true;
-
+console.log(userData);
                         self.setUser(userData);
                     } else {
                         self.logout();
@@ -79,8 +79,7 @@ module.exports = {
             .post(postUrl)
             .type('form')
             .set({
-                //'authorization': 'Bearer ' + token,
-                'X-Requested-With': 'XMLHttpRequest'
+                'authorization': 'Bearer ' + token,
             })
             .send(postData)
             .end(function (res) {

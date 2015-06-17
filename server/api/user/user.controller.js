@@ -1,3 +1,4 @@
+
 /**
  * Main Controller
  */
@@ -16,6 +17,7 @@ var readAccount = function (req, res, next) {
     User.findOne().where({
         id: req.user.id
     }).then(function (user) {
+        user.setSensitiveDataOnJSON();
         res.status(200).json({
             user: user
         });
@@ -132,7 +134,6 @@ var updatePassword = function (req, res, next) {
             if (err) {
                 return next(err);   
             }
-            console.log(user);
         });
     }).catch(function(err) {
         return next(err);

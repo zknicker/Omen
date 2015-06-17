@@ -20,7 +20,7 @@ var SettingsComponent = React.createClass({
     
     render: function() {
         var user = this.state.user;
-
+        
         return (
           /* jshint ignore:start */
           <div>
