@@ -46,6 +46,8 @@ var config = {
 // Loading models into Waterline.
 var User = require('../api/user/user.model');
 orm.loadCollection(User);
+var CachedUser = require('../api/user/cachedUser.model');
+orm.loadCollection(CachedUser);
 var Message = require('../api/message/message.model');
 orm.loadCollection(Message);
 var CachedMessage = require('../api/message/cachedMessage.model');

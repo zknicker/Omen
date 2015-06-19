@@ -7,11 +7,26 @@
 
 var db = require('../../config/database');
 var User = db.models.user;
+var CachedUser = db.models.cacheduser;
 var auth = require('../../auth');
 
 /**
- * GET /user
- * Read user data.
+ * Cache the passed user. For more information on why, see the
+ * cached user model.
+ */
+var cacheUser = function(user, cb) {
+    CachedUser.findOrCreate({ id: user.id }).then(function(cachedUser) {
+        cachedUser.id = user.id;
+        cachedUser.role = user.role;
+        cachedUser.firstName = user.firstName;
+        cachedUser.lastName = user.lastName;
+        cachedUser.save(cb);
+    }).catch(cb);
+}
+
+/**
+ * Retrieve a user account with sensitive (e.g. email) data.
+ * Also caches the retrieved user.
  */
 var readAccount = function (req, res, next) {
     User.findOne().where({
@@ -21,9 +36,9 @@ var readAccount = function (req, res, next) {
         res.status(200).json({
             user: user
         });
-    }).catch(function (err) {
-        return next(err);
-    });
+        
+        cacheUser(user, next);
+    }).catch(next);
 };
 
 /**

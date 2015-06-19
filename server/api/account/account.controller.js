@@ -16,12 +16,8 @@ var settings = require('../../config/env/default');
 var auth = require('../../auth');
 
 /**
- * POST /login
- * Sign in using email and password.
- * @param email
- * @param password
+ * Sign in via email and password using the passport authentication module.
  */
-
 var login = function (req, res, next) {
 
     req.assert('email', 'Please enter a valid email address.').isEmail();
@@ -55,14 +51,15 @@ var login = function (req, res, next) {
             // Don't send password hash
             user: _.omit(user, 'password')
         });
+        
+        // Cache the user.
+        cacheUser(user, next);
     })(req, res, next);
 };
 
 /**
- * GET /signup
- * Signup page.
+ * Sign up a new user 
  */
-
 var signup = function (req, res) {
     // Render index.html to allow application to handle routing
     res.sendFile(path.join(settings.staticAssets, '/index.html'), {
