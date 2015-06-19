@@ -30,6 +30,21 @@ var CachedUser = Waterline.Collection.extend({
 
         lastName: {
             type: 'string',
+        },
+        
+        // List of cached message for this cached user. Shouldn't
+        // be a need to actually use this. It's just here to enable
+        // the database associations.
+        messages: {
+            collection: 'cachedMessage',
+            via: 'user'
+        },
+
+        toJSON: function () {
+            var obj = this.toObject();
+            delete obj.createdAt;
+            delete obj.updatedAt;
+            return obj;
         }
     }
 });

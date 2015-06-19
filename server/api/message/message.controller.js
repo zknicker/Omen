@@ -7,7 +7,7 @@ var CachedMessage = db.models.cachedmessage;
 var createMessage = function (data, socket) {
     var newMessage = {
         message: data.message,
-        userId: socket.userId
+        user: socket.userId
     };
 
     CachedMessage.create(newMessage).catch(function() {
@@ -16,7 +16,7 @@ var createMessage = function (data, socket) {
 };
 
 var readLatestMessages = function (req, res, next) {
-    Message.find({ limit: 10, sort: 'id ASC' })
+    Message.find({ limit: 10, sort: 'id DESC' })
         .populate('user')
         .then(function (messages) {
             res.send(messages);
