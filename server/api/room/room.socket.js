@@ -6,12 +6,13 @@ var RoomController = require('./room.controller');
 // Socket listeners to react to client messages for each user.
 exports.register = function(io, socket) {
     
-    socket.on('ROOM_JOIN', function(data) {
-        data.userId = socket.userId;
-        RoomController.joinRoom(data, function(err) {
-            if (err) {
-                socket.emit('ROOM_JOIN_SERVER_ERROR');
+    socket.on('ROOM_JOIN', function(roomId, acknowledgement) {
+        RoomController.joinRoom(roomId, socket.userId, function(err, room) {
+            var res = {
+                errors: err,
+                room: room                
             }
+            acknowledgement(res);
         });
     });
 }

@@ -22,6 +22,7 @@ var Message = React.createClass({
         // then we need to go to the user store for user data. The user is 
         // only on the message object when the message comes from the persistent
         // store.
+        console.log(this.props.message);
         var user = this.props.message.user || userStore.get();
         var message = this.props.message;
         

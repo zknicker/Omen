@@ -8,18 +8,18 @@ var createRoom = function (req, res, next) {
         title: "Awesome Room"
     };
     
-    Room.create(newRoom).then(function(room) {
+    Room.create(newRoom).then(function (room) {
         res.json(room);
     }).catch(next);   
 };
 
-var joinRoom = function (data, cb) {
-    Room.findOne({ id: data.roomId })
+var joinRoom = function (roomId, userId, cb) {
+    Room.findOne({ id: roomId })
         .populate('users')
         .then(function(room) {
-            room.users.add(data.userId);
-            room.save(cb);
-            cb();
+            room.users.add(userId);
+            room.save();
+            cb(null, room);
         }).catch(cb);
 }
 

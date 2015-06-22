@@ -24,8 +24,8 @@ var socketFunctions = {
         _socket.on(event, func);   
     },
     
-    emit: function(event, data) {
-        _socket.emit(event, data);   
+    emit: function(event, data, acknowledgement) {
+        _socket.emit(event, data, acknowledgement);   
     }
 };
 

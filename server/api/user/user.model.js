@@ -31,6 +31,7 @@ var User = Waterline.Collection.extend({
 
         password: {
             type: 'string',
+            notNull: true
         },
 
         firstName: {
@@ -96,9 +97,15 @@ var User = Waterline.Collection.extend({
     },
 
     beforeCreate: function (attrs, cb) {
-        bcrypt.hash(attrs.password, SALT_WORK_FACTOR, function (err, hash) {
-            attrs.password = hash;
-            return cb();
+        bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+            if (err) return cb(err);
+
+            bcrypt.hash(attrs.password, salt, null, function (err, crypted) {
+                if (err) return cb(err);
+
+                attrs.password = crypted;
+                return cb();
+            });
         });
     },
 

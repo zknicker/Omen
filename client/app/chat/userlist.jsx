@@ -30,7 +30,7 @@ var UserListComponeont = React.createClass({
     },
 
     componentDidMount: function() {
-        roomActions.getRoom();
+        //roomActions.getRoom();
     },
 
     render: function () {

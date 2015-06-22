@@ -8,21 +8,17 @@ var userStore = require('../user/user.store');
 
 module.exports = {
     
-    // Load all of the currently logged in users.
-    getRoom: function() {
-        Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
-        
-        roomAjax.getRoom(function(room) {
-            Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_SUCCESS, room: room });
-        }.bind(this), function() {
-            Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
-        }.bind(this));
-    },
-    
+    /**
+     * Dispatches a socket message to join a room. The acknowledgment returns the room
+     * data, including user list.
+     */
     joinRoom: function(roomId) {
-        var data = {
-            roomId: roomId
-        };
-        socket.emit('ROOM_JOIN', data);   
+        Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
+        socket.emit('ROOM_JOIN', roomId, function(res) {
+            if (res.errors) {
+                Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
+            }
+            Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_SUCCESS, room: res.room });
+        });   
     }
 };

@@ -3,8 +3,6 @@
 var Waterline = require('Waterline');
 var events = require('../../config/events');
 var db = require('../../config/database');
-//console.log(db);
-//var CachedUser = db.models.cacheduser;
 
 var CachedMessage = Waterline.Collection.extend({
 

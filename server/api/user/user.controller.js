@@ -29,9 +29,13 @@ var cacheUser = function(user, cb) {
  * Also caches the retrieved user.
  */
 var readAccount = function (req, res, next) {
+console.log(req.user);
     User.findOne().where({
         id: req.user.id
     }).then(function (user) {
+        if (!user) {
+            res.status(404);
+        }
         user.setSensitiveDataOnJSON();
         res.status(200).json({
             user: user
@@ -64,7 +68,7 @@ var createAccount = function (req, res, next) {
         password: req.body.password
     };
 
-    User.findOne().where({
+    User.findOne({
         email: req.body.email
     }).then(function (existingUser) {
         if (existingUser) {
@@ -86,13 +90,9 @@ var createAccount = function (req, res, next) {
                         msg: 'Account created successfully.'
                     }]
                 });
-            }).catch(function (err) {
-                return next(err);
-            });
+            }).catch(next);
         }
-    }).catch(function (err) {
-        return next(err);
-    });
+    }).catch(next);
 };
 
 /**
