@@ -2,6 +2,7 @@
 
 var Waterline = require('Waterline');
 var events = require('../../config/events');
+var error = require('../../helpers/error.helper');
 
 var Room = Waterline.Collection.extend({
 
@@ -25,6 +26,13 @@ var Room = Waterline.Collection.extend({
         users: {
             collection: 'user',
             via: 'rooms'
+        },
+        
+        // Add a user to the users collection for this room.
+        // Caller must handle check for duplicate add.
+        addUser: function (userId, cb) {
+            this.users.add(userId);
+            this.save(cb);
         },
         
         toJSON: function() {

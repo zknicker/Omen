@@ -34,7 +34,7 @@ var ChatComponent = React.createClass({
         e.preventDefault();
         var form = e.currentTarget;
 
-        messageActions.createMessage(this.state.message);
+        messageActions.create(this.state.message);
 
         this.setState({
             message: ""

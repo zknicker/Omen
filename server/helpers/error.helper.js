@@ -5,7 +5,7 @@
  */
 var log = function(error) {
     if (error) {
-        console.log('ERROR HELPER: ' + error);
+        console.log('ERROR HELPER: ', error);
     }
 }
 

@@ -13,8 +13,8 @@ var MessageInput = require('./messageInput.jsx');
 var ChatComponent = React.createClass({
 
     componentDidMount: function() {
-        roomActions.joinRoom(1);
-        messageActions.getRecentMessagesForRoom(1); 
+        roomActions.join(1);
+        messageActions.getRecent(1); 
     },
 
     render: function () {

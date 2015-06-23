@@ -12,9 +12,10 @@ module.exports = {
      * Dispatches a socket message to join a room. The acknowledgment returns the room
      * data, including user list.
      */
-    joinRoom: function(roomId) {
+    join: function(roomId) {
         Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
         socket.emit('ROOM_JOIN', roomId, function(res) {
+            console.log(res);
             if (res.errors) {
                 Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
             }

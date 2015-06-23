@@ -29,7 +29,6 @@ var cacheUser = function(user, cb) {
  * Also caches the retrieved user.
  */
 var readAccount = function (req, res, next) {
-console.log(req.user);
     User.findOne().where({
         id: req.user.id
     }).then(function (user) {

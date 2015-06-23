@@ -8,12 +8,12 @@ var messageConstants = require('./message.constants');
 module.exports = {
 
     // Creates a message in a chat room.
-    createMessage: function (messageContent) {
+    create: function (messageContent) {
         socket.emit('message:create', { message: messageContent });
     },
     
     // Loads all of the recent messages for a chat room.
-    getRecentMessagesForRoom: function(roomId) {
+    getRecent: function(roomId) {
         Dispatcher.handleViewAction({ actionType: messageConstants.MESSAGE_LATEST_LOADING });
         
         messageAjax.loadRecentMessagesForRoom(roomId, function(messages) {

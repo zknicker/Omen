@@ -5,7 +5,6 @@ var Message = db.models.message;
 var CachedMessage = db.models.cachedmessage;
 
 var createMessage = function (data, socket) {
-    console.log('hey: ' + socket.userId);
     var newMessage = {
         message: data.message,
         user: socket.userId

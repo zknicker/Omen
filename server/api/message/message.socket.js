@@ -14,7 +14,6 @@ var socketHelpers = require('../../helpers/socket.helper');
 exports.register = function(io, socket) {
     
     socket.on('message:create', function(data) {
-        console.log('HEY FUCKTARD');
         MessageController.createMessage(data, socket);
     });
 }
