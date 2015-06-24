@@ -4,8 +4,6 @@ var Store = require('../../lib/store');
 var Dispatcher = require('../../dispatcher');
 var constants = require('./room.constants');
 
-
-
 var RoomStore = new Store({
 
     initialize: function() {
@@ -30,6 +28,31 @@ var RoomStore = new Store({
     onRoomError: function() {
         this.loading = false;
         this.emitChange();
+    },
+    
+    /**
+     * Handle a user joining the room.
+     */
+    onRoomJoined: function(user) {
+        this.room.users.push(user);
+        this.emitChange();
+    },
+    
+    /**
+     * Handle a user leaving the room.
+     */
+    onRoomDeparted: function(user) {
+        var indexOfUser = -1;
+        this.room.users.forEach(function (roomUser, i) {
+            if (roomUser.id === user.id) {
+                 indexOfUser = i;  
+            }
+        });
+        
+        if (indexOfUser) {
+            this.room.users.splice(indexOfUser, 1);
+        }
+        this.emitChange();
     }
 });
 
@@ -39,11 +62,16 @@ Dispatcher.register(function(action) {
             RoomStore.onRoomLoading();
             break;
         case constants.ROOM_SUCCESS:
-            var room = action.action.room;
-            RoomStore.onRoomSuccess(room);
+            RoomStore.onRoomSuccess(action.action.room);
             break;
         case constants.ROOM_ERROR:
             RoomStore.onRoomError();
+            break;
+        case constants.ROOM_JOINED:
+            RoomStore.onRoomJoined(action.action.user);
+            break;
+        case constants.ROOM_DEPARTED:
+            RoomStore.onRoomDeparted(action.action.user);
             break;
     }
 });

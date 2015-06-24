@@ -51,9 +51,6 @@ var login = function (req, res, next) {
             // Don't send password hash
             user: _.omit(user, 'password')
         });
-        
-        // Cache the user.
-        cacheUser(user, next);
     })(req, res, next);
 };
 

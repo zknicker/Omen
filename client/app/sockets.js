@@ -1,6 +1,7 @@
 'use strict';
 
 var messageSocketListeners = require('./modules/message/message.socket'); 
+var roomSocketListeners = require('./modules/room/room.socket'); 
 
 var _socket;
 var _connect = function() {
@@ -13,6 +14,7 @@ var socketFunctions = {
         _connect();
         
         messageSocketListeners(_socket);
+        roomSocketListeners(_socket);
     },
     
     authenticate: function(token) {

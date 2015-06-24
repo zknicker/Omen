@@ -13,6 +13,15 @@ exports.register = function(io, socket) {
                 room: room                
             }
             acknowledgement(res);
+            
+            if (!err) {
+                room.users.forEach(function (user) {
+                    if (user.id === socket.userId) {
+                        // Tell others about the user that joined.
+                        socket.broadcast.emit('ROOM_JOIN', user);
+                    }
+                });
+            }
         });
     });
 }

@@ -6,15 +6,26 @@
 
 var messageSocketFunctions = require('../api/message/message.socket');
 var roomSocketFunctions = require('../api/room/room.socket');
+var roomController = require('../api/room/room.controller');
 var jwtHelper = require('../helpers/jwt.helper');
+var error = require('../helpers/error.helper');
 
-// Executed when the client socket connects.
 function onConnect(io, socket) {
 
     // Register per-socket listeners.
     socket.removeAllListeners();
     messageSocketFunctions.register(io, socket);
     roomSocketFunctions.register(io, socket);
+}
+
+function onDisconnect(io, socket) {
+    
+    // Remove the auth'd user from any rooms.
+    if (socket.authenticated) {
+        roomController.leaveAllRooms(socket.userId, function (err, user) {
+            io.emit('ROOM_DEPART', user);
+        });
+    }
 }
 
 // Executed when the client authenticates over socket.
@@ -37,15 +48,6 @@ module.exports = function (io) {
 
     io.on('connection', function (socket) {
         console.info('[SocketIO] Client connected: ' + socket.id);
-
-        if (socket.handshake.address !== null) {
-            socket.address = socket.handshake.address.address + ':' + socket.handshake.address.port;
-        }
-
-        // Disconnect any existing session for user. Set the user's new socket.
-        //socketsHelper.disconnectExistingSocketForUser(socket.user._id);
-        //socketsHelper.setSocketForUser(socket.user._id, socket);
-
         onConnect(io, socket);
 
         socket.authenticated = false;
@@ -54,8 +56,8 @@ module.exports = function (io) {
         });
 
         socket.on('disconnect', function () {
-            //socketsHelper.removeSocketForUser(socket.user._id);
             console.info('[SocketIO] Client disconnected: ' + socket.id);
+            onDisconnect(io, socket);
         });
     });
 };
