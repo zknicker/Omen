@@ -57,8 +57,9 @@ var joinRoom = function (roomId, userId, cb) {
 
 var leaveAllRooms = function (userId, cb) {
     User.update({ id: userId }, { rooms: [] })
-        .then(function (user) {
-            cb(null, user);
+        .then(function (usersUpdated) {
+            // Only 1 user will be updated, but the ORM returns an array.
+            cb(null, usersUpdated[0]);
         })
         .catch(error.log);
 }

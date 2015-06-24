@@ -22,6 +22,7 @@ var RoomStore = new Store({
     onRoomSuccess: function(room) {
         this.room = room;
         this.loading = false;
+        console.log(this.room);
         this.emitChange();
     },
     
@@ -34,6 +35,7 @@ var RoomStore = new Store({
      * Handle a user joining the room.
      */
     onRoomJoined: function(user) {
+        console.log(user);
         this.room.users.push(user);
         this.emitChange();
     },
@@ -42,14 +44,14 @@ var RoomStore = new Store({
      * Handle a user leaving the room.
      */
     onRoomDeparted: function(user) {
-        var indexOfUser = -1;
+        var indexOfUser = null;
         this.room.users.forEach(function (roomUser, i) {
             if (roomUser.id === user.id) {
                  indexOfUser = i;  
             }
         });
         
-        if (indexOfUser) {
+        if (indexOfUser !== null) {
             this.room.users.splice(indexOfUser, 1);
         }
         this.emitChange();
