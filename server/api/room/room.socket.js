@@ -16,7 +16,6 @@ exports.register = function(io, socket) {
             
             if (!err) {
                 room.users.forEach(function (user) {
-                    console.log(socket.userId);
                     if (user.id === socket.userId) {
                         // Tell others about the user that joined.
                         socket.broadcast.emit('ROOM_JOIN', user);

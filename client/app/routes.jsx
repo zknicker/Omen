@@ -10,6 +10,7 @@ var ForgotPage = React.createFactory(require('./account/forgot.jsx'));
 var SignupPage = React.createFactory(require('./account/signup.jsx'));
 var SettingsPage = React.createFactory(require('./account/settings.jsx'));
 var ChatPage = React.createFactory(require('./chat/chat.jsx'));
+var RoomBrowserPage = React.createFactory(require('./roomBrowser/roomBrowser.jsx'));
 
 var routes = (
   <Route name="app" path="/" handler={App}>
@@ -20,6 +21,7 @@ var routes = (
     <Route name="signup" handler={SignupPage} />
     <Route name="settings" handler={SettingsPage} />
     <Route name="chat" handler={ChatPage} />
+    <Route name="rooms" handler={RoomBrowserPage} />
     <NotFoundRoute handler={IndexPage} />
   </Route>
 );
