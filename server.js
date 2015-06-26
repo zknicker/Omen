@@ -28,6 +28,9 @@ database.initialize(function(err) {
         require('./server/config/socketio')(io);
         require('./server/config/express')(app, express, database);
         
+        // Clear all room user lists.
+        require('./server/helpers/startup.helper');
+        
         // Start routing.
         require('./server/routes')(app);
         console.log('✔ Starting routing. '.green);
