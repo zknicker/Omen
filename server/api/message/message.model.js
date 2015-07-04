@@ -30,7 +30,13 @@ var Message = Waterline.Collection.extend({
         },
 
         user: {
-            model: 'user'
+            model: 'user',
+            notNull: true
+        },
+
+        room: {
+            model: 'room',
+            notNull: true
         },
 
         toJSON: function () {

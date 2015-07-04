@@ -7,7 +7,8 @@ var CachedMessage = db.models.cachedmessage;
 var createMessage = function (data, socket) {
     var newMessage = {
         message: data.message,
-        user: socket.userId
+        user: socket.userId,
+        roomId: 1
     };
 
     CachedMessage.create(newMessage).catch(function() {
@@ -16,7 +17,15 @@ var createMessage = function (data, socket) {
 };
 
 var readLatestMessages = function (req, res, next) {
-    Message.find({ limit: 10, sort: 'id DESC' })
+    req.assert('roomId', 'Invalid room ID.').notEmpty().isInt();
+
+    if (req.validationErrors()) {
+        return res.status(400).json({
+            errors: req.validationErrors()
+        });
+    }
+    
+    Message.find({ room: req.params.roomId, limit: 10, sort: 'id DESC' })
         .populate('user')
         .then(function (messages) {
             res.send(messages);

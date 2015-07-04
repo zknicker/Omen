@@ -35,6 +35,13 @@ var CachedMessage = Waterline.Collection.extend({
         user: {
             model: 'cachedUser'
         },
+        
+        // The ID of the room. Stored typed, not a reference, 
+        // because there is no copy of the room in the cache.
+        roomId: {
+            type: 'integer',
+            notNull: true
+        },
 
         toJSON: function () {
             var obj = this.toObject();

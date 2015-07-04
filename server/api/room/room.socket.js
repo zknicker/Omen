@@ -1,6 +1,7 @@
 'use strict';
 
 var events = require('../../config/events');
+var socketHelper = require('../../helpers/socket.helper');
 var RoomController = require('./room.controller');
 
 // Socket listeners to react to client messages for each user.
@@ -12,13 +13,17 @@ exports.register = function(io, socket) {
                 errors: err,
                 room: room                
             }
+            // Acknowledge join by returning the room data.
             acknowledgement(res);
+            
+            // Join the user to the socket room-space.
+            socketHelper.joinRoom(socket, roomId);
             
             if (!err) {
                 room.users.forEach(function (user) {
                     if (user.id === socket.userId) {
                         // Tell others about the user that joined.
-                        socket.broadcast.emit('ROOM_JOIN', user);
+                        socketHelper.broadcastToRoom(socket, roomId, 'ROOM_JOIN', user);
                     }
                 });
             }

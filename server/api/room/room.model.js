@@ -28,6 +28,11 @@ var Room = Waterline.Collection.extend({
             via: 'rooms'
         },
         
+        messages: {
+            collection: 'message',
+            via: 'room'
+        },
+        
         // Add a user to the users collection for this room.
         // Caller must handle check for duplicate add.
         addUser: function (userId, cb) {

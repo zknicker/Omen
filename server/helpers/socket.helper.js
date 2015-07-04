@@ -1,32 +1,26 @@
 'use strict';
 
-var sockets = [];
-
 /**
- * Sets a socket for user.
+ * Join a room.
  */
-var setSocketForUser = function(userId, socket) {
-    sockets[userId] = socket;
-}
-
-var forgetSocketForUser = function(userId, socket) {
-    delete sockets[userId];
+var joinRoom = function(socket, roomId) {
+    socket.join('room-' + roomId);
 }
 
 /**
- * Disconnects the socket recorded for a user if one exists.
+ * Leave a room.
  */
-var disconnectExistingSocketForUser = function(userId) {
-    if (sockets[userId]) {
-        sockets[userId].disconnect();   
-    }
+var leaveRoom = function(socket, roomId) {
+    socket.leave('room-' + roomId);
 }
 
 /**
- * Gets all of the sockets in the default namespace.
+ * Broadcast a message to a room using the socket.io room-space feature.
+ * Note that, since this is a broadcast, the message won't be sent to the
+ * socket client, only other socket clients.
  */
-var getSocketsForDefaultNameSpace = function() {
-    return this._getSocketsForNamespace('/');
+var broadcastToRoom = function(socket, roomId, event, message) {
+    socket.broadcast.to('room-' + roomId).emit(event, message);
 }
 
 /**
@@ -42,8 +36,7 @@ var _getSocketsForNamespace = function(namespace) {
 }
 
 module.exports = {
-    setSocketForUser: setSocketForUser,
-    forgetSocketForUser: forgetSocketForUser,
-    disconnectExistingSocketForUser: disconnectExistingSocketForUser,
-    getSocketsForDefaultNameSpace: getSocketsForDefaultNameSpace
+    joinRoom: joinRoom,
+    leaveRoom: leaveRoom,
+    broadcastToRoom: broadcastToRoom
 };
