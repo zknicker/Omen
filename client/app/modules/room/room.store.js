@@ -22,7 +22,6 @@ var RoomStore = new Store({
     onRoomSuccess: function(room) {
         this.room = room;
         this.loading = false;
-        console.log(this.room);
         this.emitChange();
     },
     

@@ -44,7 +44,7 @@ var joinRoom = function (roomId, userId, cb) {
                 room.addUser(userId, function (err, roomWithUpdate) {
                     if (err) {
                         error.log(err);
-                        err = constant.get('ERROR_COULD_NOT_ADD_USER_TO_ROOM');
+                        err = constant.get('COULD_NOT_ADD_USER_TO_ROOM');
                     }
                     cb(err, roomWithUpdate);   
                 });

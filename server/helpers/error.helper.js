@@ -10,5 +10,9 @@ var log = function(error) {
 }
 
 module.exports = {
+    // Functions
     log: log,
+    
+    // Error codes
+    SOCKET_NO_AUTH: 'SOCKET_NO_AUTH'
 };

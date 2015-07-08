@@ -24,6 +24,14 @@ var broadcastToRoom = function(socket, roomId, event, message) {
 }
 
 /**
+ * Returns true if the socket connection is authenticated, and false
+ * otherwise.
+ */
+var isAuthenticated = function(socket) {
+    return socket.authenticated;   
+}
+
+/**
  * Returns a collection of all sockets in a socketio namespace.
  */
 var _getSocketsForNamespace = function(namespace) {
@@ -38,5 +46,6 @@ var _getSocketsForNamespace = function(namespace) {
 module.exports = {
     joinRoom: joinRoom,
     leaveRoom: leaveRoom,
-    broadcastToRoom: broadcastToRoom
+    broadcastToRoom: broadcastToRoom,
+    isAuthenticated: isAuthenticated
 };

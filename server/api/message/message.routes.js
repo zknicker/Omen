@@ -6,7 +6,7 @@ var auth = require('../../auth');
 var routes = function (app) {
     
     // Create
-    app.post('/message', messageController.createMessage);
+    app.post('/message', auth.isAuthenticated, messageController.createMessage);
 
     // Read
     app.get('/messages/latest/:roomId', messageController.readLatestMessages);
