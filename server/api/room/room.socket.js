@@ -8,7 +8,7 @@ var RoomController = require('./room.controller');
 // Socket listeners to react to client messages for each user.
 exports.register = function (io, socket) {
 
-    socket.on('ROOM_JOIN', function (roomId, acknowledgement) {
+    socket.on('room:join', function (roomId, acknowledgement) {
         if (socketHelper.isAuthenticated(socket)) {
             RoomController.joinRoom(roomId, socket.userId, function (err, room) {
                 // Acknowledge join by returning the room data.
@@ -23,7 +23,7 @@ exports.register = function (io, socket) {
                 if (!err) {
                     room.users.forEach(function (user) {
                         if (user.id === socket.userId) {
-                            socketHelper.broadcastToRoom(socket, roomId, 'ROOM_JOIN', user);
+                            socketHelper.broadcastToRoom(socket, roomId, 'room:join', user);
                         }
                     });
                 }

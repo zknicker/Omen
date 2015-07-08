@@ -14,7 +14,7 @@ module.exports = {
      */
     join: function(roomId) {
         Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
-        socket.emit('ROOM_JOIN', roomId, function(res) {
+        socket.emit('room:join', roomId, function(res) {
             console.log(res);
             if (res.errors) {
                 Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
