@@ -9,6 +9,7 @@ module.exports = {
      * Sets the auth token in the session store.
      */
     setAuthToken: function (token) {
+        localStorage.setItem('token', token);
         Dispatcher.handleViewAction({
             actionType: sessionConstants.SET_AUTH_TOKEN,
             token: token

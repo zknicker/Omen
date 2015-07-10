@@ -116,15 +116,6 @@ module.exports = {
             });
     },
 
-    setToken: function (token, duration) {
-        var today = new Date();
-        // Set expire date for cookie for some time into the future (days)
-        var endDate = new Date(today.getTime() + (duration * 1000 * 60 * 60 * 24));
-        document.cookie = cookie.serialize('token', token, {
-            expires: endDate
-        });
-    },
-
     login: function (form, callback) {
         var cb = callback || function () {};
         cb.options = {
@@ -135,14 +126,10 @@ module.exports = {
 
     logout: function () {
         // Remove token
-        this.setToken('', -1);
+        sessionActions.setAuthToken(null);
 
         // Reset user to defaults
-        console.log(userConstants.unauthenticatedUser);
         this.setUser(userConstants.unauthenticatedUser);
-
-        // Redirect to homepage [todo: replace this]
-        //routeActions.setRoute('/');
     },
 
     signup: function (form, callback) {
