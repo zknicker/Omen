@@ -7,7 +7,7 @@ var IndexComponent = React.createClass({
         var definitionUnderline = {
             textDecoration: 'underline'
         };
-        
+                
         return (
           /* jshint ignore:start */
             <div className="main-container">

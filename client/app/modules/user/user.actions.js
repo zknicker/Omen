@@ -2,6 +2,8 @@
 
 var Dispatcher = require('../../dispatcher');
 var userConstants = require('./user.constants');
+var sessionActions = require('../session/session.actions');
+var sessionStore = require('../session/session.store');
 var request = require('superagent');
 var serialize = require('form-serialize');
 var cookie = require('cookie');
@@ -27,7 +29,7 @@ module.exports = {
     },
 
     /**
-     * CALL ONCE WHEN THE APP IS STARTED.
+     * CALLED ONCE WHEN THE APP IS STARTED.
      *
      * Requests the current user from the server, and dispatches an event 
      * to set the app's user to it. If no user is authenticated, the default 
@@ -35,7 +37,7 @@ module.exports = {
      */
     bootstrap: function (callback) {
         var self = this;
-        var token = self.getToken();
+        var token = sessionStore.token;
         request
             .get('/user')
             .type('json')
@@ -71,7 +73,7 @@ module.exports = {
         var self = this;
         var postData = serialize(form);
         var postUrl = form.getAttribute('action') || window.location.pathname;
-        var token = self.getToken();
+        var token = sessionStore.token;
         var options = callback.options || {};
 
         request
@@ -87,7 +89,7 @@ module.exports = {
 
                     // Store the new token.
                     if (res.body.token) {
-                        localStorage.token = res.body.token;
+                        sessionActions.setAuthToken(res.body.token);
                         socket.authenticate(res.body.token);
                     }
                     
@@ -112,10 +114,6 @@ module.exports = {
                     }
                 }
             });
-    },
-
-    getToken: function () {
-        return localStorage.token;
     },
 
     setToken: function (token, duration) {

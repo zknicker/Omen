@@ -5,7 +5,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 var Navigation = Router.Navigation;
 var userActions = require('../modules/user/user.actions');
-
+var sessionStore = require('../modules/session/session.store');
 
 var LoginComponent = React.createClass({
     mixins: [Navigation],
@@ -33,17 +33,22 @@ var LoginComponent = React.createClass({
             /* jshint ignore:end */
         );
     },
+        
     handleSubmit: function (e) {
         var self = this;
         e.preventDefault();
         var form = e.currentTarget;
         userActions.login(form, {
             success: function(res) {
-                self.transitionTo('/index');
+                if (sessionStore.loginRedirectRoute) {
+                    self.transitionTo(sessionStore.loginRedirectRoute);
+                } else {
+                    self.transitionTo('/index');   
+                }
             },
             error: function(res) {
                 // Post some warning...
-                console.log('error');
+                alert('error');
             }
         });
     }

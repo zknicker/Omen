@@ -2,6 +2,7 @@
 
 var routes = require('./routes.jsx');
 var userActions = require('./modules/user/user.actions');
+var sessionStore = require('./modules/session/session.store');
 var socket = require('./sockets');
 
 // Bootstrap the app with the current user.
@@ -15,9 +16,8 @@ userActions.bootstrap({
         userActions.setSocket(socket);
         
         // If the user is authenticated, authenticate the socket.
-        var token = userActions.getToken();
-        if (token) {
-            socket.authenticate(token); 
+        if (sessionStore.token) {
+            socket.authenticate(sessionStore.token); 
         }
         
         // Start routing & rendering pages.

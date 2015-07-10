@@ -8,10 +8,12 @@ var messageActions = require('../modules/message/message.actions');
 var UserList = require('./userlist.jsx');
 var MessageList = require('./messageList.jsx');
 var MessageInput = require('./messageInput.jsx');
-
+var Authentication = require('../lib/auth.mixin');
 
 var ChatComponent = React.createClass({
 
+    mixins: [ Authentication ],
+    
     componentDidMount: function() {
         roomActions.join(1);
         messageActions.getRecent(1); 
