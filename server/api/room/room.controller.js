@@ -52,7 +52,7 @@ var joinRoom = function (roomId, userId, cb) {
                 cb(null, room);   
             }
         })
-        .catch(error.log);
+        .catch(cb);
 }
 
 var leaveAllRooms = function (userId, cb) {
@@ -61,7 +61,15 @@ var leaveAllRooms = function (userId, cb) {
             // Only 1 user will be updated, but the ORM returns an array.
             cb(null, usersUpdated[0]);
         })
-        .catch(error.log);
+        .catch(cb);
+}
+
+var getJoinableRooms = function (userId, cb) {
+    Room.find()
+        .then(function(rooms) {
+            cb(null, rooms);
+        })
+        .catch(cb);
 }
 
 var getRoom = function (req, res, next) {
@@ -76,5 +84,6 @@ module.exports = {
     createRoom: createRoom,
     joinRoom: joinRoom,
     leaveAllRooms: leaveAllRooms,
-    getRoom: getRoom
+    getRoom: getRoom,
+    getJoinableRooms: getJoinableRooms
 };

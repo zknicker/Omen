@@ -7,10 +7,12 @@ var constants = require('./room.constants');
 var RoomStore = new Store({
 
     initialize: function() {
-        this.room = {
+        this.currentRoom = {
             title: '',
             users: []
         };
+        this.joinableRooms = [];
+        this.joinableRoomsLoading = true;
         this.loading = true;
     },
     
@@ -20,7 +22,7 @@ var RoomStore = new Store({
     },
     
     onRoomSuccess: function(room) {
-        this.room = room;
+        this.currentRoom = room;
         this.loading = false;
         this.emitChange();
     },
@@ -35,7 +37,7 @@ var RoomStore = new Store({
      */
     onRoomJoined: function(user) {
         console.log(user);
-        this.room.users.push(user);
+        this.currentRoom.users.push(user);
         this.emitChange();
     },
     
@@ -44,15 +46,35 @@ var RoomStore = new Store({
      */
     onRoomDeparted: function(user) {
         var indexOfUser = null;
-        this.room.users.forEach(function (roomUser, i) {
+        this.currentRoom.users.forEach(function (roomUser, i) {
             if (roomUser.id === user.id) {
                  indexOfUser = i;  
             }
         });
         
         if (indexOfUser !== null) {
-            this.room.users.splice(indexOfUser, 1);
+            this.currentRoom.users.splice(indexOfUser, 1);
         }
+        this.emitChange();
+    },
+    
+    /**
+     * Handle the AJAX call for getting the list of joinable rooms.
+     */
+    onGetJoinableRoomsLoading: function() {
+        this.joinableRoomsLoading = true;
+        this.emitChange();
+    },
+    
+    onGetJoinableRoomsSuccess: function(rooms) {
+        this.joinableRoomsLoading = false;
+        console.log(rooms);
+        this.joinableRooms = rooms;
+        this.emitChange();
+    },
+    
+    onGetJoinableRoomsFailure: function() {
+        this.joinableRoomsLoading = false;
         this.emitChange();
     }
 });
@@ -73,6 +95,15 @@ Dispatcher.register(function(action) {
             break;
         case constants.ROOM_DEPARTED:
             RoomStore.onRoomDeparted(action.action.user);
+            break;
+        case constants.GET_JOINABLE_ROOMS_LOADING:
+            RoomStore.onGetJoinableRoomsLoading();
+            break;
+        case constants.GET_JOINABLE_ROOMS_SUCCESS:
+            RoomStore.onGetJoinableRoomsSuccess(action.action.rooms);
+            break;
+        case constants.GET_JOINABLE_ROOMS_ERROR:
+            RoomStore.onGetJoinableRoomsError();
             break;
     }
 });

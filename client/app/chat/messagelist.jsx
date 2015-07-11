@@ -4,6 +4,7 @@ var React = require('react/addons');
 var Router = require('react-router');
 var messageActions = require('../modules/message/message.actions');
 var messageStore = require('../modules/message/message.store');
+var roomStore = require('../modules/room/room.store');
 var Message = require('./message.jsx');
 
 var getState = function () {
@@ -15,7 +16,7 @@ var getState = function () {
 
 var MessageListComponent = React.createClass({
     mixins: [React.addons.LinkedStateMixin, messageStore.mixin],
-
+    
     getInitialState: function () {
         return getState();
     },

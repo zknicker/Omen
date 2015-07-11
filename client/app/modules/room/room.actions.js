@@ -15,11 +15,21 @@ module.exports = {
     join: function(roomId) {
         Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
         socket.emit('room:join', roomId, function(res) {
-            console.log(res);
             if (res.errors) {
                 Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
             }
             Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_SUCCESS, room: res.room });
         });   
+    },
+    
+    // Retrieves a list of all joinable rooms.
+    getJoinable: function() {
+        Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_LOADING });
+        socket.emit('rooms:joinable', null, function(res) {
+            if (res.errors) {
+                Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_ERROR });
+            }
+            Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_SUCCESS, rooms: res.rooms });
+        });
     }
 };

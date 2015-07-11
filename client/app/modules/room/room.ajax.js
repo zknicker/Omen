@@ -2,17 +2,20 @@
 
 var request = require('superagent');
 
+var getResponseFromEndpoint = function(endpoint, successCallback, errorCallback) {
+    request.get(endpoint).end(function(err, res) {
+        if (res.ok) {
+            successCallback(res.body);
+        } else {
+            errorCallback();
+        }
+    });
+};
+
 module.exports = {
     
-    // AJAX query for all currently logged in users.
+    // AJAX query for room information.
     getRoom: function(successCallback, errorCallback) {
-        request.get('/room').end(function(err, res) {
-            if (res.ok) {
-                var room = res.body;
-                successCallback(room);
-            } else {
-                errorCallback();
-            }
-        });
+        getResponseFromEndpoint('/room', successCallback, errorCallback);
     }
 };

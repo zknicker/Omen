@@ -2,27 +2,11 @@
 
 var React = require('react/addons');
 var userStore = require('../modules/user/user.store');
-var roomStore = require('../modules/room/room.store');
-
-var getState = function () {
-    return {
-        roomUsers: roomStore.room.users
-    };
-};
 
 var Message = React.createClass({
-    mixins: [roomStore.mixin],
-    
-    getInitialState: function () {
-        return getState();
-    },
-    
+
     render: function () {
-        // If this message is from the cache (i.e. the user just created it)
-        // then we need to go to the user store for user data. The user is 
-        // only on the message object when the message comes from the persistent
-        // store.
-        var user = this.props.message.user || userStore.get();
+        var user = this.props.message.user;
         var message = this.props.message;
         
         return (
@@ -35,12 +19,6 @@ var Message = React.createClass({
             </li>
             /* jshint ignore:end */
         );
-    },
-    
-    _onChange: function () {
-        this.setState({
-            roomUsers: roomStore.room.users,
-        });
     }
 });
 

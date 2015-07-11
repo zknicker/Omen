@@ -7,7 +7,7 @@ var roomActions = require('../modules/room/room.actions');
 
 var getState = function () {
     return {
-        room: roomStore.room,
+        room: roomStore.currentRoom,
         loading: roomStore.loading
     };
 };
@@ -27,10 +27,6 @@ var UserListComponeont = React.createClass({
 
     getInitialState: function () {
         return getState();
-    },
-
-    componentDidMount: function() {
-        //roomActions.getRoom();
     },
 
     render: function () {
@@ -53,7 +49,7 @@ var UserListComponeont = React.createClass({
 
     _onChange: function () {
         this.setState({
-            room: roomStore.room,
+            room: roomStore.currentRoom,
             loading: roomStore.loading
         });
     }

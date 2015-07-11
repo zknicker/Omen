@@ -8,6 +8,9 @@ var RoomController = require('./room.controller');
 // Socket listeners to react to client messages for each user.
 exports.register = function (io, socket) {
 
+    /**
+     * Joins a room by room ID. The joined room is sent back to the requester.
+     */
     socket.on('room:join', function (roomId, acknowledgement) {
         if (socketHelper.isAuthenticated(socket)) {
             RoomController.joinRoom(roomId, socket.userId, function (err, room) {
@@ -34,6 +37,18 @@ exports.register = function (io, socket) {
                 room: null
             });
         }
+    });
+    
+    /**
+     * Retrieves a list of joinable rooms by user ID.
+     */
+    socket.on('rooms:joinable', function(req, acknowledgement) {
+        RoomController.getJoinableRooms(socket.userId, function(err, rooms) {
+            acknowledgement({
+                error: err,
+                rooms: rooms
+            });
+        });
     });
 }
 

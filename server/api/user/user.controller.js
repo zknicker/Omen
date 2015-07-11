@@ -57,6 +57,7 @@ var createAccount = function (req, res, next) {
     req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
 
     if (req.validationErrors()) {
+        console.log('hey', req.validationErrors());
         return res.status(400).json({
             errors: req.validationErrors()
         });
@@ -72,7 +73,7 @@ var createAccount = function (req, res, next) {
     }).then(function (existingUser) {
         if (existingUser) {
             // User already exists. Send error.
-            res.status(409).json({
+            res.status(400).json({
                 errors: [{
                     param: 'email',
                     msg: 'Account with that email address already exists.'
