@@ -5,8 +5,8 @@ var Router = require('react-router');
 var roomActions = require('../modules/room/room.actions');
 var roomStore = require('../modules/room/room.store');
 var messageActions = require('../modules/message/message.actions');
+var RoomBrowserRoom = require('./roomBrowserRoom.jsx');
 var Authentication = require('../lib/auth.mixin');
-var Navigation = Router.Navigation;
 
 var getState = function () {
     return {
@@ -17,7 +17,7 @@ var getState = function () {
 
 var RoomBrowserComponent = React.createClass({
 
-    mixins: [ Authentication, Navigation, roomStore.mixin ],
+    mixins: [ Authentication, roomStore.mixin ],
     
     getInitialState: function () {
         return getState();
@@ -25,13 +25,6 @@ var RoomBrowserComponent = React.createClass({
     
     componentDidMount: function() {
         roomActions.getJoinable();
-    },
-    
-    handleJoinRoomClick: function (e) {
-        e.preventDefault();
-        roomActions.join(1);
-        messageActions.getRecent(1);
-        this.transitionTo('/chat');
     },
     
     render: function () {
@@ -43,7 +36,7 @@ var RoomBrowserComponent = React.createClass({
                 <ul>
                 {
                     this.state.joinableRooms.map(function(room, index) {
-                        return (<li>{room.title}: <a href="#" onClick={this.handleJoinRoomClick}>Join</a></li>);
+                        return <RoomBrowserRoom key={index} room={room} />
                     }.bind(this))
                 }
                 </ul>
