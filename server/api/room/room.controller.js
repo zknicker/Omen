@@ -20,6 +20,19 @@ var createRoom = function (req, res, next) {
 };
 
 /**
+ * Create a new room.
+ */
+var create = function (roomTitle, cb) {
+    var newRoom = {
+        title: roomTitle
+    };
+    
+    Room.create(newRoom).then(function (room) {
+        cb(null, room);
+    }).catch(cb);   
+};
+
+/**
  * Joins a user to a room. If the user is already in the room, then
  * the user will NOT be added.
  */
@@ -81,7 +94,8 @@ var getRoom = function (req, res, next) {
 };
 
 module.exports = {
-    createRoom: createRoom,
+    createRoom: createRoom, //todo: DEPRECATE
+    create: create,
     joinRoom: joinRoom,
     leaveAllRooms: leaveAllRooms,
     getRoom: getRoom,

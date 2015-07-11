@@ -13,6 +13,7 @@ var RoomStore = new Store({
         };
         this.joinableRooms = [];
         this.joinableRoomsLoading = true;
+        this.createRoomLoading = false;
         this.loading = true;
     },
     
@@ -59,7 +60,7 @@ var RoomStore = new Store({
     },
     
     /**
-     * Handle the AJAX call for getting the list of joinable rooms.
+     * Handle getting the list of joinable rooms.
      */
     onGetJoinableRoomsLoading: function() {
         this.joinableRoomsLoading = true;
@@ -68,13 +69,31 @@ var RoomStore = new Store({
     
     onGetJoinableRoomsSuccess: function(rooms) {
         this.joinableRoomsLoading = false;
-        console.log(rooms);
         this.joinableRooms = rooms;
         this.emitChange();
     },
     
     onGetJoinableRoomsFailure: function() {
         this.joinableRoomsLoading = false;
+        this.emitChange();
+    },
+    
+    /**
+     * Handle creating a new room.
+     */
+    onCreateRoomLoading: function() {
+        this.createRoomLoading = true;
+        this.emitChange();
+    },
+    
+    onCreateRoomSuccess: function(room) {
+        this.createRoomLoading = false;
+        this.joinableRooms.push(room);
+        this.emitChange();
+    },
+    
+    onCreateRoomError: function() {
+        this.createRoomLoading = false;
         this.emitChange();
     }
 });
@@ -104,6 +123,15 @@ Dispatcher.register(function(action) {
             break;
         case constants.GET_JOINABLE_ROOMS_ERROR:
             RoomStore.onGetJoinableRoomsError();
+            break;
+        case constants.CREATE_ROOM_LOADING:
+            RoomStore.onCreateRoomLoading();
+            break;
+        case constants.CREATE_ROOM_SUCCESS:
+            RoomStore.onCreateRoomSuccess(action.action.room);
+            break;
+        case constants.CREATE_ROOM_ERROR:
+            RoomStore.onCreateRoomError();
             break;
     }
 });

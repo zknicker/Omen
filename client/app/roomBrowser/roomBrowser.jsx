@@ -6,6 +6,7 @@ var roomActions = require('../modules/room/room.actions');
 var roomStore = require('../modules/room/room.store');
 var messageActions = require('../modules/message/message.actions');
 var RoomBrowserRoom = require('./roomBrowserRoom.jsx');
+var RoomCreator = require('./roomCreator.jsx');
 var Authentication = require('../lib/auth.mixin');
 
 var getState = function () {
@@ -40,6 +41,9 @@ var RoomBrowserComponent = React.createClass({
                     }.bind(this))
                 }
                 </ul>
+                <br />
+                <b>Create a room:</b>
+                <RoomCreator />
             </div>
             /* jshint ignore:end */
         );

@@ -40,6 +40,25 @@ exports.register = function (io, socket) {
     });
     
     /**
+     * Creates a room given a room title. Acknowledges with the new room.
+     */
+    socket.on('room:create', function(roomTitle, acknowledgement) {
+        if (socketHelper.isAuthenticated(socket)) {
+            RoomController.create(roomTitle, function (err, room) {
+                acknowledgement({
+                    errors: err,
+                    room: room
+                });
+            });
+        } else {
+            acknowledgement({
+                error: constant.get('SOCKET_NO_AUTH'),
+                room: null
+            });
+        }
+    });
+    
+    /**
      * Retrieves a list of joinable rooms by user ID.
      */
     socket.on('rooms:joinable', function(req, acknowledgement) {

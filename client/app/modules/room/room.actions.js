@@ -22,7 +22,22 @@ module.exports = {
         });   
     },
     
-    // Retrieves a list of all joinable rooms.
+    /**
+     * Creates a room given a room title. The newly created room is returned.
+     */
+    create: function(roomTitle) {
+        Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_LOADING });
+        socket.emit('room:create', roomTitle, function(res) {
+            if (res.errors) {
+                Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_ERROR });
+            }
+            Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_SUCCESS, room: res.room });
+        });   
+    },
+    
+    /**
+     * Retrieves a list of all joinable rooms.
+     */
     getJoinable: function() {
         Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_LOADING });
         socket.emit('rooms:joinable', null, function(res) {
@@ -31,5 +46,6 @@ module.exports = {
             }
             Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_SUCCESS, rooms: res.rooms });
         });
-    }
+    },
+    
 };
