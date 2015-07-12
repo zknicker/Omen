@@ -86,7 +86,7 @@ var getJoinableRooms = function (userId, cb) {
 }
 
 var getRoom = function (req, res, next) {
-    Room.findOne({ id: 1 })
+    Room.findOne({ id: req.params.roomId })
         .populate('users')
         .then(function(room) {
             res.json(room);

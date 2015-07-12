@@ -8,8 +8,8 @@ var routes = function (app) {
     // Create (temporary so rooms can be created from browser... lazy)
     app.get('/room/create', roomController.createRoom);
 
-    // Read (TODO: take room id as a param)
-    app.get('/room', roomController.getRoom);
+    // Read
+    app.get('/room/:roomId', roomController.getRoom);
 };
 
 module.exports = routes;
