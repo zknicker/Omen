@@ -15,8 +15,9 @@ var RoomBrowserRoomComponent = React.createClass({
      */
     handleJoinRoomClick: function (e) {
         e.preventDefault();
-        roomActions.join(1);
-        messageActions.getRecent(1);
+        console.log(this.props.room.id);
+        roomActions.join(this.props.room.id);
+        messageActions.getRecent(this.props.room.id);
         this.transitionTo('/chat');
     },
     

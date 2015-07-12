@@ -8,7 +8,7 @@ var createMessage = function (data, socket) {
     var newMessage = {
         message: data.message,
         user: socket.userId,
-        roomId: 1
+        roomId: data.roomId
     };
 
     CachedMessage.create(newMessage).catch(function() {
@@ -24,7 +24,7 @@ var readLatestMessages = function (req, res, next) {
             errors: req.validationErrors()
         });
     }
-    
+    console.log(req.params.roomId);
     Message.find({ room: req.params.roomId, limit: 10, sort: 'id DESC' })
         .populate('user')
         .then(function (messages) {

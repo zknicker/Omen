@@ -8,8 +8,8 @@ var messageConstants = require('./message.constants');
 module.exports = {
 
     // Creates a message in a chat room.
-    create: function (messageContent) {
-        socket.emit('message:create', { message: messageContent });
+    create: function (messageContent, roomId) {
+        socket.emit('message:create', { message: messageContent, roomId: roomId });
     },
     
     // Loads all of the recent messages for a chat room.
