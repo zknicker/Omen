@@ -11,7 +11,7 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
 var db = require('../../config/database');
-var User = db.user;
+var User = db.models.user;
 var settings = require('../../config/env/default');
 var auth = require('../../auth');
 
@@ -234,7 +234,7 @@ var postForgot = function (req, res, next) {
                 where: {
                     email: req.body.email
                 }
-            }).success(function (user) {
+            }).then(function (user) {
                 if (!user) {
                     res.status(404).json({
                         errors: [{
@@ -246,11 +246,13 @@ var postForgot = function (req, res, next) {
                 user.resetPasswordToken = token;
                 user.resetPasswordExpires = new Date(new Date().getTime() + 3600000); // 1 hour
 
+                console.log(user);
+                
                 // Save token to user account
                 user.save().success(function () {
                     done(null, token, user);
                 });
-            }).error(function (err) {
+            }).catch(function (err) {
                 if (err) {
                     return next(err);
                 }
@@ -261,7 +263,7 @@ var postForgot = function (req, res, next) {
             var transporter = nodemailer.createTransport();
             // Create email message
             var mailOptions = {
-                to: user.email,
+                to: user[0].email,
                 from: 'yeogurt@yoururl.com',
                 subject: 'Reset your password on Yeogurt',
                 text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n' +
