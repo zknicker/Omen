@@ -2,7 +2,6 @@
 
 var db = require('../../config/database');
 var Room = db.models.room;
-var User = db.models.user;
 var error = require('../../helpers/error.helper');
 var constant = require('../../helpers/constants.helper');
 
@@ -68,15 +67,6 @@ var joinRoom = function (roomId, userId, cb) {
         .catch(cb);
 }
 
-var leaveAllRooms = function (userId, cb) {
-    User.update({ id: userId }, { rooms: [] })
-        .then(function (usersUpdated) {
-            // Only 1 user will be updated, but the ORM returns an array.
-            cb(null, usersUpdated[0]);
-        })
-        .catch(cb);
-}
-
 var getJoinableRooms = function (userId, cb) {
     Room.find()
         .then(function(rooms) {
@@ -97,7 +87,6 @@ module.exports = {
     createRoom: createRoom, //todo: DEPRECATE
     create: create,
     joinRoom: joinRoom,
-    leaveAllRooms: leaveAllRooms,
     getRoom: getRoom,
     getJoinableRooms: getJoinableRooms
 };

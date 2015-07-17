@@ -155,9 +155,22 @@ var updatePassword = function (req, res, next) {
     });
 };
 
+/**
+ * Given a user ID, removes the associated user from all rooms.
+ */
+var leaveAllRooms = function (userId, cb) {
+    User.update({ id: userId }, { rooms: [] })
+        .then(function (usersUpdated) {
+            // Only 1 user will be updated, but the ORM returns an array.
+            cb(null, usersUpdated[0]);
+        })
+        .catch(cb);
+}
+
 module.exports = {
     readAccount: readAccount,
     createAccount: createAccount,
     updateProfile: updateProfile,
-    updatePassword: updatePassword
+    updatePassword: updatePassword,
+    leaveAllRooms: leaveAllRooms
 };
