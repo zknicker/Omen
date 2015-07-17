@@ -57,7 +57,6 @@ var createAccount = function (req, res, next) {
     req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
 
     if (req.validationErrors()) {
-        console.log('hey', req.validationErrors());
         return res.status(400).json({
             errors: req.validationErrors()
         });

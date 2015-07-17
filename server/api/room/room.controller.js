@@ -8,22 +8,10 @@ var constant = require('../../helpers/constants.helper');
 /**
  * Create a new room.
  */
-var createRoom = function (req, res, next) {
-    var newRoom = {
-        title: "Awesome Room"
-    };
-    
-    Room.create(newRoom).then(function (room) {
-        res.json(room);
-    }).catch(next);   
-};
-
-/**
- * Create a new room.
- */
 var create = function (roomTitle, cb) {
     var newRoom = {
-        title: roomTitle
+        title: roomTitle,
+        type: "public"
     };
     
     Room.create(newRoom).then(function (room) {
@@ -84,7 +72,6 @@ var getRoom = function (req, res, next) {
 };
 
 module.exports = {
-    createRoom: createRoom, //todo: DEPRECATE
     create: create,
     joinRoom: joinRoom,
     getRoom: getRoom,

@@ -35,6 +35,7 @@ var UserListComponeont = React.createClass({
           <section className="chat-userlist">
               <b>{this.state.loading ? "Loading room..." : ""}</b>
               <h3>{this.state.room.title}</h3>
+              <h5>{this.state.room.type}</h5>
               <ul>
               {
                   this.state.room.users.map(function(user, index) {

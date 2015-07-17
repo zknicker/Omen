@@ -24,7 +24,7 @@ var readLatestMessages = function (req, res, next) {
             errors: req.validationErrors()
         });
     }
-    console.log(req.params.roomId);
+    
     Message.find({ room: req.params.roomId, limit: 10, sort: 'id DESC' })
         .populate('user')
         .then(function (messages) {
