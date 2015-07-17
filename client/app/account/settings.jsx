@@ -61,14 +61,6 @@ var SettingsComponent = React.createClass({
 
               <button>Change Password</button>
             </form>
-
-            <h3>Delete Account</h3>
-
-            <p>You can delete your account, but keep in mind this action is irreversible.</p>
-
-            <form id="delete-form" action="/user?_method=DELETE" method="post" onSubmit={this.handleDestroy}>
-              <button>Delete my account</button>
-            </form>
           </div>
           /* jshint ignore:end */
         );

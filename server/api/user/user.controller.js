@@ -155,28 +155,9 @@ var updatePassword = function (req, res, next) {
     });
 };
 
-/**
- * DELETE /user
- * Delete current user account.
- */
-var deleteAccount = function (req, res, next) {
-    User.destroy({
-        id: req.user.id
-    }).then(function () {
-        res.status(200).json({
-            info: [{
-                msg: 'Your account has been deleted.'
-            }]
-        });
-    }).catch(function (err) {
-        return next(err);
-    });
-};
-
 module.exports = {
     readAccount: readAccount,
     createAccount: createAccount,
     updateProfile: updateProfile,
-    updatePassword: updatePassword,
-    deleteAccount: deleteAccount
+    updatePassword: updatePassword
 };

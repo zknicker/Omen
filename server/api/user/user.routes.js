@@ -22,9 +22,6 @@ var routes = function(app) {
   // Update Password
   app.put('/user/password', auth.isAuthenticated, userController.updatePassword);
 
-  // Delete
-  app.delete('/user', auth.isAuthenticated, userController.deleteAccount);
-
 };
 
 module.exports = routes;
