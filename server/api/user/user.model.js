@@ -33,13 +33,9 @@ var User = Waterline.Collection.extend({
             type: 'string',
             notNull: true
         },
-
-        firstName: {
-            type: 'string',
-        },
-
-        lastName: {
-            type: 'string',
+        
+        username: {
+            type: 'string',  
         },
 
         resetPasswordToken: {

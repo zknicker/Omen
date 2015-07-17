@@ -101,6 +101,7 @@ var createAccount = function (req, res, next) {
  */
 var updateProfile = function (req, res, next) {
     req.assert('email', 'Email is not valid').isEmail();
+    req.assert('username', 'Username must be between 3 and 20 characters.').len(3, 20);
 
     if (req.validationErrors()) {
         return res.status(400).json({
@@ -112,8 +113,7 @@ var updateProfile = function (req, res, next) {
         id: req.user.id
     }, {
         email: req.body.email || '',
-        firstName: req.body.firstName || '',
-        lastName: req.body.lastName || ''
+        username: req.body.username
     }).then(function (user) {
         res.status(200).json({
             success: [{

@@ -13,7 +13,7 @@ var Message = React.createClass({
             /* jshint ignore:start */
             <li> 
                 <dl>
-                    <dt>{user.firstName}: {message.message}</dt>
+                    <dt>{user.username}: {message.message}</dt>
                     <dd>{message.datetime}</dd>
                 </dl>
             </li>
