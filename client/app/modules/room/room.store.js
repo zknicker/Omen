@@ -8,6 +8,7 @@ var RoomStore = new Store({
 
     initialize: function() {
         this.currentRoom = {
+            id: null,
             title: '',
             users: []
         };

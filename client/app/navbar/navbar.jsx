@@ -60,7 +60,6 @@ var NavbarComponent = React.createClass({
               <div className="nav">
                 <ul className="nav-list pull-left">
                   <li className="nav-item"><Link to="/">Home</Link></li>
-                  <li className="nav-item"><Link to="/chat">Chat</Link></li>
                   <li className="nav-item"><Link to="/rooms">Rooms</Link></li>
                 </ul>
                 {navLinks}

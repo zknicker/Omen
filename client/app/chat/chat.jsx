@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react/addons');
+var Router = require('react-router');
+var Navigation = Router.Navigation;
 var messageStore = require('../modules/message/message.store');
 var roomStore = require('../modules/room/room.store');
 var UserList = require('./userlist.jsx');
@@ -18,8 +20,14 @@ var getState = function () {
 
 var ChatComponent = React.createClass({
 
-    mixins: [roomStore.mixin, messageStore.mixin],
+    mixins: [Navigation, roomStore.mixin, messageStore.mixin],
 
+    componentDidMount: function() {
+        if (!this.state.currentRoom.id) {
+            this.transitionTo('/rooms');
+        }
+    },
+    
     getInitialState: function () {
         return getState();
     },
