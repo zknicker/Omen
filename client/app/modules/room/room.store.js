@@ -37,7 +37,6 @@ var RoomStore = new Store({
      * Handle a user joining the room.
      */
     onRoomJoined: function(user) {
-        console.log(user);
         this.currentRoom.users.push(user);
         this.emitChange();
     },

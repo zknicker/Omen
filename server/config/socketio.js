@@ -6,6 +6,7 @@
 
 var messageSocketFunctions = require('../api/message/message.socket');
 var roomSocketFunctions = require('../api/room/room.socket');
+var userSocketFunctions = require('../api/user/user.socket');
 var userController = require('../api/user/user.controller');
 var jwtHelper = require('../helpers/jwt.helper');
 var error = require('../helpers/error.helper');
@@ -45,6 +46,7 @@ module.exports = function (io) {
     // Register global listeners.
     messageSocketFunctions.registerOnce(io);
     roomSocketFunctions.registerOnce(io);
+    userSocketFunctions.registerOnce(io);
 
     io.on('connection', function (socket) {
         console.info('[SocketIO] Client connected: ' + socket.id);

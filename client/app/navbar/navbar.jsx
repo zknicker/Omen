@@ -5,6 +5,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
+var JoinedRoomNavigation = require('./joinedRoomNavigation.jsx');
 
 function getState() {
     return {
@@ -65,6 +66,7 @@ var NavbarComponent = React.createClass({
                 {navLinks}
               </div>
             </div>
+            <JoinedRoomNavigation />
           </div>
           /* jshint ignore:end */
         );

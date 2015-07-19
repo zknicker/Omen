@@ -106,6 +106,7 @@ var User = Waterline.Collection.extend({
     },
 
     beforeUpdate: function (attrs, cb) {
+        console.log('HEY YO');  
         if (attrs.newPassword) {
             bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
                 if (err) return cb(err);
@@ -121,7 +122,10 @@ var User = Waterline.Collection.extend({
         } else {
             return cb();
         }
-    }
+    },
+    
+    afterUpdate: function (attrs, cb) {
+    },
 });
 
 module.exports = User;

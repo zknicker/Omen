@@ -9,6 +9,7 @@ var SessionStore = new Store({
     initialize: function () {
         this.token = localStorage.getItem('token');
         this.loginRedirectRoute = null;
+        this.joinedRooms = [];
     },
 
     setAuthToken: function (token) {

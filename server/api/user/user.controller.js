@@ -166,10 +166,23 @@ var leaveAllRooms = function (userId, cb) {
         .catch(cb);
 }
 
+/**
+ * Retrieves all of the rooms that the user is presently joined.
+ */
+var getRooms = function (userId, cb) {
+    User.findOne(userId)
+        .populate('rooms')
+        .then(function (user) {
+            cb(null, user.rooms);
+        })
+        .catch(cb);
+}
+
 module.exports = {
     readAccount: readAccount,
     createAccount: createAccount,
     updateProfile: updateProfile,
     updatePassword: updatePassword,
-    leaveAllRooms: leaveAllRooms
+    leaveAllRooms: leaveAllRooms,
+    getRooms: getRooms
 };

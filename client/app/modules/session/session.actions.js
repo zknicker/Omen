@@ -25,5 +25,5 @@ module.exports = {
             actionType: sessionConstants.SET_LOGIN_REDIRECT_ROUTE,
             route: route
         });
-    },
+    }
 };
