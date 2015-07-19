@@ -23,12 +23,14 @@ var ChatComponent = React.createClass({
     mixins: [Navigation, roomStore.mixin, messageStore.mixin],
 
     componentDidMount: function() {
-        if (!this.state.currentRoom.id) {
+        console.log('component did mount', this.state);
+        if (!this.state.currentRoom.id && !this.state.currentRoomLoading) {
             this.transitionTo('/rooms');
         }
     },
     
     getInitialState: function () {
+        console.log('get state');
         return getState();
     },
     

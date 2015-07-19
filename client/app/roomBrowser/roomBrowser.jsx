@@ -50,7 +50,6 @@ var RoomBrowserComponent = React.createClass({
     },
 
     _onChange: function () {
-        console.log('onchange', roomStore.joinableRooms);
         this.setState({
             joinableRooms: roomStore.joinableRooms,
             joinableRoomsLoading: roomStore.joinableRoomsLoading

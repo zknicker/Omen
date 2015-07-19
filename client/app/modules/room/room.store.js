@@ -15,7 +15,7 @@ var RoomStore = new Store({
         this.joinableRooms = [];
         this.joinableRoomsLoading = true;
         this.createRoomLoading = false;
-        this.loading = true;
+        this.loading = false;
     },
     
     onRoomLoading: function() {
