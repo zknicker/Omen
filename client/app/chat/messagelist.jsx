@@ -7,29 +7,18 @@ var messageStore = require('../modules/message/message.store');
 var roomStore = require('../modules/room/room.store');
 var Message = require('./message.jsx');
 
-var getState = function () {
-    return {
-        messages: messageStore.messages,
-        loading: messageStore.loading
-    };
-};
-
 var MessageListComponent = React.createClass({
-    mixins: [React.addons.LinkedStateMixin, messageStore.mixin],
-    
-    getInitialState: function () {
-        return getState();
-    },
+    mixins: [React.addons.LinkedStateMixin],
 
     render: function () {
         return (
             /* jshint ignore:start */
             <section className="chat-messages">
                 <h3>Messages</h3>
-                <b>{this.state.loading ? "Loading messages..." : ""}</b>
+                <b>{this.props.loading ? "Loading messages..." : ""}</b>
                 <ul>
                 {
-                    this.state.messages.map(function(message, index) {
+                    this.props.messages.map(function(message, index) {
                         return <Message key={index} message={message} />
                     })
                 }
@@ -37,13 +26,6 @@ var MessageListComponent = React.createClass({
             </section>
           /* jshint ignore:end */
         );
-    },
-
-    _onChange: function () {
-        this.setState({
-            messages: messageStore.messages,
-            loading: messageStore.loading
-        });
     }
 });
 

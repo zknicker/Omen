@@ -2,15 +2,7 @@
 
 var React = require('react/addons');
 var Router = require('react-router');
-var roomStore = require('../modules/room/room.store');
 var roomActions = require('../modules/room/room.actions');
-
-var getState = function () {
-    return {
-        room: roomStore.currentRoom,
-        loading: roomStore.loading
-    };
-};
 
 var UserListUserComponent = React.createClass({
     render: function () {
@@ -23,22 +15,16 @@ var UserListUserComponent = React.createClass({
 });
 
 var UserListComponeont = React.createClass({
-    mixins: [roomStore.mixin],
-
-    getInitialState: function () {
-        return getState();
-    },
-
     render: function () {
         return (
           /* jshint ignore:start */
           <section className="chat-userlist">
-              <b>{this.state.loading ? "Loading room..." : ""}</b>
-              <h3>{this.state.room.title}</h3>
-              <h5>{this.state.room.type}</h5>
+              <b>{this.props.loading ? "Loading room..." : ""}</b>
+              <h3>{this.props.room.title}</h3>
+              <h5>{this.props.room.type}</h5>
               <ul>
               {
-                  this.state.room.users.map(function(user, index) {
+                  this.props.room.users.map(function(user, index) {
                       return <UserListUserComponent key={index} user={user} />
                   })
               }
@@ -46,13 +32,6 @@ var UserListComponeont = React.createClass({
           </section>
           /* jshint ignore:end */
         );
-    },
-
-    _onChange: function () {
-        this.setState({
-            room: roomStore.currentRoom,
-            loading: roomStore.loading
-        });
     }
 });
 

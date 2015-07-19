@@ -2,20 +2,16 @@
 
 var React = require('react/addons');
 var Router = require('react-router');
-var userStore = require('../modules/user/user.store');
-var roomStore = require('../modules/room/room.store');
-var roomActions = require('../modules/room/room.actions');
 var messageActions = require('../modules/message/message.actions');
 
 var getState = function () {
     return {
         message: "",
-        room: roomStore.currentRoom
     };
 };
 
 var ChatComponent = React.createClass({
-    mixins: [React.addons.LinkedStateMixin, roomStore.mixin],
+    mixins: [React.addons.LinkedStateMixin],
              
     getInitialState: function () {
         return getState();
@@ -35,16 +31,10 @@ var ChatComponent = React.createClass({
     handleSubmitMessage: function (e) {
         e.preventDefault();
         var form = e.currentTarget;
-        messageActions.create(this.state.message, this.state.room.id);
+        messageActions.create(this.state.message, this.props.room.id);
 
         this.setState({
             message: ""
-        });
-    },
-
-    _onChange: function () {
-        this.setState({
-            room: roomStore.currentRoom
         });
     }
 });

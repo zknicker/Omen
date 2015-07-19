@@ -1,27 +1,48 @@
 'use strict';
 
 var React = require('react/addons');
-var Router = require('react-router');
-var userStore = require('../modules/user/user.store');
+var messageStore = require('../modules/message/message.store');
 var roomStore = require('../modules/room/room.store');
-var roomActions = require('../modules/room/room.actions');
-var messageActions = require('../modules/message/message.actions');
 var UserList = require('./userlist.jsx');
 var MessageList = require('./messageList.jsx');
 var MessageInput = require('./messageInput.jsx');
 
+var getState = function () {
+    return {
+        currentRoom: roomStore.currentRoom,
+        currentRoomLoading: roomStore.loading,
+        currentRoomMessages: messageStore.messages,
+        currentRoomMessagesLoading: messageStore.loading
+    };
+};
+
 var ChatComponent = React.createClass({
 
+    mixins: [roomStore.mixin, messageStore.mixin],
+
+    getInitialState: function () {
+        return getState();
+    },
+    
     render: function () {
         return (
             /* jshint ignore:start */
             <div>
-                <MessageList />    
-                <UserList />
-                <MessageInput />
+                <MessageList messages={this.state.currentRoomMessages} loading={this.state.currentRoomMessagesLoading} />    
+                <UserList room={this.state.currentRoom} loading={this.state.currentRoomLoading} />
+                <MessageInput room={this.state.currentRoom} />
             </div>
             /* jshint ignore:end */
         );
+    },
+
+    _onChange: function () {
+        this.setState({
+            currentRoom: roomStore.currentRoom,
+            currentRoomLoading: roomStore.loading,
+            currentRoomMessages: messageStore.messages,
+            currentRoomMessagesLoading: messageStore.loading
+        });
     }
 });
 
