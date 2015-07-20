@@ -4,6 +4,7 @@
 
 'use strict';
 
+var events = require('../config/events');
 var messageSocketFunctions = require('../api/message/message.socket');
 var roomSocketFunctions = require('../api/room/room.socket');
 var userSocketFunctions = require('../api/user/user.socket');
@@ -20,11 +21,10 @@ function onConnect(io, socket) {
 }
 
 function onDisconnect(io, socket) {
-    
     // Remove the auth'd user from any rooms.
     if (socket.authenticated) {
         userController.leaveAllRooms(socket.userId, function (err) {
-            io.emit('room:depart', socket.userId);
+            events.emit('server:room:departed', socket.userId);
         });
     }
 }

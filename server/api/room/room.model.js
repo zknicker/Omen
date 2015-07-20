@@ -1,7 +1,6 @@
 'use strict';
 
 var Waterline = require('Waterline');
-var events = require('../../config/events');
 var error = require('../../helpers/error.helper');
 
 var Room = Waterline.Collection.extend({

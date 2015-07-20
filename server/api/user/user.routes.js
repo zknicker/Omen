@@ -22,9 +22,9 @@ var routes = function(app) {
   // Update Password
   app.put('/user/password', auth.isAuthenticated, userController.updatePassword);
 
-app.get('/user/test', function() {
+app.get('/user/test', function(req, res, next) {
     userController.leaveAllPublicRooms(2, function(err, user) {
-    res.status(200);   
+        res.status(200).json(user); 
 })});
     
 };

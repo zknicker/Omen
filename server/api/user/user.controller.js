@@ -5,6 +5,7 @@
 
 'use strict';
 
+var events = require('../../config/events');
 var db = require('../../config/database');
 var User = db.models.user;
 var CachedUser = db.models.cacheduser;
@@ -176,7 +177,11 @@ var leaveAllPublicRooms = function (userId, cb) {
                     user.rooms.remove(room.id);
                 }
             });
-            user.save(cb);
+            user.save(function (err) {
+                events.emit('server:room:departed', userId);
+                cb(err);
+            });
+        
         })
         .catch(cb);
 }

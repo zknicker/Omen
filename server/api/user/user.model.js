@@ -121,10 +121,7 @@ var User = Waterline.Collection.extend({
         } else {
             return cb();
         }
-    },
-    
-    afterUpdate: function (attrs, cb) {
-    },
+    }
 });
 
 module.exports = User;

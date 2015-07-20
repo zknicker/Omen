@@ -4,6 +4,7 @@ var events = require('../../config/events');
 var socketHelper = require('../../helpers/socket.helper');
 var constant = require('../../helpers/constants.helper');
 var RoomController = require('./room.controller');
+var UserController = require('../user/user.controller');
 
 // Socket listeners to react to client messages for each user.
 exports.register = function (io, socket) {
@@ -13,23 +14,25 @@ exports.register = function (io, socket) {
      */
     socket.on('room:join', function (roomId, acknowledgement) {
         if (socketHelper.isAuthenticated(socket)) {
-            RoomController.joinRoom(roomId, socket.userId, function (err, room) {
-                // Acknowledge join by returning the room data.
-                acknowledgement({
-                    errors: err,
-                    room: room
-                });
-
-                // Join the user to the socket room-space.
-                socketHelper.joinRoom(socket, roomId);
-
-                if (!err) {
-                    room.users.forEach(function (user) {
-                        if (user.id === socket.userId) {
-                            socketHelper.broadcastToRoom(socket, roomId, 'room:join', user);
-                        }
+            UserController.leaveAllPublicRooms(socket.userId, function(err) {
+                RoomController.joinRoom(roomId, socket.userId, function (err, room) {
+                    // Acknowledge join by returning the room data.
+                    acknowledgement({
+                        errors: err,
+                        room: room
                     });
-                }
+
+                    // Join the user to the socket room-space.
+                    socketHelper.joinRoom(socket, roomId);
+
+                    if (!err) {
+                        room.users.forEach(function (user) {
+                            if (user.id === socket.userId) {
+                                socketHelper.broadcastToRoom(socket, roomId, 'room:join', user);
+                            }
+                        });
+                    }
+                });
             });
         } else {
             acknowledgement({
@@ -73,5 +76,12 @@ exports.register = function (io, socket) {
 
 // Socket listeners that register once in app lifetime.
 exports.registerOnce = function (io) {
-
+    
+    /**
+     * Events which result in a user departing a room need to be
+     * broadcasted to all clients.
+     */
+    events.on('server:room:departed', function(userId) {
+        io.emit('room:depart', userId);
+    });
 }
