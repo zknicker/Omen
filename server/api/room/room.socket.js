@@ -14,7 +14,7 @@ exports.register = function (io, socket) {
      */
     socket.on('room:join', function (roomId, acknowledgement) {
         if (socketHelper.isAuthenticated(socket)) {
-            UserController.leaveAllPublicRooms(socket.userId, function(err) {
+            UserController.leaveCurrentPublicRoom(socket.userId, function(err) {
                 RoomController.joinRoom(roomId, socket.userId, function (err, room) {
                     // Acknowledge join by returning the room data.
                     acknowledgement({

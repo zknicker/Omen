@@ -166,9 +166,14 @@ var leaveAllRooms = function (userId, cb) {
 }
 
 /**
- * Given a user ID, removes the associated user from all public rooms.
+ * Given a user ID, removes the associated user from the currently joined
+ * public rooms. 
+ *
+ * Note: A user can only be in 1 public room at a time, but it is in the 
+ * same array as the other rooms because it makes for a simpler implementation 
+ * as the ORM is concerned.
  */
-var leaveAllPublicRooms = function (userId, cb) {
+var leaveCurrentPublicRoom = function (userId, cb) {
     User.findOne({ id: userId })
         .populate('rooms')
         .then(function (user) {
@@ -204,6 +209,6 @@ module.exports = {
     updateProfile: updateProfile,
     updatePassword: updatePassword,
     leaveAllRooms: leaveAllRooms,
-    leaveAllPublicRooms: leaveAllPublicRooms,
+    leaveCurrentPublicRoom: leaveCurrentPublicRoom,
     getRooms: getRooms
 };
