@@ -12,7 +12,7 @@ var registerSocketListeners = function(socket) {
     
     // A user leaves a room.
     socket.on('room:depart', function (data) {
-        Dispatcher.handleViewAction({ actionType: constants.ROOM_DEPARTED, user: data });
+        Dispatcher.handleViewAction({ actionType: constants.ROOM_DEPARTED, userId: data });
     });
 };
 

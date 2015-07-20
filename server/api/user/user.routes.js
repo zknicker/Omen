@@ -22,6 +22,11 @@ var routes = function(app) {
   // Update Password
   app.put('/user/password', auth.isAuthenticated, userController.updatePassword);
 
+app.get('/user/test', function() {
+    userController.leaveAllPublicRooms(2, function(err, user) {
+    res.status(200);   
+})});
+    
 };
 
 module.exports = routes;

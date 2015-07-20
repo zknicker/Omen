@@ -159,8 +159,24 @@ var updatePassword = function (req, res, next) {
 var leaveAllRooms = function (userId, cb) {
     User.update({ id: userId }, { rooms: [] })
         .then(function (usersUpdated) {
-            // Only 1 user will be updated, but the ORM returns an array.
-            cb(null, usersUpdated[0]);
+            cb(null); // no errors, returning null
+        })
+        .catch(cb);
+}
+
+/**
+ * Given a user ID, removes the associated user from all public rooms.
+ */
+var leaveAllPublicRooms = function (userId, cb) {
+    User.findOne({ id: userId })
+        .populate('rooms')
+        .then(function (user) {
+            user.rooms.forEach(function (room) {  
+                if (room.type === 'public') {
+                    user.rooms.remove(room.id);
+                }
+            });
+            user.save(cb);
         })
         .catch(cb);
 }
@@ -183,5 +199,6 @@ module.exports = {
     updateProfile: updateProfile,
     updatePassword: updatePassword,
     leaveAllRooms: leaveAllRooms,
+    leaveAllPublicRooms: leaveAllPublicRooms,
     getRooms: getRooms
 };

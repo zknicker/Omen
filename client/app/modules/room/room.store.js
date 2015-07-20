@@ -45,10 +45,10 @@ var RoomStore = new Store({
     /**
      * Handle a user leaving the room.
      */
-    onRoomDeparted: function(user) {
+    onRoomDeparted: function(userId) {
         var indexOfUser = null;
         this.currentRoom.users.forEach(function (roomUser, i) {
-            if (roomUser.id === user.id) {
+            if (roomUser.id === userId) {
                  indexOfUser = i;  
             }
         });
@@ -113,7 +113,7 @@ Dispatcher.register(function(action) {
             RoomStore.onRoomJoined(action.action.user);
             break;
         case constants.ROOM_DEPARTED:
-            RoomStore.onRoomDeparted(action.action.user);
+            RoomStore.onRoomDeparted(action.action.userId);
             break;
         case constants.GET_JOINABLE_ROOMS_LOADING:
             RoomStore.onGetJoinableRoomsLoading();
