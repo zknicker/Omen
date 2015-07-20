@@ -67,6 +67,5 @@ module.exports = function (app, express, database) {
             next();
         });
         app.use(errorHandler());
-        app.set('appHomepage', settings.staticAssets);
     }
 };
