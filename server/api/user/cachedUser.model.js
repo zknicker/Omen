@@ -21,17 +21,15 @@ var CachedUser = Waterline.Collection.extend({
 
         role: {
             type: 'string',
-            defaultsTo: 'user'
+            defaultsTo: 'user',
+            notNull: true
         },
 
-        firstName: {
+        username: {
             type: 'string',
+            notNull: true
         },
 
-        lastName: {
-            type: 'string',
-        },
-        
         // List of cached message for this cached user. Shouldn't
         // be a need to actually use this. It's just here to enable
         // the database associations.

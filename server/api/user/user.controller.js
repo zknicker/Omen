@@ -18,8 +18,7 @@ var cacheUser = function(user, cb) {
     CachedUser.findOrCreate({ id: user.id }).then(function(cachedUser) {
         cachedUser.id = user.id;
         cachedUser.role = user.role;
-        cachedUser.firstName = user.firstName;
-        cachedUser.lastName = user.lastName;
+        cachedUser.username = user.username;
         cachedUser.save(cb);
     }).catch(cb);
 }
