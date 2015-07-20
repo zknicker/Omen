@@ -1,6 +1,8 @@
 'use strict';
 
+var path = require('path');
 var errors = require('./errors');
+var config = require('./config/env/default');
 
 module.exports = function (app) {
 
@@ -16,6 +18,6 @@ module.exports = function (app) {
 
     // All other routes should redirect to the index.html
     app.get('/*', function (req, res) {
-        res.sendfile(app.get('appHomepage') + '/');
+        res.sendFile(path.join(config.root, config.staticAssets) + '/');
     });
 };
