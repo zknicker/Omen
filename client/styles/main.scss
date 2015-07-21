@@ -15,99 +15,31 @@
 // bower:scss
 // endbower
 
-// Injects all import files automatically
-// [injector]
-// [endinjector]
-
-.yeogurt-info {
-  text-align: center;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+ul, li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
-.version {
-  font-size: 14px;
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+a {
+    text-decoration: none;
+    color: #1596CC;
 }
 
-.logo {
-  margin-top: 15px;
+@mixin transition-quick($property) {
+    transition: $property 0.2s ease;
 }
 
-.links a {
-  color: white;
-  margin-right: 5px;
-  margin-top: 20px;
-  border-radius: 4px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background: #ed7c6c;
-  display: inline-block;
-  zoom: 1;
-  line-height: normal;
-  white-space: nowrap;
-  vertical-align: baseline;
-  text-align: center;
-  cursor: pointer;
-  font-size: 100%;
-  padding: .5em 1em;
-  text-decoration: none;
-}
 
+@mixin transition-none($property) {
+    transition: $property 0s ease;
+}
 
 .main-container {
   clear: both;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.navbar {
-  position: relative;
-  top: 0;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 50px;
-}
-
-.nav {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0;
-  list-style-type: none;
-}
-
-.nav-list {
-  padding: 0;
-}
-
-.pull-left {
-  float: left;
-}
-
-.pull-right {
-  float: right;
-}
-
-.nav-item {
-  display: inline-block;
-  margin-left: 5px;
-}
-
-.error {
-  color: #c00;
-}
-
-.info {
-  color: #5280e4;
-}
-
-.success {
-  color: #58e44e;
 }
 
 // Styling on warning for users on IE7 or below
@@ -119,25 +51,8 @@
   padding: 0.5em 0;
 }
 
-.chat-messages {
-    display: inline-block;
-    width: 600px;
-    border: 1px dotted black;
-}
-
-.chat-userlist {
-    display: inline-block;
-    width: 300px;
-    margin-left: 10px;
-    border: 1px dotted black;
-}
-
-.chat-message-input {
-    margin-top: 10px;
-}
-
-.joined-rooms {
-    max-width: 500px;
-    border: 1px dotted blue;
-    margin: 0 auto;
-}
+// Injects all import files automatically
+// [injector]
+@import 'chat';
+@import 'header';
+// [endinjector]

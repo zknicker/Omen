@@ -1,0 +1,22 @@
+.chat-messages {
+    display: inline-block;
+    width: 600px;
+    border: 1px dotted black;
+}
+
+.chat-userlist {
+    display: inline-block;
+    width: 300px;
+    margin-left: 10px;
+    border: 1px dotted black;
+}
+
+.chat-message-input {
+    margin-top: 10px;
+}
+
+.joined-rooms {
+    max-width: 500px;
+    border: 1px dotted blue;
+    margin: 0 auto;
+}

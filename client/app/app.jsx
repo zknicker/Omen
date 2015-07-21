@@ -26,7 +26,7 @@ var App = React.createClass({
             /* jshint ignore:start */
             <div>
                 <Navbar user={this.state.user} />
-                <section class="content">
+                <section className="content">
                     <RouteHandler/>
                 </section>
             </div>

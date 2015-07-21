@@ -13,11 +13,28 @@ function getState() {
     }
 }
 
+function setHeaderBackgroundSlope() {
+    var angle = 1.34 / ($(document).width() / 3440);
+    console.log('rotate(-' + angle + 'deg)');
+    $('#sloped-header-bg').css({
+       'transform': 'rotate(-' + angle + 'deg)' 
+    });
+}
+
 var NavbarComponent = React.createClass({
     mixins: [userStore.mixin],
     
     getInitialState: function () {
         return getState();
+    },
+    
+    componentDidMount: function() {
+        setHeaderBackgroundSlope();
+        $(window).resize(setHeaderBackgroundSlope);
+    },
+    
+    componentWillUnmount: function() {
+        $(window).off('resize', setHeaderBackgroundSlope);
     },
     
     render: function() {
@@ -56,6 +73,12 @@ var NavbarComponent = React.createClass({
         return (
           /* jshint ignore:start */
           <div>
+            <header className="header">
+                <div id="sloped-header-bg" className="header-bg"></div>
+                <div className="header-logo"></div>
+                <div className="header-profile"></div>
+                <ul className="header-actions"></ul>
+            </header>
             <div className="navbar">
               <div className="nav">
                 <ul className="nav-list pull-left">
