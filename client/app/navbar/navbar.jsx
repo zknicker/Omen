@@ -6,6 +6,9 @@ var Link = Router.Link;
 var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
 var JoinedRoomNavigation = require('./joinedRoomNavigation.jsx');
+var NavbarProfile = require('./profile.jsx');
+var NavbarActions = require('./actions.jsx');
+var NavbarLogo = require('./logo.jsx');
 
 function getState() {
     return {
@@ -14,7 +17,7 @@ function getState() {
 }
 
 function setHeaderBackgroundSlope() {
-    var angle = 1.34 / ($(document).width() / 3440);
+    var angle = 1.18 / ($(document).width() / 3440);
     console.log('rotate(-' + angle + 'deg)');
     $('#sloped-header-bg').css({
        'transform': 'rotate(-' + angle + 'deg)' 
@@ -75,9 +78,9 @@ var NavbarComponent = React.createClass({
           <div>
             <header className="header">
                 <div id="sloped-header-bg" className="header-bg"></div>
-                <div className="header-logo"></div>
-                <div className="header-profile"></div>
-                <ul className="header-actions"></ul>
+                <NavbarLogo />
+                <NavbarProfile />
+                <NavbarActions user={this.state.user} />
             </header>
             <div className="navbar">
               <div className="nav">
