@@ -12,13 +12,13 @@ var NavbarLogo = require('./logo.jsx');
 
 function getState() {
     return {
-        user: userStore.get()
+        user: userStore.get(),
+        userIsAdmin: userStore.isAdmin()
     }
 }
 
 function setHeaderBackgroundSlope() {
     var angle = 1.18 / ($(document).width() / 3440);
-    console.log('rotate(-' + angle + 'deg)');
     $('#sloped-header-bg').css({
        'transform': 'rotate(-' + angle + 'deg)' 
     });
@@ -80,7 +80,7 @@ var NavbarComponent = React.createClass({
                 <div id="sloped-header-bg" className="header-bg"></div>
                 <NavbarLogo />
                 <NavbarProfile />
-                <NavbarActions user={this.state.user} />
+                <NavbarActions user={this.state.user} userIsAdmin={this.state.userIsAdmin} />
             </header>
             <div className="navbar">
               <div className="nav">

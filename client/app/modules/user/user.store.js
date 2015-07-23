@@ -5,16 +5,19 @@ var Dispatcher = require('../../dispatcher');
 var userConstants = require('./user.constants');
 var userDefaults = require('../../constants').user;
 
-var _user;
+var _user = userDefaults;
 var _socket;
 
 var UserStore = new Store({
 
     // Gets data associated with the current user.
     get: function () {
-        return _user || userDefaults;
+        return _user;
+    },
+    
+    isAdmin: function() {
+        return _user.role === 'admin';
     }
-
 });
 
 UserStore.dispatcherToken = Dispatcher.register(function (payload) {
