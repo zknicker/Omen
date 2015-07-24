@@ -30,7 +30,7 @@ var NavbarActionsComponent = React.createClass({
                         <span>Settings</span>
                     </Link>
                 </li>
-                { (this.props.userIsAdmin) &&
+                { (this.props.user.isAdmin()) &&
                     <li className="profile-action profile-action-admin">
                         <Link to="/admin">
                             <svg version="1.1" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" enable-background="new 0 0 64 64">

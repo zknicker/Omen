@@ -10,13 +10,17 @@ var _socket;
 
 var UserStore = new Store({
 
-    // Gets data associated with the current user.
-    get: function () {
-        return _user;
-    },
-    
-    isAdmin: function() {
-        return _user.role === 'admin';
+    getUser: function() {
+        return {
+            id: _user.id,
+            email: _user.email,
+            username: _user.username,
+            loggedIn: _user.loggedIn, // TODO: wtf?
+            
+            isAdmin: function() {
+                return _user.role === 'admin';   
+            }
+        };
     }
 });
 

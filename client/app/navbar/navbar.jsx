@@ -12,8 +12,7 @@ var NavbarLogo = require('./logo.jsx');
 
 function getState() {
     return {
-        user: userStore.get(),
-        userIsAdmin: userStore.isAdmin()
+        user: userStore.getUser()
     }
 }
 
@@ -80,7 +79,7 @@ var NavbarComponent = React.createClass({
                 <div id="sloped-header-bg" className="header-bg"></div>
                 <NavbarLogo />
                 <NavbarProfile />
-                <NavbarActions user={this.state.user} userIsAdmin={this.state.userIsAdmin} />
+                <NavbarActions user={this.state.user} />
             </header>
             <div className="navbar">
               <div className="nav">
