@@ -2,6 +2,7 @@
 
 var React = require('react');
 var userActions = require('../modules/user/user.actions');
+var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var ResetComponent = React.createClass({
   render: function() {
@@ -33,4 +34,4 @@ var ResetComponent = React.createClass({
   }
 });
 
-module.exports = ResetComponent;
+module.exports = StandardWrapper(ResetComponent);

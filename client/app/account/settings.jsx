@@ -5,10 +5,11 @@ var Router = require('react-router');
 var Link = Router.Link;
 var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
+var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var getState = function() {
     return {
-        user: userStore.get()
+        user: userStore.getUser()
     };
 };
 
@@ -85,4 +86,4 @@ var SettingsComponent = React.createClass({
     }
 });
 
-module.exports = SettingsComponent;
+module.exports = StandardWrapper(SettingsComponent);

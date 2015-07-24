@@ -2,6 +2,7 @@
 
 var React = require('react');
 var userActions = require('../modules/user/user.actions');
+var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var ForgotComponent = React.createClass({
     render: function () {
@@ -29,4 +30,4 @@ var ForgotComponent = React.createClass({
     }
 });
 
-module.exports = ForgotComponent;
+module.exports = StandardWrapper(ForgotComponent);

@@ -3,8 +3,8 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-var Navbar = require('./navbar/navbar.jsx');
-var userStore = require('./modules/user/user.store');
+var Navbar = require('../navbar/navbar.jsx');
+var userStore = require('../modules/user/user.store');
 
 var getState = function () {
     return {
@@ -13,19 +13,21 @@ var getState = function () {
     };
 };
 
-var App = React.createClass({
+var Admin = React.createClass({
     mixins: [userStore.mixin],
-    componentDidMount: function () {
-        userStore.emitChange();
-    },
+    
     getInitialState: function () {
         return getState();
     },
+    
     render: function () {
         return (
             /* jshint ignore:start */
-            <div className="content">
-                <RouteHandler/>
+            <div>
+                <section className="content">
+                    Admin Page
+                    <RouteHandler/>
+                </section>
             </div>
             /* jshint ignore:end */
         );
@@ -36,4 +38,4 @@ var App = React.createClass({
     }
 });
 
-module.exports = App;
+module.exports = Admin;

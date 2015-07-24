@@ -6,10 +6,6 @@ var Link = Router.Link;
 
 var NavbarActionsComponent = React.createClass({
 
-    componentDidMount: function() {
-        console.log(this.props.user);
-    },
-    
     render: function () {
         return (
             /* jshint ignore:start */
