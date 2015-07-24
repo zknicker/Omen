@@ -24,7 +24,7 @@ var App = React.createClass({
     render: function () {
         return (
             /* jshint ignore:start */
-            <div className="content">
+            <div className="wrapper">
                 <RouteHandler/>
             </div>
             /* jshint ignore:end */

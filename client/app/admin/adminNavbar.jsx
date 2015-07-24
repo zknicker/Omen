@@ -3,22 +3,20 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-var AdminWrapper = require('./adminWrapper.jsx');
+var Link = Router.Link;
 
-var AdminGateway = React.createClass({
-    
-    mixins: [ Router.State ],
+var AdminNavbarComponent = React.createClass({
     
     render: function () {
-        console.log(this.getQuery());
         return (
             /* jshint ignore:start */
-            <div>
-                State: {this.getQuery()}
+            <div className="admin-navbar">
+                <Link to="/index" className="admin-navbar-logo" />
+                <span>club administrator</span>
             </div>
             /* jshint ignore:end */
         );
     }
 });
 
-module.exports = AdminWrapper(AdminGateway);
+module.exports = AdminNavbarComponent;
