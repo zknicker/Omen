@@ -13,6 +13,8 @@ var get = function(constant) {
         case 'SOCKET_NO_AUTH':
             ret = 'You must be logged in to join a room.';
             break;
+        case 'SOCKET_NO_SPECIAL_ACCESS_RIGHTS':
+            ret = 'You are not special enough to access this content.';
     }
     return ret;
 }

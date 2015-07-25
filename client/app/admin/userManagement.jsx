@@ -5,7 +5,7 @@ var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var AdminWrapper = require('./adminWrapper.jsx');
 
-var GatewayComponent = React.createClass({
+var UserManagementComponent = React.createClass({
     
     mixins: [ Router.State ],
     
@@ -13,11 +13,11 @@ var GatewayComponent = React.createClass({
         return (
             /* jshint ignore:start */
             <div>
-                Gateway freakin' yo
+                User management yo
             </div>
             /* jshint ignore:end */
         );
     }
 });
 
-module.exports = GatewayComponent;
+module.exports = UserManagementComponent;

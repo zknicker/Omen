@@ -37,6 +37,7 @@ function onAuthenticate(socket, token) {
         } else {
             socket.authenticated = true;
             socket.userId = decodedToken.id;
+            socket.userRole = decodedToken.role;
         }
     });
 }

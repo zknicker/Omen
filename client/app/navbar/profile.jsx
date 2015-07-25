@@ -16,7 +16,7 @@ var NavbarProfileComponent = React.createClass({
                         Test
                     </div>
                     <div className="profile-points">
-                        <span>0 Points</span>
+                        <span>0</span>
                     </div>
                 </div>
             </div>

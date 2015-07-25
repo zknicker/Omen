@@ -1,7 +1,7 @@
 'use strict';
 
 var socketHelper = require('../../helpers/socket.helper');
-var constant = require('../../helpers/constants.helper');
+var constants = require('../../helpers/constants.helper');
 var UserController = require('./user.controller');
 
 // Socket listeners to react to client messages for each user.
@@ -20,8 +20,27 @@ exports.register = function (io, socket) {
             });
         } else {
             acknowledgement({
-                error: constant.get('SOCKET_NO_AUTH'),
+                error: constants.get('SOCKET_NO_AUTH'),
                 room: null
+            });
+        }
+    });
+
+    /**
+     * Retrieves a list of all users registered to the site.
+     */
+    socket.on('users:list', function (req, acknowldegement) {
+        if (socketHelper.hasSpecialAdvancedAccessRights(socket)) {
+            UserController.listAllUsers(function (err, users) {
+                acknowledegement({
+                    errors: err,
+                    users: users
+                });
+            });
+        } else {
+            acknowldegement({
+                error: constants.get('SOCKET_NO_SPECIAL_ACCESS_RIGHTS'),
+                users: null
             });
         }
     });

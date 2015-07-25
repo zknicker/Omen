@@ -155,6 +155,17 @@ var updatePassword = function (req, res, next) {
 };
 
 /**
+ * Retrieve a user account with sensitive (e.g. email) data.
+ * Also caches the retrieved user.
+ */
+var listAllUsers = function (CB) {
+    User.find()
+    .then(function (users) {
+        cb(null, users);
+    }).catch(cb);
+};
+
+/**
  * Given a user ID, removes the associated user from all rooms.
  */
 var leaveAllRooms = function (userId, cb) {
@@ -208,6 +219,7 @@ module.exports = {
     createAccount: createAccount,
     updateProfile: updateProfile,
     updatePassword: updatePassword,
+    listAllUsers: listAllUsers,
     leaveAllRooms: leaveAllRooms,
     leaveCurrentPublicRoom: leaveCurrentPublicRoom,
     getRooms: getRooms

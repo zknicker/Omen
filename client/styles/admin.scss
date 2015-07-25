@@ -37,9 +37,24 @@
         padding: 0 20px;
         margin-bottom: 4px;
         line-height: 60px;
+        
+        a {
+            height: 100%; 
+            width: 100%;
+            display: block;
+        }
+        
+        &:hover {
+            background-color: #EDEDED;   
+        }
     }
-}
-
-.admin-sidebar-list-selected-item {
-    background-color: #E3E3E3;   
+    
+    li.selected {
+        background-color: #E3E3E3;
+        font-size: 24px;
+        
+        a {
+            color: #4E4E4E;
+        }
+    }
 }
