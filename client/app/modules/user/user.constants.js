@@ -8,9 +8,10 @@ var userConstants = {
 
     // Unauthenticated user settings.
     unauthenticatedUser: {
+        id: 0,
         loggedIn: false,
-        firstName: 'Guest',
-        lastName: 'Pants'
+        username: 'Guest',
+        role: 'Guest'
     }
 };
 
