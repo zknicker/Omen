@@ -9,7 +9,7 @@ var NavbarProfileComponent = React.createClass({
             /* jshint ignore:start */
             <div className = "header-profile">
                 <div className="profile-avatar profile-right">
-                    <img src="../images/default-avatar.png" />
+                    <img src="../avatar/2.png" />
                 </div>
                 <div className="profile-left">
                     <div className="profile-username">

@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var Navbar = require('../navbar/navbar.jsx');
+var Header = require('../header/header.jsx');
 var userStore = require('../modules/user/user.store');
 
 function StandardWrapper(WrappedComponent) {
@@ -23,7 +23,7 @@ function StandardWrapper(WrappedComponent) {
         render: function() {
             return ( 
                 <div className="wrapper"> 
-                    <Navbar user={this.state.user} />
+                    <Header user={this.state.user} />
                     <WrappedComponent />
                 </div>
             );

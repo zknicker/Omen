@@ -6,9 +6,9 @@ var Link = Router.Link;
 var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
 var JoinedRoomNavigation = require('./joinedRoomNavigation.jsx');
-var NavbarProfile = require('./profile.jsx');
-var NavbarActions = require('./actions.jsx');
-var NavbarLogo = require('./logo.jsx');
+var HeaderProfile = require('./headerProfile.jsx');
+var HeaderProfileActions = require('./headerProfileActions.jsx');
+var HeaderLogo = require('./headerLogo.jsx');
 
 function getState() {
     return {
@@ -77,9 +77,9 @@ var NavbarComponent = React.createClass({
           <div>
             <header className="header">
                 <div id="sloped-header-bg" className="header-bg"></div>
-                <NavbarLogo />
-                <NavbarProfile />
-                <NavbarActions user={this.state.user} />
+                <HeaderLogo />
+                <HeaderProfile />
+                <HeaderProfileActions user={this.state.user} />
             </header>
             <div className="navbar">
               <div className="nav">

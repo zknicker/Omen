@@ -93,8 +93,8 @@ var defaults = {
     },
     root: path.normalize(__dirname + '/../../..'),
     staticAssets: 'client',
-    avatarsStorage: 'client/images/avatars',
-    avatarsURL: '/images',
+    avatarAssets: 'images/avatars',
+    defaultAvatar: 'default.png',
     security: {
         // Arrays of URLs to whitelist from security policies
         whitelists: {
