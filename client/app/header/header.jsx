@@ -11,6 +11,7 @@ var HeaderProfileActions = require('./headerProfileActions.jsx');
 var HeaderLogo = require('./headerLogo.jsx');
 
 function getState() {
+    console.log(userStore.getUser());
     return {
         user: userStore.getUser()
     }
@@ -78,7 +79,7 @@ var NavbarComponent = React.createClass({
             <header className="header">
                 <div id="sloped-header-bg" className="header-bg"></div>
                 <HeaderLogo />
-                <HeaderProfile />
+                <HeaderProfile user={this.state.user} />
                 <HeaderProfileActions user={this.state.user} />
             </header>
             <div className="navbar">

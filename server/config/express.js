@@ -49,6 +49,7 @@ module.exports = function (app, express, database) {
     // Load favicon & other static assets.
     app.use(favicon(path.join(settings.root, settings.staticAssets, '/favicon.ico')));
     app.use(express.static(path.join(settings.root, settings.staticAssets)));
+    app.use('/images', express.static(path.join(settings.root, settings.serverImageAssets)));
 
     // Authentication middleware.
     auth.init(database.models.user);

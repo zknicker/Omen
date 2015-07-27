@@ -15,7 +15,10 @@ var userConstants = {
         loggedIn: false,
         username: 'Guest',
         role: 'Guest'
-    }
+    },
+    
+    // Avatar path.
+    AVATAR_URL: '../images/avatars/',
 };
 
 module.exports = userConstants;

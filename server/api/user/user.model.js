@@ -37,6 +37,11 @@ var User = Waterline.Collection.extend({
         username: {
             type: 'string',  
         },
+        
+        avatar: {
+            type: 'string',
+            defaultsTo: 'default.png'
+        },
 
         resetPasswordToken: {
             type: 'string',

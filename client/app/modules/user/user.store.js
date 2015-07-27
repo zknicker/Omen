@@ -20,6 +20,7 @@ var UserStore = new Store({
             email: this._user.email,
             username: this._user.username,
             loggedIn: this._user.loggedIn, // TODO: wtf?
+            avatar: userConstants.AVATAR_URL + this._user.avatar,
             
             isAdmin: function() {
                 return this._user.role === 'admin';   
