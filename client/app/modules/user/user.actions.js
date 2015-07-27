@@ -173,6 +173,19 @@ module.exports = {
             destroyUser: true
         };
         this.postForm(form, cb);
-    }
-
+    },
+    
+    /**
+     * Gets a list of all users registered to the site.
+     * [ADMIN ONLY]
+     */
+    getAllUsers: function() {
+        Dispatcher.handleViewAction({ actionType: userConstants.ALL_USERS_LOADING });
+        socket.emit('users:list', null, function(res) {
+            if (res.errors) {
+                Dispatcher.handleViewAction({ actionType: userConstants.ALL_USERS_ERROR });
+            }
+            Dispatcher.handleViewAction({ actionType: userConstants.ALL_USERS_SUCCESS, users: res.users });
+        });
+    },
 };

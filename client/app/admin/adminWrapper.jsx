@@ -18,7 +18,6 @@ var AdminWrapper = React.createClass({
             <div className="wrapper"> 
                 <AdminNavbar />
                 <AdminSidebar />
-            Route Handler:    
                 <RouteHandler/>
             </div>
         );

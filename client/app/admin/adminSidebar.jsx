@@ -20,9 +20,15 @@ var AdminSidebarComponent = React.createClass({
     },
     
     getInitialState: function() {
-        
+        console.log('yo');
         var path = this.getRoutes();
         var currentRoute = path[path.length - 1];
+        
+        // The route name is undefined for /admin route. The sidebar
+        // should indicate that the user is on the overview page.
+        if (!currentRoute.name) {
+            currentRoute.name = 'overview';
+        }
         
         return {
             activeSidebarItemRouteName: currentRoute.name  

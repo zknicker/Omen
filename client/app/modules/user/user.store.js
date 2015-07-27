@@ -28,15 +28,18 @@ var UserStore = new Store({
     },
     
     handleSetCurrentUser: function(user) {
-        this._user = user;   
+        this._user = user;
+        UserStore.emitChange();
     },
     
     handleSetUserSocket: function(socket) {
-        this._socket = socket;   
+        this._socket = socket;
+        UserStore.emitChange();
     },
     
     handleSetAllUsers: function(allUsers) {
-        this.allUsers = allUsers;   
+        this.allUsers = allUsers || [];
+        UserStore.emitChange(); 
     },
 });
 
@@ -46,17 +49,14 @@ UserStore.dispatcherToken = Dispatcher.register(function (payload) {
 
     if (action.actionType === userConstants.SET_CURRENT_USER) {
         UserStore.handleSetCurrentUser(action.user);
-        UserStore.emitChange();
     }
     
     if (action.actionType === userConstants.SET_CURRENT_USER_SOCKET) {
         UserStore.handleSetUserSocket(action.socket);
-        UserStore.emitChange();
     }
     
     if (action.actionType === userConstants.SET_ALL_USERS_LIST) {
         UserStore.handleSetAllUsers(action.users);
-        UserStore.emitChange();
     }
 });
 

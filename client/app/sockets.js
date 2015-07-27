@@ -2,6 +2,7 @@
 
 var messageSocketListeners = require('./modules/message/message.socket'); 
 var roomSocketListeners = require('./modules/room/room.socket'); 
+var userSocketListeners = require('./modules/user/user.socket'); 
 
 var _socket;
 var _connect = function() {
@@ -15,6 +16,7 @@ var socketFunctions = {
         
         messageSocketListeners(_socket);
         roomSocketListeners(_socket);
+        userSocketListeners(_socket);
     },
     
     authenticate: function(token) {

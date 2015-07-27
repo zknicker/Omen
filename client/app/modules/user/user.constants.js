@@ -5,6 +5,9 @@ var userConstants = {
     // Action types.
     SET_CURRENT_USER: 'SET_CURRENT_USER',
     SET_CURRENT_USER_SOCKET: 'SET_CURRENT_USER_SOCKET',
+    GET_ALL_USERS_LOADING: 'GET_ALL_USERS_LOADING',
+    GET_ALL_USERS_ERROR: 'GET_ALL_USERS_LOADING',
+    GET_ALL_USERS_SUCCESS: 'GET_ALL_USERS_LOADING',
 
     // Unauthenticated user settings.
     unauthenticatedUser: {

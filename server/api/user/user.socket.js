@@ -29,16 +29,16 @@ exports.register = function (io, socket) {
     /**
      * Retrieves a list of all users registered to the site.
      */
-    socket.on('users:list', function (req, acknowldegement) {
+    socket.on('users:list', function (req, acknowledgement) {
         if (socketHelper.hasSpecialAdvancedAccessRights(socket)) {
             UserController.listAllUsers(function (err, users) {
-                acknowledegement({
+                acknowledgement({
                     errors: err,
                     users: users
                 });
             });
         } else {
-            acknowldegement({
+            acknowledgement({
                 error: constants.get('SOCKET_NO_SPECIAL_ACCESS_RIGHTS'),
                 users: null
             });

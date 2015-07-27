@@ -18,6 +18,7 @@ function onConnect(io, socket) {
     socket.removeAllListeners();
     messageSocketFunctions.register(io, socket);
     roomSocketFunctions.register(io, socket);
+    userSocketFunctions.register(io, socket);
 }
 
 function onDisconnect(io, socket) {

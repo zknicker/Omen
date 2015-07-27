@@ -158,7 +158,7 @@ var updatePassword = function (req, res, next) {
  * Retrieve a user account with sensitive (e.g. email) data.
  * Also caches the retrieved user.
  */
-var listAllUsers = function (CB) {
+var listAllUsers = function (cb) {
     User.find()
     .then(function (users) {
         cb(null, users);
