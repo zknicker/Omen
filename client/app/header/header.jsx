@@ -48,9 +48,6 @@ var NavbarComponent = React.createClass({
           /* jshint ignore:start */
           <ul className="nav-list pull-right">
             <li className="nav-item">
-              Hello {user.firstName ? user.firstName : user.email}
-            </li>
-            <li className="nav-item">
               <Link to="settings">My Account</Link>
             </li>
             <li className="nav-item">

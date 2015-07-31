@@ -13,7 +13,7 @@ var NavbarProfileComponent = React.createClass({
                 </div>
                 <div className="profile-left">
                     <div className="profile-username">
-                        Test
+                        {this.props.user.username}
                     </div>
                     <div className="profile-points">
                         <span>0</span>
