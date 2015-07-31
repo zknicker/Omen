@@ -14,7 +14,8 @@ var userConstants = {
         id: 0,
         loggedIn: false,
         username: 'Guest',
-        role: 'Guest'
+        role: 'Guest',
+        avatar: 'default.png'
     },
     
     // Avatar path.
