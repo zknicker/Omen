@@ -11,7 +11,6 @@ var HeaderProfileActions = require('./headerProfileActions.jsx');
 var HeaderLogo = require('./headerLogo.jsx');
 
 function getState() {
-    console.log(userStore.getUser());
     return {
         user: userStore.getUser()
     }

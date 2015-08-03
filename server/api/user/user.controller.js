@@ -10,6 +10,7 @@ var db = require('../../config/database');
 var User = db.models.user;
 var CachedUser = db.models.cacheduser;
 var auth = require('../../auth');
+var avatarHelper = require('../../helpers/avatar.helper');
 
 /**
  * Cache the passed user. For more information on why, see the
@@ -154,6 +155,22 @@ var updatePassword = function (req, res, next) {
     });
 };
 
+var updateAvatar = function (req, res, next) {
+    avatarHelper.validateAndSave(req.body.avatar, req.body.avatarMimeType, req.user.id, function (err, fileName) {
+        if (err) {
+            return next(err);   
+        }
+        
+        User.update({ id: req.user.id }, { avatar: fileName })
+        .then(function (usersUpdated) {
+            return res.status(200).json({
+                avatar: fileName  
+            });
+        })
+        .catch(next);
+    });
+}
+
 /**
  * Retrieve a user account with sensitive (e.g. email) data.
  * Also caches the retrieved user.
@@ -219,6 +236,7 @@ module.exports = {
     createAccount: createAccount,
     updateProfile: updateProfile,
     updatePassword: updatePassword,
+    updateAvatar: updateAvatar,
     listAllUsers: listAllUsers,
     leaveAllRooms: leaveAllRooms,
     leaveCurrentPublicRoom: leaveCurrentPublicRoom,

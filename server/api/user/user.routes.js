@@ -18,7 +18,8 @@ var routes = function (app) {
     // Update profile
     app.put('/user', auth.isAuthenticated, userController.updateProfile);
     app.patch('/user', auth.isAuthenticated, userController.updateProfile);
-
+    app.post('/user/avatar', auth.isAuthenticated, userController.updateAvatar);
+    
     // Update Password
     app.put('/user/password', auth.isAuthenticated, userController.updatePassword);
 

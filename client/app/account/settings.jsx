@@ -5,6 +5,7 @@ var Router = require('react-router');
 var Link = Router.Link;
 var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
+var settingsActions = require('../modules/user/settings.actions');
 var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var getState = function() {
@@ -57,6 +58,18 @@ var SettingsComponent = React.createClass({
 
               <button>Change Password</button>
             </form>
+            
+            <h3>Change Avatar</h3>
+
+            <form onSubmit={this.handleAvatarForm} encType="multipart/form-data">
+
+              <p>
+                <label htmlFor="avatar">New Avatar:</label>
+                <input type="file" name="avatar" ref="avatarFile" id="avatar" />
+              </p>
+            
+              <button>Update Avatar</button>
+            </form>
           </div>
           /* jshint ignore:end */
         );
@@ -78,6 +91,14 @@ var SettingsComponent = React.createClass({
         e.preventDefault();
         var form = e.currentTarget;
         userActions.destroy(form);
+    },
+    
+    handleAvatarForm: function(e) {
+        e.preventDefault();
+        var file = this.refs.avatarFile.getDOMNode().files[0];
+        if (file) {
+            settingsActions.updateAvatar(file);
+        }
     },
     
     // Event handler for 'change' events coming from store mixins.

@@ -42,6 +42,16 @@ var UserStore = new Store({
         this.allUsers = allUsers || [];
         UserStore.emitChange(); 
     },
+    
+    handleUpdateAvatarSuccess: function(avatarFileName) {
+        console.log(avatarFileName);
+        this._user.avatar = avatarFileName;
+        UserStore.emitChange();
+    },
+    
+    handleUpdateAvatarError: function(error) {
+        alert(error);   
+    }
 });
 
 UserStore.dispatcherToken = Dispatcher.register(function (payload) {
@@ -58,6 +68,14 @@ UserStore.dispatcherToken = Dispatcher.register(function (payload) {
     
     if (action.actionType === userConstants.SET_ALL_USERS_LIST) {
         UserStore.handleSetAllUsers(action.users);
+    }
+    
+    if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_SUCCESS) {
+        UserStore.handleUpdateAvatarSuccess(action.payload);
+    }
+    
+    if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_ERROR) {
+        UserStore.handleUpdateAvatarError(action.payload);
     }
 });
 
