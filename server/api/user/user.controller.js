@@ -158,12 +158,15 @@ var updatePassword = function (req, res, next) {
 var updateAvatar = function (req, res, next) {
     avatarHelper.validateAndSave(req.body.avatar, req.body.avatarMimeType, req.user.id, function (err, fileName) {
         if (err) {
-            return next(err);   
+            res.status(400).json({
+                error: err 
+            });
+            return;
         }
         
         User.update({ id: req.user.id }, { avatar: fileName })
         .then(function (usersUpdated) {
-            return res.status(200).json({
+            res.status(200).json({
                 avatar: fileName  
             });
         })

@@ -1,11 +1,21 @@
 {
   "name": "omen",
   "version": "0.0.1",
+  "browserify-shim": {
+    "swal": "global:swal",
+    "Ladda": "global:Ladda"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
   "dependencies": {
     "async": "^0.7.0",
     "bcrypt": "~0.8.0",
     "bcrypt-nodejs": "~0.0.3",
     "body-parser": "^1.13.2",
+    "browserify-shim": "^3.8.10",
     "colors": "^0.6.2",
     "compression": "^1.5.1",
     "cookie": "^0.1.3",

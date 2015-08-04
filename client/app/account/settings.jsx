@@ -7,10 +7,12 @@ var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
 var settingsActions = require('../modules/user/settings.actions');
 var StandardWrapper = require('../index/standardWrapper.jsx');
+var AccountButton = require('./accountButton.jsx');
 
 var getState = function() {
     return {
-        user: userStore.getUser()
+        user: userStore.getUser(),
+        avatarUpdateLoading: userStore.avatarUpdateLoading,
     };
 };
 
@@ -22,7 +24,6 @@ var SettingsComponent = React.createClass({
     
     render: function() {
         var user = this.state.user;
-        
         return (
           /* jshint ignore:start */
           <div>
@@ -63,12 +64,12 @@ var SettingsComponent = React.createClass({
 
             <form onSubmit={this.handleAvatarForm} encType="multipart/form-data">
 
-              <p>
-                <label htmlFor="avatar">New Avatar:</label>
-                <input type="file" name="avatar" ref="avatarFile" id="avatar" />
-              </p>
-            
-              <button>Update Avatar</button>
+                <p>
+                    <label htmlFor="avatar">New Avatar:</label>
+                    <input type="file" name="avatar" ref="avatarFile" id="avatar" />
+                </p>
+
+                <AccountButton loading={this.state.avatarUpdateLoading} />
             </form>
           </div>
           /* jshint ignore:end */

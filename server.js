@@ -35,6 +35,9 @@ database.initialize(function(err) {
         require('./server/routes')(app);
         console.log('✔ Starting routing. '.green);
         
+        // Setup Express error handling.
+        require('./server/config/errorHandling')(app);
+        
         // Start message cache writeback job.
         require('./server/helpers/writeback.helper');
         console.log('✔ Starting message cache writeback job. '.green);

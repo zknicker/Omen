@@ -33,7 +33,9 @@ module.exports = function (app, express, database) {
     app.use(compression());
 
     // JSON Parsing.
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({
+        limit: '10mb'
+    }));
     app.use(bodyParser.urlencoded({
         extended: true
     }));
@@ -67,6 +69,5 @@ module.exports = function (app, express, database) {
             res.header('Expires', 0);
             next();
         });
-        app.use(errorHandler());
     }
 };

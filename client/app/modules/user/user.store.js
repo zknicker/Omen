@@ -4,6 +4,7 @@ var Store = require('../../lib/store');
 var Dispatcher = require('../../dispatcher');
 var userConstants = require('./user.constants');
 var userDefaults = require('./user.constants').unauthenticatedUser;
+var Alert = require('../../lib/alert');
 
 var UserStore = new Store({
 
@@ -12,6 +13,7 @@ var UserStore = new Store({
         this._socket = null;
         
         this.allUsers = [];
+        this.avatarUpdateLoading = false;
     },
     
     getUser: function() {
@@ -52,14 +54,17 @@ var UserStore = new Store({
             // bind(this) on functions which are members of objects (rather than 
             // another function), because JSHint says so. Lameeeeee.
             UserStore._user.avatar = datedAvatarFileName;
+            UserStore.avatarUpdateLoading = false;
             UserStore.emitChange();
         },
         
         error: function(error) {
-            alert(error);
+            Alert.error(error);
         },
         
         loading: function() {
+            UserStore.avatarUpdateLoading = true;
+            UserStore.emitChange();
         }
     }
 });
@@ -86,6 +91,10 @@ UserStore.dispatcherToken = Dispatcher.register(function (payload) {
     
     if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_ERROR) {
         UserStore.handleUpdateAvatar.error(action.payload);
+    }
+    
+    if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_LOADING) {
+        UserStore.handleUpdateAvatar.loading();
     }
 });
 
