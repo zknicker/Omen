@@ -43,14 +43,24 @@ var UserStore = new Store({
         UserStore.emitChange(); 
     },
     
-    handleUpdateAvatarSuccess: function(avatarFileName) {
-        console.log(avatarFileName);
-        this._user.avatar = avatarFileName;
-        UserStore.emitChange();
-    },
-    
-    handleUpdateAvatarError: function(error) {
-        alert(error);   
+    handleUpdateAvatar: {
+        success: function(avatarFileName) {
+            var datedAvatarFileName = avatarFileName + '?' + (new Date()).getTime();
+            
+            // Stores are singletons, so this is an OK way to access the "instance" 
+            // fields. Still, it feels dirty. Doing it this way since you can't use
+            // bind(this) on functions which are members of objects (rather than 
+            // another function), because JSHint says so. Lameeeeee.
+            UserStore._user.avatar = datedAvatarFileName;
+            UserStore.emitChange();
+        },
+        
+        error: function(error) {
+            alert(error);
+        },
+        
+        loading: function() {
+        }
     }
 });
 
@@ -71,11 +81,11 @@ UserStore.dispatcherToken = Dispatcher.register(function (payload) {
     }
     
     if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_SUCCESS) {
-        UserStore.handleUpdateAvatarSuccess(action.payload);
+        UserStore.handleUpdateAvatar.success(action.payload);
     }
     
     if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_ERROR) {
-        UserStore.handleUpdateAvatarError(action.payload);
+        UserStore.handleUpdateAvatar.error(action.payload);
     }
 });
 
