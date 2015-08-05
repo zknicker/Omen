@@ -21,6 +21,9 @@ function setHeaderBackgroundSlope() {
     $('#sloped-header-bg').css({
        'transform': 'rotate(-' + angle + 'deg)' 
     });
+    $('#sloped-header-bg .header-bg-inner').css({
+       'transform': 'rotate(' + angle + 'deg)' 
+    });
 }
 
 var NavbarComponent = React.createClass({
@@ -73,7 +76,9 @@ var NavbarComponent = React.createClass({
           /* jshint ignore:start */
           <div>
             <header className="header">
-                <div id="sloped-header-bg" className="header-bg"></div>
+                <div id="sloped-header-bg" className="header-bg">
+                    <div className="header-bg-inner"></div>
+                </div>
                 <HeaderLogo />
                 <HeaderProfile user={this.state.user} />
                 <HeaderProfileActions user={this.state.user} />

@@ -5,13 +5,23 @@
 }
 
 .header-bg {
-    width: 100%;
     height: 74px;
+    width: 100%;
     background: #21A3D5;
     transform-origin: bottom left;
     position: absolute;
     top: -6px;
     left: 0;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.header-bg-inner {
+    height: 200px;
+    width: 100%;
+    background: #39ADDA;
+    position: absolute;
+    left: 300px;
 }
 
 .header-logo {
