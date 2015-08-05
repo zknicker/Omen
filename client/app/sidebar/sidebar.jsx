@@ -5,6 +5,7 @@ var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 var SidebarItem = require('./sidebarItem.jsx');
+var JoinedRoomsList = require('./joinedRoomsList.jsx');
 
 var SidebarComponent = React.createClass({
 
@@ -57,6 +58,7 @@ var SidebarComponent = React.createClass({
                 </ul>
                 <ul className="sidebar-list">
                     <li className="sidebar-list-category">Rooms</li>
+                    <JoinedRoomsList />
                 </ul>
             </div>
             /* jshint ignore:end */

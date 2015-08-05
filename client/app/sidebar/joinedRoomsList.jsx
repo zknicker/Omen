@@ -4,6 +4,7 @@ var React = require('react/addons');
 var Router = require('react-router');
 var roomStore = require('../modules/room/room.store');
 var Navigation = Router.Navigation;
+var SidebarItem = require('./sidebarItem.jsx');
 
 var getState = function () {
     return {
@@ -11,7 +12,7 @@ var getState = function () {
     };
 };
 
-var JoinedRoomNavigationComponent = React.createClass({
+var JoinedRoomsList = React.createClass({
 
     mixins: [ Navigation, roomStore.mixin ],
     
@@ -23,19 +24,20 @@ var JoinedRoomNavigationComponent = React.createClass({
      * Responds to a click on a room.
      */
     handleRoomClick: function (e) {
-        this.transitionTo('/chat');
+        //this.transitionTo('/chat');
     },
     
     render: function () {
+        var isActive = false;
+        
         return (
-            /* jshint ignore:start */
-            <div className="joined-rooms">
-                Rooms:
-                <ul>
-                    <li><a href="#" onClick={this.handleRoomClick}>{this.state.currentRoom.title}</a></li>
-                </ul>
-            </div>
-            /* jshint ignore:end */
+            <SidebarItem
+                active={isActive}
+                routeName={'room-' + this.state.currentRoom.id}
+                name={this.state.currentRoom.title}
+                link="chat"
+                onSelect={this.handleRoomClick}
+            />
         );
     },
 
@@ -46,4 +48,4 @@ var JoinedRoomNavigationComponent = React.createClass({
     }
 });
 
-module.exports = JoinedRoomNavigationComponent;
+module.exports = JoinedRoomsList;

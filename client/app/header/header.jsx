@@ -5,7 +5,6 @@ var Router = require('react-router');
 var Link = Router.Link;
 var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
-var JoinedRoomNavigation = require('./joinedRoomNavigation.jsx');
 var HeaderProfile = require('./headerProfile.jsx');
 var HeaderProfileActions = require('./headerProfileActions.jsx');
 var HeaderLogo = require('./headerLogo.jsx');
@@ -54,7 +53,6 @@ var NavbarComponent = React.createClass({
                 <HeaderProfile user={this.state.user} />
                 <HeaderProfileActions user={this.state.user} />
             </header>
-            <JoinedRoomNavigation />
           </div>
           /* jshint ignore:end */
         );
