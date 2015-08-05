@@ -18,6 +18,20 @@ html, body {
     height: 100%;   
 }
 
+.page {
+    height: 100%;
+    padding-top: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.page-content {
+    float: left;
+    padding: 42px 0 0 30px;
+}
+
 // Injects all bower_component files automatically
 // bower:scss
 // endbower
@@ -41,13 +55,6 @@ a {
     transition: $property 0s ease;
 }
 
-.main-container {
-    clear: both;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 // Styling on warning for users on IE7 or below
 .browsehappy {
     text-align: center;
@@ -62,4 +69,5 @@ a {
 @import 'admin';
 @import 'chat';
 @import 'header';
+@import 'sidebar';
 // [endinjector]
