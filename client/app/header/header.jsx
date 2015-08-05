@@ -43,35 +43,6 @@ var NavbarComponent = React.createClass({
     },
     
     render: function() {
-        var user = this.props.user;
-
-        // Logged in
-        var navLinks = user.loggedIn ? (
-          /* jshint ignore:start */
-          <ul className="nav-list pull-right">
-            <li className="nav-item">
-              <Link to="settings">My Account</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="logout" onClick={this.handleLogout}>Logout</Link>
-            </li>
-          </ul>
-          /* jshint ignore:end */
-
-        // Logged Out
-        ) : (
-          /* jshint ignore:start */
-          <ul className="nav-list pull-right">
-            <li className="nav-item">
-              <Link to="login">Login</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="signup">Create Account</Link>
-            </li>
-          </ul>
-          /* jshint ignore:end */
-        );
-
         return (
           /* jshint ignore:start */
           <div>
@@ -83,15 +54,6 @@ var NavbarComponent = React.createClass({
                 <HeaderProfile user={this.state.user} />
                 <HeaderProfileActions user={this.state.user} />
             </header>
-            <div className="navbar">
-              <div className="nav">
-                <ul className="nav-list pull-left">
-                  <li className="nav-item"><Link to="/">Home</Link></li>
-                  <li className="nav-item"><Link to="/rooms">Rooms</Link></li>
-                </ul>
-                {navLinks}
-              </div>
-            </div>
             <JoinedRoomNavigation />
           </div>
           /* jshint ignore:end */

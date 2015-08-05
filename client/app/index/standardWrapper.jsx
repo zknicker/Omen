@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Header = require('../header/header.jsx');
+var Sidebar = require('../sidebar/sidebar.jsx');
 var userStore = require('../modules/user/user.store');
 
 function StandardWrapper(WrappedComponent) {
@@ -23,8 +24,13 @@ function StandardWrapper(WrappedComponent) {
         render: function() {
             return ( 
                 <div className="wrapper"> 
-                    <Header user={this.state.user} />
-                    <WrappedComponent />
+                    <Header />
+                    <div className="page">
+                        <Sidebar />
+                        <div className="page-content">
+                            <WrappedComponent />
+                        </div>
+                    </div>
                 </div>
             );
         },

@@ -11,7 +11,7 @@ var IndexComponent = React.createClass({
                 
         return (
           /* jshint ignore:start */
-            <div className="main-container wrapper">
+            <div>
                 <h1>Omen</h1>
                 <h3>A next generation chat platform.</h3>
                 <p><span style={definitionUnderline}>omen</span>: something that is believed to be a sign or warning of something that will happen in the future</p>

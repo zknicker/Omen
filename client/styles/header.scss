@@ -2,6 +2,7 @@
     height: 100px;
     width: 100%;
     position: relative;
+    z-index: 1000;
 }
 
 .header-bg {
@@ -14,6 +15,8 @@
     left: 0;
     overflow: hidden;
     -webkit-backface-visibility: hidden;
+    border-bottom: 8px solid white;
+    box-sizing: content-box;
 }
 
 .header-bg-inner {
@@ -21,7 +24,7 @@
     width: 100%;
     background: #39ADDA;
     position: absolute;
-    left: 300px;
+    left: 280px;
 }
 
 .header-logo {
