@@ -11,7 +11,7 @@
 }
 
 html, body {
-    height: 100%; 
+    height: 100%;
 }
 
 .wrapper {
@@ -47,6 +47,22 @@ a {
     color: #1596CC;
 }
 
+h1 {
+    font-size: 50px;
+    font-weight: 700;
+}
+
+p {
+    line-height: 160%;
+    font-size: 20px;
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 @mixin transition-quick($property) {
     transition: $property 0.2s ease;
 }
@@ -69,5 +85,6 @@ a {
 @import 'admin';
 @import 'chat';
 @import 'header';
+@import 'login';
 @import 'sidebar';
 // [endinjector]

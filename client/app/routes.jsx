@@ -5,6 +5,7 @@ var DefaultRoute = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
 var App = require('./app.jsx');
 var IndexPage = require('./index/index.jsx');
+var LandingPage = require('./account/landing.jsx');
 var LoginPage = require('./account/login.jsx');
 var ForgotPage = require('./account/forgot.jsx');
 var SignupPage = require('./account/signup.jsx');
@@ -20,6 +21,7 @@ var routes = (
     
     // User Routes
     <DefaultRoute handler={IndexPage} />
+    <Route name="landing" handler={LandingPage} />
     <Route name="login" handler={LoginPage} />
     <Route name="logout" handler={IndexPage} />
     <Route name="forgot" handler={ForgotPage} />

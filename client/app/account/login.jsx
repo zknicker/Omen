@@ -14,7 +14,7 @@ var LoginComponent = React.createClass({
     render: function () {
         return (
             /* jshint ignore:start */
-            <div>
+            <div>            
                 <h3>Sign in</h3>
                 <form method="post" action="/login" onSubmit={this.handleSubmit}>
                     <p>

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "browserify-shim": {
     "swal": "global:swal",
-    "Ladda": "global:Ladda"
+    "Ladda": "global:Ladda",
+    "Trianglify": "global:Trianglify"
   },
   "browserify": {
     "transform": [

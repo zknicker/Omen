@@ -16,8 +16,7 @@ var SidebarComponent = React.createClass({
             sidebarItems: [
                 { routeName: 'home', name: 'Home', link: '/' },
                 { routeName: 'rooms', name: 'Rooms', link: 'rooms' },
-                { routeName: 'settings', name: 'Settings', link: 'settings' },
-                { routeName: 'logout', name: 'Logout', link: 'logout' }
+                { routeName: 'settings', name: 'Settings', link: 'settings' }
             ]
         };
     },
