@@ -4,7 +4,10 @@
  * Join a room.
  */
 var joinRoom = function (socket, roomId) {
-    socket.join('room-' + roomId);
+    socket.join('room-' + roomId, function() {
+        console.log('JOINED AND DONE');
+        console.log(socket);
+    });
 }
 
 /**
@@ -19,8 +22,8 @@ var leaveRoom = function (socket, roomId) {
  * Note that, since this is a broadcast, the message won't be sent to the
  * socket client, only other socket clients.
  */
-var broadcastToRoom = function (socket, roomId, event, message) {
-    socket.broadcast.to('room-' + roomId).emit(event, message);
+var broadcastToRoom = function (io, socket, roomId, event, data) {
+    socket.broadcast.to('room-' + roomId).emit(event, data);
 }
 
 /**

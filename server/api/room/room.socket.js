@@ -14,25 +14,28 @@ exports.register = function (io, socket) {
      */
     socket.on('room:join', function (roomId, acknowledgement) {
         if (socketHelper.isAuthenticated(socket)) {
-            UserController.leaveCurrentPublicRoom(socket.userId, function(err) {
-                RoomController.joinRoom(roomId, socket.userId, function (err, room) {
-                    // Acknowledge join by returning the room data.
-                    acknowledgement({
-                        errors: err,
-                        room: room
-                    });
-
-                    // Join the user to the socket room-space.
-                    socketHelper.joinRoom(socket, roomId);
-
-                    if (!err) {
-                        room.users.forEach(function (user) {
-                            if (user.id === socket.userId) {
-                                socketHelper.broadcastToRoom(socket, roomId, 'room:join', user);
-                            }
-                        });
-                    }
+            RoomController.joinRoom(roomId, socket.userId, function (err, room) {
+                // Acknowledge join by returning the room data.
+                acknowledgement({
+                    errors: err,
+                    room: room
                 });
+
+                // Join the user to the socket room-space.
+                socketHelper.joinRoom(socket, roomId);
+
+                if (!err) {
+                    room.users.forEach(function (user) {
+                        if (user.id === socket.userId) {
+                            var data = {
+                                user: user,
+                                roomId: roomId
+                            }
+                            
+                            socketHelper.broadcastToRoom(io, socket, roomId, 'room:join', data);
+                        }
+                    });
+                }
             });
         } else {
             acknowledgement({

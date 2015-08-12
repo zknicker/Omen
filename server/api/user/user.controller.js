@@ -211,10 +211,13 @@ var leaveCurrentPublicRoom = function (userId, cb) {
             user.rooms.forEach(function (room) {  
                 if (room.type === 'public') {
                     user.rooms.remove(room.id);
+                    events.emit('server:room:departed', {
+                        userId: userId,
+                        roomId: room.id
+                    });
                 }
             });
             user.save(function (err) {
-                events.emit('server:room:departed', userId);
                 cb(err);
             });
         
