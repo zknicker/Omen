@@ -15,7 +15,7 @@ module.exports = {
     join: function(roomId) {
         Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
         socket.emit('room:join', roomId, function(res) {
-            if (res.errors) {
+            if (res.error) {
                 Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
             }
             Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_SUCCESS, room: res.room });
@@ -28,7 +28,7 @@ module.exports = {
     create: function(roomTitle) {
         Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_LOADING });
         socket.emit('room:create', roomTitle, function(res) {
-            if (res.errors) {
+            if (res.error) {
                 Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_ERROR });
             }
             Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_SUCCESS, room: res.room });
@@ -41,7 +41,7 @@ module.exports = {
     getJoinable: function() {
         Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_LOADING });
         socket.emit('rooms:joinable', null, function(res) {
-            if (res.errors) {
+            if (res.error) {
                 Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_ERROR });
             }
             Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_SUCCESS, rooms: res.rooms });

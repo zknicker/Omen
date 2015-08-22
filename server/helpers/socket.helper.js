@@ -1,13 +1,12 @@
 'use strict';
 
+var userController = require('../api/user/user.controller');
+
 /**
  * Join a room.
  */
 var joinRoom = function (socket, roomId) {
-    socket.join('room-' + roomId, function() {
-        console.log('JOINED AND DONE');
-        console.log(socket);
-    });
+    socket.join('room-' + roomId);
 }
 
 /**
@@ -22,7 +21,7 @@ var leaveRoom = function (socket, roomId) {
  * Note that, since this is a broadcast, the message won't be sent to the
  * socket client, only other socket clients.
  */
-var broadcastToRoom = function (io, socket, roomId, event, data) {
+var broadcastToRoom = function (socket, roomId, event, data) {
     socket.broadcast.to('room-' + roomId).emit(event, data);
 }
 
@@ -34,8 +33,24 @@ var isAuthenticated = function (socket) {
     return socket.authenticated;
 }
 
+/**
+ * Returns true if the user has admin rights.
+ */
 var hasSpecialAdvancedAccessRights = function (socket) {
     return socket.authenticated && socket.userRole === 'admin';
+}
+
+/**
+ * Caches the current user's profile information on the socket object.
+ * If the user's profile changes, call this function.
+ */
+var cacheUserOnSocket = function(socket) {
+    userController.readCachedAccount(socket.userId, function (err, user) {
+        socket.user = user;
+        if (err) {
+            error.log('Error caching user on socket: ' + err);   
+        }
+    });   
 }
 
 /**
@@ -55,5 +70,6 @@ module.exports = {
     leaveRoom: leaveRoom,
     broadcastToRoom: broadcastToRoom,
     isAuthenticated: isAuthenticated,
-    hasSpecialAdvancedAccessRights: hasSpecialAdvancedAccessRights
+    hasSpecialAdvancedAccessRights: hasSpecialAdvancedAccessRights,
+    cacheUserOnSocket: cacheUserOnSocket
 };

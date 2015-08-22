@@ -3,8 +3,9 @@
 var events = require('../../config/events');
 var socketHelper = require('../../helpers/socket.helper');
 var constant = require('../../helpers/constants.helper');
+var roomResponse = require('../../data/roomResponse');
 var RoomController = require('./room.controller');
-var UserController = require('../user/user.controller');
+var async = require('async');
 
 // Socket listeners to react to client messages for each user.
 exports.register = function (io, socket) {
@@ -15,33 +16,21 @@ exports.register = function (io, socket) {
     socket.on('room:join', function (roomId, acknowledgement) {
         if (socketHelper.isAuthenticated(socket)) {
             RoomController.joinRoom(roomId, socket.userId, function (err, room) {
+                
                 // Acknowledge join by returning the room data.
-                acknowledgement({
-                    errors: err,
-                    room: room
-                });
+                acknowledgement(roomResponse.joinRoomAcknowledgement(err, room));
 
                 // Join the user to the socket room-space.
                 socketHelper.joinRoom(socket, roomId);
-
-                if (!err) {
-                    room.users.forEach(function (user) {
-                        if (user.id === socket.userId) {
-                            var data = {
-                                user: user,
-                                roomId: roomId
-                            }
-                            
-                            socketHelper.broadcastToRoom(io, socket, roomId, 'room:join', data);
-                        }
-                    });
-                }
+                        
+                // Notify everyone else.
+                var response = roomResponse.joinRoomResponse(socket.user, roomId);
+                socketHelper.broadcastToRoom(socket, roomId, 'room:join', response);
             });
         } else {
-            acknowledgement({
-                error: constant.get('SOCKET_NO_AUTH'),
-                room: null
-            });
+            var err = constant.get('SOCKET_NO_AUTH');
+            var room = null;
+            acknowledgement(roomResponse.joinRoomAcknowledgement(err, room));
         }
     });
     
@@ -51,16 +40,12 @@ exports.register = function (io, socket) {
     socket.on('room:create', function(roomTitle, acknowledgement) {
         if (socketHelper.isAuthenticated(socket)) {
             RoomController.create(roomTitle, function (err, room) {
-                acknowledgement({
-                    errors: err,
-                    room: room
-                });
+                acknowledgement(roomResponse.createRoomAcknowledgement(err, room));
             });
         } else {
-            acknowledgement({
-                error: constant.get('SOCKET_NO_AUTH'),
-                room: null
-            });
+            var err = constant.get('SOCKET_NO_AUTH');
+            var room = null;
+            acknowledgement(roomResponse.createRoomAcknowledgement(err, room));
         }
     });
     
@@ -69,10 +54,7 @@ exports.register = function (io, socket) {
      */
     socket.on('rooms:joinable', function(req, acknowledgement) {
         RoomController.getJoinableRooms(socket.userId, function(err, rooms) {
-            acknowledgement({
-                error: err,
-                rooms: rooms
-            });
+            acknowledgement(roomResponse.listRoomsAcknowledgement(err, rooms));
         });
     });
 }
@@ -85,6 +67,7 @@ exports.registerOnce = function (io) {
      * broadcasted to all clients.
      */
     events.on('server:room:departed', function(userId) {
-        io.emit('room:depart', userId);
+        var response = roomResponse.departRoomResponse(userId)
+        io.emit('room:depart', response);
     });
 }

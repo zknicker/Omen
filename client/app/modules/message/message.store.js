@@ -16,12 +16,11 @@ var MessageStore = new Store({
         this.emitChange();
     },
     
-    onLatestMessagesSuccess: function(retrievedMessages) {
-        this.messages.length = 0;
-        var messages = this.messages;
-        (retrievedMessages).forEach(function(message) {
-            messages.unshift(message);
-        });
+    onLatestMessagesSuccess: function(roomId, retrievedMessages) {
+        this.messages[roomId] = [];
+        retrievedMessages.forEach(function(message) {
+            this.messages[roomId].unshift(message);
+        }.bind(this));
         this.loading = false;
         this.emitChange();
     },
@@ -31,27 +30,26 @@ var MessageStore = new Store({
         this.emitChange();
     },
     
-    onCreateMessage: function(message) {
-        this.messages.push(message);
+    onCreateMessage: function(roomId, message) {
+        this.messages[roomId].push(message);
         this.emitChange();
     }
 });
 
 Dispatcher.register(function(action) {
-    switch(action.action.actionType) {
+    var a = action.action;
+    switch(a.actionType) {
         case constants.MESSAGE_LATEST_LOADING:
             MessageStore.onLatestMessagesLoading();
             break;
         case constants.MESSAGE_LATEST_SUCCESS:
-            var messages = action.action.messages;
-            MessageStore.onLatestMessagesSuccess(messages);
+            MessageStore.onLatestMessagesSuccess(a.roomId, a.messages);
             break;
         case constants.MESSAGE_LATEST_ERROR:
             MessageStore.onLatestMessagesError();
             break;
         case constants.CREATE_MESSAGE:
-            var message = action.action.content;
-            MessageStore.onCreateMessage(message);
+            MessageStore.onCreateMessage(a.roomId, a.message);
             break;
     }
 });

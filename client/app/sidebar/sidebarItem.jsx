@@ -8,7 +8,9 @@ var Link = Router.Link;
 var SidebarItem = React.createClass({
     
     handleClick: function (event) {
-        this.props.onSelect(this.props.routeName);
+        if (this.props.onSelect && this.props.onSelect === 'function') {
+            this.props.onSelect(this.props.routeName);
+        }
     },
     
     render: function () {
@@ -20,7 +22,7 @@ var SidebarItem = React.createClass({
         
         return (
             <li className={className} onClick={this.handleClick}>
-                <Link to={this.props.link}>{this.props.name}</Link>
+                <Link to={this.props.link} params={this.props.linkParams}>{this.props.name}</Link>
             </li>
         );
     }

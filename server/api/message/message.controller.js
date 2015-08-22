@@ -3,6 +3,7 @@
 var db = require('../../config/database');
 var Message = db.models.message;
 var CachedMessage = db.models.cachedmessage;
+var messageResponse = require('../../data/messageResponse');
 
 var createMessage = function (data, socket) {
     var newMessage = {
@@ -28,7 +29,8 @@ var readLatestMessages = function (req, res, next) {
     Message.find({ room: req.params.roomId, limit: 10, sort: 'id DESC' })
         .populate('user')
         .then(function (messages) {
-            res.send(messages);
+            var response = messageResponse.getLatestMessagesResponse(req.params.roomId, messages);
+            res.send(response);
         }).catch(next);
 };
 

@@ -4,6 +4,8 @@ var React = require('react/addons');
 var Router = require('react-router');
 var Navigation = Router.Navigation;
 var messageStore = require('../modules/message/message.store');
+var messageActions = require('../modules/message/message.actions');
+var roomActions = require('../modules/room/room.actions');
 var roomStore = require('../modules/room/room.store');
 var UserList = require('./userlist.jsx');
 var MessageList = require('./messageList.jsx');
@@ -12,9 +14,10 @@ var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var getState = function () {
     return {
-        currentRoom: roomStore.currentRoom,
+        activeRoom: roomStore.activeRoom,
+        currentRooms: roomStore.currentRooms,
         currentRoomLoading: roomStore.loading,
-        currentRoomMessages: messageStore.messages,
+        messages: messageStore.messages,
         currentRoomMessagesLoading: messageStore.loading
     };
 };
@@ -23,10 +26,17 @@ var ChatComponent = React.createClass({
 
     mixins: [Navigation, roomStore.mixin, messageStore.mixin],
 
+    contextTypes: {
+        router: React.PropTypes.func
+    },
+    
     componentDidMount: function() {
-        if (!this.state.currentRoom.id && !this.state.currentRoomLoading) {
-            this.transitionTo('/rooms');
+        var roomId = this.context.router.getCurrentParams().roomId;
+        
+        if (!this.state.currentRooms[roomId]) {
+            roomActions.join(roomId);
         }
+        messageActions.getRecent(roomId);
     },
     
     getInitialState: function () {
@@ -34,12 +44,15 @@ var ChatComponent = React.createClass({
     },
     
     render: function () {
+        var roomId = this.context.router.getCurrentParams().roomId;
+        var messages = this.state.messages[roomId] || [];
+        
         return (
             /* jshint ignore:start */
             <div>
-                <MessageList messages={this.state.currentRoomMessages} loading={this.state.currentRoomMessagesLoading} />    
-                <UserList room={this.state.currentRoom} loading={this.state.currentRoomLoading} />
-                <MessageInput room={this.state.currentRoom} />
+                <MessageList messages={messages} loading={this.state.currentRoomMessagesLoading} />    
+                <UserList room={this.state.activeRoom} loading={this.state.currentRoomLoading} />
+                <MessageInput room={this.state.activeRoom} />
             </div>
             /* jshint ignore:end */
         );
@@ -47,9 +60,10 @@ var ChatComponent = React.createClass({
 
     _onChange: function () {
         this.setState({
-            currentRoom: roomStore.currentRoom,
+            activeRoom: roomStore.activeRoom,
+            currentRooms: roomStore.currentRooms,
             currentRoomLoading: roomStore.loading,
-            currentRoomMessages: messageStore.messages,
+            messages: messageStore.messages,
             currentRoomMessagesLoading: messageStore.loading
         });
     }

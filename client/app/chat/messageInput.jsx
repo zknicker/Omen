@@ -31,6 +31,7 @@ var ChatComponent = React.createClass({
     handleSubmitMessage: function (e) {
         e.preventDefault();
         var form = e.currentTarget;
+    console.log(this.props.room.id);
         messageActions.create(this.state.message, this.props.room.id);
 
         this.setState({

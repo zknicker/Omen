@@ -13,7 +13,7 @@ var routes = function (app) {
     app.post('/user', userController.createAccount);
 
     // Read
-    app.get('/user', auth.isAuthenticated, userController.readAccount);
+    app.get('/user', auth.isAuthenticated, userController.readAccountSensitive);
 
     // Update profile
     app.put('/user', auth.isAuthenticated, userController.updateProfile);

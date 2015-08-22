@@ -3,10 +3,11 @@
 var Dispatcher = require('../../dispatcher');
 
 var registerSocketListeners = function(socket) {
-    socket.on('message:create', function(message) {
+    socket.on('message:create', function(data) {
         Dispatcher.handleViewAction({
             actionType: 'CREATE_MESSAGE',
-            content: message
+            roomId: data.roomId,
+            message: data.message
         });
     });
 };

@@ -27,7 +27,7 @@ var routes = (
     <Route name="forgot" handler={ForgotPage} />
     <Route name="signup" handler={SignupPage} />
     <Route name="settings" handler={SettingsPage} />
-    <Route name="chat" handler={ChatPage} />
+    <Route name="chat" path="/chat/:roomId" handler={ChatPage} />
     <Route name="rooms" handler={RoomBrowserPage} />
     <NotFoundRoute handler={IndexPage} />
     

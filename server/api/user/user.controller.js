@@ -29,7 +29,7 @@ var cacheUser = function(user, cb) {
  * Retrieve a user account with sensitive (e.g. email) data.
  * Also caches the retrieved user.
  */
-var readAccount = function (req, res, next) {
+var readAccountSensitive = function (req, res, next) {
     User.findOne().where({
         id: req.user.id
     }).then(function (user) {
@@ -43,6 +43,17 @@ var readAccount = function (req, res, next) {
         
         cacheUser(user, next);
     }).catch(next);
+};
+
+/**
+ * Retrieve a user account from the cache.
+ */
+var readCachedAccount = function (userId, cb) {
+    CachedUser
+        .findOne({ id: userId })
+        .then(function (user) {
+            cb(null, user);
+        }).catch(cb);
 };
 
 /**
@@ -238,7 +249,8 @@ var getRooms = function (userId, cb) {
 }
 
 module.exports = {
-    readAccount: readAccount,
+    readAccountSensitive: readAccountSensitive,
+    readCachedAccount: readCachedAccount,
     createAccount: createAccount,
     updateProfile: updateProfile,
     updatePassword: updatePassword,

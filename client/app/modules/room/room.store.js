@@ -7,17 +7,27 @@ var constants = require('./room.constants');
 var RoomStore = new Store({
 
     initialize: function() {
+        // Room current being viewed
         this.currentRoom = {
             id: null,
             title: '',
             users: []
         };
+        this.activeRoom = {
+            id: null,
+            title: '',
+            users: []
+        };
+        this.currentRooms = [];
         this.joinableRooms = [];
         this.joinableRoomsLoading = true;
         this.createRoomLoading = false;
         this.loading = false;
     },
     
+    /**
+     * LOAD ROOM
+     */
     onRoomLoading: function() {
         this.loading = true;
         this.emitChange();
@@ -25,6 +35,8 @@ var RoomStore = new Store({
     
     onRoomSuccess: function(room) {
         this.currentRoom = room;
+        this.currentRooms[room.id] = room;
+        this.activeRoom = room;
         this.loading = false;
         this.emitChange();
     },
@@ -35,7 +47,7 @@ var RoomStore = new Store({
     },
     
     /**
-     * Handle a user joining the room.
+     * USER JOINS ROOM
      */
     onRoomJoined: function(user) {
         this.currentRoom.users.push(user);
@@ -43,7 +55,7 @@ var RoomStore = new Store({
     },
     
     /**
-     * Handle a user leaving the room.
+     * USER DEPARTS ROOMS
      */
     onRoomDeparted: function(userId) {
         var indexOfUser = null;
@@ -60,7 +72,7 @@ var RoomStore = new Store({
     },
     
     /**
-     * Handle getting the list of joinable rooms.
+     * GET JOINABLE ROOMS
      */
     onGetJoinableRoomsLoading: function() {
         this.joinableRoomsLoading = true;
@@ -79,7 +91,7 @@ var RoomStore = new Store({
     },
     
     /**
-     * Handle creating a new room.
+     * CREATE ROOM
      */
     onCreateRoomLoading: function() {
         this.createRoomLoading = true;

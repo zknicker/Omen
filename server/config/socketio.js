@@ -10,6 +10,7 @@ var roomSocketFunctions = require('../api/room/room.socket');
 var userSocketFunctions = require('../api/user/user.socket');
 var userController = require('../api/user/user.controller');
 var jwtHelper = require('../helpers/jwt.helper');
+var socketHelper = require('../helpers/socket.helper');
 var error = require('../helpers/error.helper');
 
 function onConnect(io, socket) {
@@ -42,6 +43,9 @@ function onAuthenticate(socket, token) {
             socket.authenticated = true;
             socket.userId = decodedToken.id;
             socket.userRole = decodedToken.role;
+            
+            // Cache the user on the socket object.
+            socketHelper.cacheUserOnSocket(socket);
         }
     });
 }

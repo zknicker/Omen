@@ -8,7 +8,7 @@ var SidebarItem = require('./sidebarItem.jsx');
 
 var getState = function () {
     return {
-        currentRoom: roomStore.currentRoom
+        currentRooms: roomStore.currentRooms
     };
 };
 
@@ -20,30 +20,33 @@ var JoinedRoomsList = React.createClass({
         return getState();
     },
         
-    /**
-     * Responds to a click on a room.
-     */
-    handleRoomClick: function (e) {
-        //this.transitionTo('/chat');
-    },
-    
     render: function () {
         var isActive = false;
         
         return (
-            <SidebarItem
-                active={isActive}
-                routeName={'room-' + this.state.currentRoom.id}
-                name={this.state.currentRoom.title}
-                link="chat"
-                onSelect={this.handleRoomClick}
-            />
+            <ul className="sidebar-list">
+                <li className="sidebar-list-category">Rooms</li>
+                { 
+                    this.state.currentRooms.map(function (room, index) {
+                        return (
+                            <SidebarItem
+                                active={isActive}
+                                routeName={'room-' + room.id}
+                                name={room.title}
+                                link="chat"
+                                linkParams={{ roomId: room.id }}
+                                key={index}
+                            />
+                        )
+                    }.bind(this))
+                }
+            </ul>
         );
     },
 
     _onChange: function () {
         this.setState({
-            currentRoom: roomStore.currentRoom,
+            activeRoom: roomStore.activeRoom,
         });
     }
 });

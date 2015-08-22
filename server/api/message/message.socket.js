@@ -9,6 +9,7 @@ var Message = require('../../config/database').message;
 var cache = require('../../config/cache');
 var MessageController = require('./message.controller');
 var socketHelper = require('../../helpers/socket.helper');
+var messageResponse = require('../../data/messageResponse');
 
 // Socket listeners to react to client messages for each user.
 exports.register = function(io, socket) {
@@ -23,6 +24,7 @@ exports.register = function(io, socket) {
 // Socket listeners that register once in app lifetime.
 exports.registerOnce = function(io) {
     events.on('server:message:created', function(message) {
-        io.emit('message:create', message); 
+        var response = messageResponse.createMessageResponse(message.roomId, message);
+        io.emit('message:create', response);
     });
 }
