@@ -1,3 +1,8 @@
+.chat-room {
+    height: 100%;
+    position: relative;   
+}
+
 .chat-messages {
     display: inline-block;
     width: 600px;
@@ -12,11 +17,39 @@
 }
 
 .chat-message-input {
-    margin-top: 10px;
-}
+    position: absolute;
+    bottom: 0;
+    left: -20px;
+    right: 0;
+    
+    input[type="text"] {
+        width: 100%;
+        padding: 15px;
+        font-size: 30px;
+        font-weight: 300;
+        border-width: 0 0 4px 0;
+        border-style: solid;
+        border-color: #1596CC;
+        @include transition-quick(border-color);
+        
+        &:focus {
+            border-color: darken(#1596CC, 20%);  
+        }
+    }
+    
+    ::-webkit-input-placeholder {
+        color: #D3D3D3;
+    }
 
-.joined-rooms {
-    max-width: 500px;
-    border: 1px dotted blue;
-    margin: 0 auto;
+    :-moz-placeholder { /* Firefox 18- */
+       color: #D3D3D3;  
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+       color: #D3D3D3;  
+    }
+
+    :-ms-input-placeholder {  
+       color: #D3D3D3;  
+    }
 }

@@ -20,10 +20,11 @@ var ChatComponent = React.createClass({
     render: function () {
         return (
             /* jshint ignore:start */
-            <form id="message-input" className="chat-message-input" action="/chat?_method=PUT" method="post" onSubmit={this.handleSubmitMessage}>
-                <input type="text" name="message" placeholder="Type new message here..." valueLink={this.linkState('message')} />
-                <button type="submit">Submit Message</button>
-            </form>
+            <div id="message-input">
+                <form id="message-input-form" className="chat-message-input" action="/chat?_method=PUT" method="post" onSubmit={this.handleSubmitMessage}>
+                    <input type="text" name="message" placeholder="Type new message here..." valueLink={this.linkState('message')} />
+                </form>
+            </div>
             /* jshint ignore:end */
         );
     },
@@ -31,7 +32,6 @@ var ChatComponent = React.createClass({
     handleSubmitMessage: function (e) {
         e.preventDefault();
         var form = e.currentTarget;
-    console.log(this.props.room.id);
         messageActions.create(this.state.message, this.props.room.id);
 
         this.setState({

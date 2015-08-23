@@ -49,7 +49,7 @@ var ChatComponent = React.createClass({
         
         return (
             /* jshint ignore:start */
-            <div>
+            <div className="chat-room">
                 <MessageList messages={messages} loading={this.state.currentRoomMessagesLoading} />    
                 <UserList room={this.state.activeRoom} loading={this.state.currentRoomLoading} />
                 <MessageInput room={this.state.activeRoom} />

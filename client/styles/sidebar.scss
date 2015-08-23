@@ -4,8 +4,11 @@ $sidebarWidth: 280px;
     height: 100%;
     width: $sidebarWidth;
     background-color: #F2F2F2;
-    padding-top: 30px;
-    float: left;
+    padding-top: 120px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
 .sidebar-list {
@@ -21,7 +24,7 @@ $sidebarWidth: 280px;
     
     a {
         height: 100%;
-        width: $sidebarWidth - 10;
+        width: $sidebarWidth;
         display: block;
         border-radius: 0 6px 6px 0;
         padding: 0 20px;
