@@ -3,12 +3,15 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var SidebarLogo = require('./sidebarLogo.jsx');
+var SidebarProfile = require('./sidebarProfile.jsx');
 var SidebarItem = require('./sidebarItem.jsx');
 var JoinedRoomsList = require('./joinedRoomsList.jsx');
+var userStore = require('../modules/user/user.store');
 
 var SidebarComponent = React.createClass({
 
-    mixins: [Router.State],
+    mixins: [Router.State, userStore.mixin],
     
     getDefaultProps: function() {
         return {
@@ -25,6 +28,7 @@ var SidebarComponent = React.createClass({
         var currentRoute = path[path.length - 1];
 
         return {
+            user: userStore.getUser(),
             activeSidebarItemRouteName: currentRoute.name  
         };
     },
@@ -37,6 +41,8 @@ var SidebarComponent = React.createClass({
         return (
             /* jshint ignore:start */
             <div className="sidebar">
+                <SidebarLogo />
+                <SidebarProfile user={this.state.user} />
                 <ul className="sidebar-list">
                     <li className="sidebar-list-category">Navigation</li>
                     {
@@ -58,6 +64,12 @@ var SidebarComponent = React.createClass({
             </div>
             /* jshint ignore:end */
         );
+    },
+    
+    _onChange: function () {
+        this.setState({
+            user: userStore.getUser()
+        });
     }
 });
 

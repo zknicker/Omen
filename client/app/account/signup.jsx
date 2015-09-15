@@ -2,7 +2,6 @@
 
 var React = require('react');
 var userActions = require('../modules/user/user.actions');
-var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var SignupComponent = React.createClass({
   render: function() {
@@ -39,4 +38,4 @@ var SignupComponent = React.createClass({
   }
 });
 
-module.exports = StandardWrapper(SignupComponent);
+module.exports = SignupComponent;

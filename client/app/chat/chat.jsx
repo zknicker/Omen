@@ -10,7 +10,6 @@ var roomStore = require('../modules/room/room.store');
 var UserList = require('./userlist.jsx');
 var MessageList = require('./messageList.jsx');
 var MessageInput = require('./messageInput.jsx');
-var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var getState = function () {
     return {
@@ -69,4 +68,4 @@ var ChatComponent = React.createClass({
     }
 });
 
-module.exports = StandardWrapper(ChatComponent);
+module.exports = ChatComponent;

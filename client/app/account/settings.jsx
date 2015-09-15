@@ -6,8 +6,8 @@ var Link = Router.Link;
 var userStore = require('../modules/user/user.store');
 var userActions = require('../modules/user/user.actions');
 var settingsActions = require('../modules/user/settings.actions');
-var StandardWrapper = require('../index/standardWrapper.jsx');
 var AccountButton = require('./accountButton.jsx');
+var Authentication = require('../lib/auth.mixin');
 
 var getState = function() {
     return {
@@ -17,7 +17,7 @@ var getState = function() {
 };
 
 var SettingsComponent = React.createClass({
-    mixins: [userStore.mixin],
+    mixins: [Authentication, userStore.mixin],
     getInitialState: function() {
         return getState();
     },
@@ -108,4 +108,4 @@ var SettingsComponent = React.createClass({
     }
 });
 
-module.exports = StandardWrapper(SettingsComponent);
+module.exports = SettingsComponent;

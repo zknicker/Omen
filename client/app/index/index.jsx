@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react');
-var StandardWrapper = require('./standardWrapper.jsx');
 
 var IndexComponent = React.createClass({
     render: function () {
@@ -21,4 +20,4 @@ var IndexComponent = React.createClass({
     }
 });
 
-module.exports = StandardWrapper(IndexComponent);
+module.exports = IndexComponent;

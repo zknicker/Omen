@@ -43,7 +43,7 @@ var JoinedRoomsList = React.createClass({
                     />
                 }.bind(this));
         }
-        console.log(this.state.currentRooms.length);
+        
         return (
             <ul className="sidebar-list">
                 <li className="sidebar-list-category">Rooms</li>

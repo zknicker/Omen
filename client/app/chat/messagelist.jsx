@@ -14,7 +14,6 @@ var MessageListComponent = React.createClass({
         return (
             /* jshint ignore:start */
             <section className="chat-messages">
-                <h3>Messages</h3>
                 <b>{this.props.loading ? "Loading messages..." : ""}</b>
                 <ul>
                 {

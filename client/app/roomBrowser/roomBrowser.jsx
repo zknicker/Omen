@@ -8,7 +8,6 @@ var messageActions = require('../modules/message/message.actions');
 var RoomBrowserRoom = require('./roomBrowserRoom.jsx');
 var RoomCreator = require('./roomCreator.jsx');
 var Authentication = require('../lib/auth.mixin');
-var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var getState = function () {
     return {
@@ -58,4 +57,4 @@ var RoomBrowserComponent = React.createClass({
     }
 });
 
-module.exports = StandardWrapper(RoomBrowserComponent);
+module.exports = RoomBrowserComponent;

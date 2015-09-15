@@ -1,7 +1,7 @@
 .header {
     height: 100px;
     width: 100%;
-    position: relative;
+    position: absolute;
     z-index: 1000;
 }
 
@@ -26,23 +26,6 @@
     position: absolute;
     left: 280px;
 }
-
-.header-logo {
-    height: 55px;
-    width: 74px;
-    background: url('../images/header-logo.png') no-repeat 0 0;
-    float: left;
-    position: relative;
-    top: 0px;
-    left: 18px;
-    
-    a {
-        height: 100%;
-        width: 100%;
-        display: block;   
-    }
-}
-
 .header-actions {
     float: right;
     margin: 27px 16px 0 0;

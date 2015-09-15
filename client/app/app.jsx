@@ -3,6 +3,8 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var Header = require('./header/header.jsx');
+var Sidebar = require('./sidebar/sidebar.jsx');
 var userStore = require('./modules/user/user.store');
 
 var getState = function () {
@@ -24,7 +26,12 @@ var App = React.createClass({
         return (
             /* jshint ignore:start */
             <div className="wrapper">
-                <RouteHandler/>
+                <div className="page">
+                    <Sidebar />
+                    <div className="page-content">
+                        <RouteHandler />
+                    </div>
+                </div>
             </div>
             /* jshint ignore:end */
         );

@@ -6,7 +6,6 @@
 .chat-messages {
     display: inline-block;
     width: 600px;
-    border: 1px dotted black;
 }
 
 .chat-userlist {
@@ -19,7 +18,7 @@
 .chat-message-input {
     position: absolute;
     bottom: 0;
-    left: -20px;
+    left: -8px;
     right: 0;
     
     input[type="text"] {
@@ -52,4 +51,26 @@
     :-ms-input-placeholder {  
        color: #D3D3D3;  
     }
+}
+
+.message {
+    margin-bottom: 14px;   
+}
+
+.message-user {
+    margin-bottom: 4px;
+    float: left;
+}
+
+.message-user-username {
+    font-size: 20px;
+    font-weight: 600;
+    color: #003145;
+    line-height: 26px;
+}
+
+.message-user-avatar {
+    float: left;
+    height: 26px;
+    margin-right: 6px;
 }

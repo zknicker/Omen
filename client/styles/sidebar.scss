@@ -1,48 +1,129 @@
-$sidebarWidth: 280px;
+$sidebarWidth: 300px;
 
 .sidebar {
     height: 100%;
     width: $sidebarWidth;
-    background-color: #F2F2F2;
-    padding-top: 120px;
+    background-color: #003E57;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 10000;
+}
+
+.sidebar-logo {
+    height: 42px;
+    width: 227px;
+    background: url('../images/header-logo.png') no-repeat 0 0;
+    margin: 25px 35px;
+    
+    a {
+        height: 100%;
+        width: 100%;
+        display: block;   
+    }
+}
+
+.sidebar-profile {
+    background-color: #002E41;
+    padding: 34px 24px;
+    margin-bottom: 34px;
+    border-top: 1px solid #002E41;
+    border-bottom: 1px solid #002E41;
+}
+
+.sidebar-profile-avatar {
+    height: 45px;
+    width: 45px;
+    
+    float: left;
+    
+    img {
+        height: 45px;
+        border-radius: 22.5px;    
+    }
+}
+
+.sidebar-profile-user {
+    padding-left: 59px;
+}
+
+.sidebar-profile-username {
+    color: #A4C5D3;
+    font-size: 18px;
+    padding: 1px 0 5px 0;
+}
+
+.sidebar-profile-level {
+    height: 20px;
+    width: 100%;
+    background-color: #00425D;
+    border: 1px solid #002432;
+    position: relative;
+    font-size: 11px;
+    line-height: 18px;
+    
+    .sidebar-profile-level-filler {
+        height: 18px;
+        width: 60%;
+        background-color: #2FBFFB;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    .sidebar-profile-level-level {
+        height: 18px;
+        color: #003145;
+        position: absolute;
+        top: 0;
+        left: 4px;
+    }
+    
+    .sidebar-profile-level-progress {
+        height: 18px;
+        color: #7BBBD5;
+        position: absolute;
+        top: 0;
+        right: 4px;
+    }
 }
 
 .sidebar-list {
-    margin: 0 0 24px 0;
-    color: #3C3C3C;
+    margin: 0 0 30px 0;
     font-size: 16px;
     font-weight: 300;
 }
 
 .sidebar-list-item {
-    height: 34px;
+    height: 32px;
     line-height: 34px;
+    margin-bottom: 2px;
     
     a {
         height: 100%;
-        width: $sidebarWidth;
+        width: $sidebarWidth - 10;
+        margin-left: 10px;
         display: block;
-        border-radius: 0 6px 6px 0;
+        border-radius: 6px 0 0 6px;
         padding: 0 20px;
+        color: #F5F5F5;
 
         &:hover {
-            background-color: #EDEDED;
+            background-color: #00212E;
         }
     }
 }
 
 .sidebar-list-item.selected {
     a {
-        background-color: #E3E3E3;
+        background-color: #00212E;
     }
 }
 
 .sidebar-list-category {
     padding: 0 20px;
-    margin: 0 0 6px 0;
+    margin: 0 0 10px 0;
     text-transform: uppercase;
+    color: #1596CC;
+    font-weight: 500;
 }

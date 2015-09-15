@@ -6,7 +6,6 @@ var Link = Router.Link;
 var Navigation = Router.Navigation;
 var userActions = require('../modules/user/user.actions');
 var sessionStore = require('../modules/session/session.store');
-var StandardWrapper = require('../index/standardWrapper.jsx');
 
 var LoginComponent = React.createClass({
     mixins: [Navigation],
@@ -55,4 +54,4 @@ var LoginComponent = React.createClass({
     }
 });
 
-module.exports = StandardWrapper(LoginComponent);
+module.exports = LoginComponent;
