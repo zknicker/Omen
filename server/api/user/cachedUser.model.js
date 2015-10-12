@@ -29,6 +29,11 @@ var CachedUser = Waterline.Collection.extend({
             type: 'string',
             notNull: true
         },
+        
+        avatar: {
+            type: 'string',
+            notNull: true
+        },
 
         // List of cached message for this cached user. Shouldn't
         // be a need to actually use this. It's just here to enable

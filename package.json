@@ -4,7 +4,8 @@
   "browserify-shim": {
     "swal": "global:swal",
     "Ladda": "global:Ladda",
-    "Trianglify": "global:Trianglify"
+    "Trianglify": "global:Trianglify",
+    "nanoscroller": "global:nanoscroller"
   },
   "browserify": {
     "transform": [

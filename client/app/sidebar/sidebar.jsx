@@ -12,17 +12,7 @@ var userStore = require('../modules/user/user.store');
 var SidebarComponent = React.createClass({
 
     mixins: [Router.State, userStore.mixin],
-    
-    getDefaultProps: function() {
-        return {
-            sidebarItems: [
-                { routeName: 'home', name: 'Home', link: '/' },
-                { routeName: 'rooms', name: 'Rooms', link: 'rooms' },
-                { routeName: 'settings', name: 'Settings', link: 'settings' }
-            ]
-        };
-    },
-    
+
     getInitialState: function() {
         var path = this.getRoutes();
         var currentRoute = path[path.length - 1];
@@ -43,23 +33,6 @@ var SidebarComponent = React.createClass({
             <div className="sidebar">
                 <SidebarLogo />
                 <SidebarProfile user={this.state.user} />
-                <ul className="sidebar-list">
-                    <li className="sidebar-list-category">Navigation</li>
-                    {
-                        this.props.sidebarItems.map(function(sidebarItem) {
-                            var isActive = (this.state.activeSidebarItemRouteName === sidebarItem.routeName);
-                            return (
-                                React.createElement(SidebarItem, {
-                                    active: isActive,
-                                    routeName: sidebarItem.routeName,
-                                    name: sidebarItem.name,
-                                    link: sidebarItem.link,
-                                    onSelect: this.setActiveMenuItemRouteName
-                                })
-                            )
-                        }.bind(this))
-                    }
-                </ul>
                 <JoinedRoomsList />
             </div>
             /* jshint ignore:end */

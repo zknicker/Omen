@@ -20,9 +20,9 @@ var UserListComponeont = React.createClass({
           /* jshint ignore:start */
           <section className="chat-userlist">
               <b>{this.props.loading ? "Loading room..." : ""}</b>
-              <h3>{this.props.room.title}</h3>
-              <h5>{this.props.room.type}</h5>
-              <ul>
+              <h3 className="chat-room-name">{this.props.room.title}</h3>
+              <h5 className="chat-room-type">{this.props.room.type}</h5>
+              <ul className="chat-room-users">
               {
                   this.props.room.users.map(function(user, index) {
                       return <UserListUserComponent key={index} user={user} />

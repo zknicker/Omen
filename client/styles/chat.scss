@@ -1,18 +1,41 @@
 .chat-room {
     height: 100%;
-    position: relative;   
+    position: relative;
+    padding-bottom: 68px;
 }
 
-.chat-messages {
-    display: inline-block;
-    width: 600px;
+.chat-messages-container { 
+    height: 100%;
+    width: 100%;
+    padding-right: 30%;
 }
+
+.nano > .nano-pane { display: block !important; right: 10px }
+.nano > .nano-pane   { background: #F2F2F2; }
+.nano > .nano-pane > .nano-slider { background: #D0D0D0; }
 
 .chat-userlist {
-    display: inline-block;
-    width: 300px;
-    margin-left: 10px;
-    border: 1px dotted black;
+    width: 30%;
+    float: left;
+    padding-right: 40px;
+    text-align: right;
+    position: absolute;
+    top: 0;
+    left: 70%;
+}
+
+.chat-room-name {
+    font-size: 36px;
+    color: #1596CC;
+    margin-bottom: 20px;
+}
+
+.chat-room-type {
+    display: none;   
+}
+
+.chat-room-users {
+    padding-right: 4px;
 }
 
 .chat-message-input {
@@ -54,7 +77,7 @@
 }
 
 .message {
-    margin-bottom: 14px;   
+    margin-bottom: 18px;   
 }
 
 .message-user {
@@ -62,15 +85,31 @@
     float: left;
 }
 
-.message-user-username {
-    font-size: 20px;
-    font-weight: 600;
-    color: #003145;
-    line-height: 26px;
+.message-icon {
+    float: left;
 }
 
 .message-user-avatar {
-    float: left;
-    height: 26px;
-    margin-right: 6px;
+    height: 45px;
+    border-radius: 22.5px;
+}
+
+.message-content {
+    padding-left: 58px;
+    padding-top: 4px;
+}
+
+.message-user-username {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.message-content-text {
+    
+}
+
+.message-content-date {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #8D8D8D;
 }

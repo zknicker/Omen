@@ -33,15 +33,15 @@ var JoinedRoomsList = React.createClass({
         } else {
             listItems = 
                 this.state.currentRooms.map(function (room, index) {
-                    <SidebarItem
+                    return (<SidebarItem
                         active = {isActive}
                         routeName = {'room-' + room.id}
                         name = {room.title}
                         link = "chat"
                         linkParams = {{ roomId: room.id }}
                         key = {index}
-                    />
-                }.bind(this));
+                    />)
+                });
         }
         
         return (

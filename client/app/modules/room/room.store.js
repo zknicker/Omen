@@ -38,6 +38,7 @@ var RoomStore = new Store({
         this.currentRooms[room.id] = room;
         this.activeRoom = room;
         this.loading = false;
+        console.log('hERE');
         this.emitChange();
     },
     

@@ -7,6 +7,7 @@ $sidebarWidth: 300px;
     position: absolute;
     top: 0;
     left: 0;
+    border-right: 8px solid #E4E4E4;
     z-index: 10000;
 }
 
@@ -14,7 +15,7 @@ $sidebarWidth: 300px;
     height: 42px;
     width: 227px;
     background: url('../images/header-logo.png') no-repeat 0 0;
-    margin: 25px 35px;
+    margin: 25px 35px 23px 35px;
     
     a {
         height: 100%;
@@ -24,11 +25,11 @@ $sidebarWidth: 300px;
 }
 
 .sidebar-profile {
-    background-color: #002E41;
-    padding: 34px 24px;
+    background-color: #003146;
+    padding: 36px 24px;
     margin-bottom: 34px;
     border-top: 1px solid #002E41;
-    border-bottom: 1px solid #002E41;
+    border-bottom: 1px solid #002B3C;
 }
 
 .sidebar-profile-avatar {
@@ -49,8 +50,8 @@ $sidebarWidth: 300px;
 
 .sidebar-profile-username {
     color: #A4C5D3;
-    font-size: 18px;
-    padding: 1px 0 5px 0;
+    font-size: 20px;
+    padding: 0 0 5px 0;
 }
 
 .sidebar-profile-level {
@@ -110,6 +111,7 @@ $sidebarWidth: 300px;
 
         &:hover {
             background-color: #00212E;
+            border-right: 8px solid #C6C6C6;
         }
     }
 }
@@ -117,6 +119,7 @@ $sidebarWidth: 300px;
 .sidebar-list-item.selected {
     a {
         background-color: #00212E;
+        border-right: 8px solid #D6D6D6;
     }
 }
 

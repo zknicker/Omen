@@ -58,6 +58,7 @@ var ChatComponent = React.createClass({
     },
 
     _onChange: function () {
+        console.log(roomStore.activeRoom);
         this.setState({
             activeRoom: roomStore.activeRoom,
             currentRooms: roomStore.currentRooms,

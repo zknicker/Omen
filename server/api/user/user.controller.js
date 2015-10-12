@@ -21,6 +21,7 @@ var cacheUser = function(user, cb) {
         cachedUser.id = user.id;
         cachedUser.role = user.role;
         cachedUser.username = user.username;
+        cachedUser.avatar = user.avatar;
         cachedUser.save(cb);
     }).catch(cb);
 }
