@@ -13,6 +13,8 @@ var jwtHelper = require('../helpers/jwt.helper');
 var socketHelper = require('../helpers/socket.helper');
 var error = require('../helpers/error.helper');
 
+var socketConnections = {};
+
 function onConnect(io, socket) {
 
     // Register per-socket listeners.
@@ -43,8 +45,13 @@ function onAuthenticate(socket, token) {
             socket.userId = decodedToken.id;
             socket.userRole = decodedToken.role;
             
-            // Cache the user on the socket object.
+            // Set 'user' field on socket from db.
             socketHelper.cacheUserOnSocket(socket);
+            
+            if (socketConnections[socket.userId]) {
+                socketConnections[socket.userId].disconnect();
+            }
+            socketConnections[socket.userId] = socket;
         }
     });
 }
