@@ -9,13 +9,13 @@ var swal = require('swal');
  * Sweet Alert: http://t4t5.github.io/sweetalert/
  */
 var Alert = {
-    error: function(errorText) {
+    error: function(error, callback) {
         swal({
             title: 'Error',
-            text: errorText,
+            text: error,
             type: 'error',
             confirmButtonText: 'Close'
-        });
+        }, callback);
     }
 };
 

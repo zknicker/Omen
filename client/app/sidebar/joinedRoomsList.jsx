@@ -22,30 +22,27 @@ var JoinedRoomsList = React.createClass({
         
     render: function () {
         var isActive = false;
-        var listItems;
-        if (this.state.currentRooms.length == 0) {
-            listItems = (
-                <SidebarItem
-                    routeName = 'joinRooms'
-                    name = 'Join a room'
-                    link ='rooms'
-                />);
-        } else {
-            listItems = 
-                this.state.currentRooms.map(function (room, index) {
-                    return (<SidebarItem
+        var listItems = 
+            this.state.currentRooms.map(function (room, index) {
+                return (
+                    <SidebarItem
                         active = {isActive}
                         routeName = {'room-' + room.id}
                         name = {room.title}
                         link = "chat"
                         linkParams = {{ roomId: room.id }}
                         key = {index}
-                    />)
-                });
-        }
+                    />
+                )
+            });
         
         return (
             <ul className="sidebar-list">
+                <SidebarItem
+                    routeName = 'joinRooms'
+                    name = '(+) Join a room'
+                    link ='rooms'
+                />
                 <li className="sidebar-list-category">Rooms</li>
                 { listItems }
             </ul>

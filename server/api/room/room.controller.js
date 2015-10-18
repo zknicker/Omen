@@ -63,17 +63,18 @@ var getJoinableRooms = function (userId, cb) {
         .catch(cb);
 }
 
-var getRoom = function (req, res, next) {
-    Room.findOne({ id: req.params.roomId })
+var getUserList = function (roomId, cb) {
+    console.log('HERE', roomId);
+    Room.findOne({ id: roomId })
         .populate('users')
         .then(function(room) {
-            res.json(room);
-        }).catch(next); 
+            cb(null, room.users);
+        }).catch(cb);
 };
 
 module.exports = {
     create: create,
     joinRoom: joinRoom,
-    getRoom: getRoom,
+    getUserList: getUserList,
     getJoinableRooms: getJoinableRooms
 };

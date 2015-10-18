@@ -10,7 +10,7 @@ module.exports = {
     
     /**
      * Dispatches a socket message to join a room. The acknowledgment returns the room
-     * data, including user list.
+     * meta-data (ie. excludes messages, user list).
      */
     join: function(roomId) {
         Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
@@ -48,4 +48,10 @@ module.exports = {
         });
     },
     
+    /**
+     * Sets the active room to the roomId parameter.
+     */
+    setActiveRoom: function(roomId) {
+        Dispatcher.handleViewAction({ actionType: roomConstants.SET_ACTIVE_ROOM, roomId: roomId });
+    }
 };

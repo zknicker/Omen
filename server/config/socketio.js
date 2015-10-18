@@ -26,9 +26,8 @@ function onDisconnect(io, socket) {
     // Remove the auth'd user from any rooms.
     if (socket.authenticated) {
         userController.leaveAllRooms(socket.userId, function (err) {
-            events.emit('server:room:departed', {
-                userId: socket.userId,
-                roomId: 0
+            events.emit('server:room:departed:all', {
+                userId: socket.userId
             });
         });
     }

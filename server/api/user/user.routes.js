@@ -14,7 +14,7 @@ var routes = function (app) {
 
     // Read
     app.get('/user', auth.isAuthenticated, userController.readAccountSensitive);
-
+    
     // Update profile
     app.put('/user', auth.isAuthenticated, userController.updateProfile);
     app.patch('/user', auth.isAuthenticated, userController.updateProfile);

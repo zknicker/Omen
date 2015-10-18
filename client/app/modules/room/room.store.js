@@ -2,24 +2,25 @@
 
 var Store = require('../../lib/store');
 var Dispatcher = require('../../dispatcher');
+var Alert = require('../../lib/alert');
 var constants = require('./room.constants');
 
 var RoomStore = new Store({
 
     initialize: function() {
-        // Room current being viewed
-        this.currentRoom = {
-            id: null,
-            title: '',
-            users: []
-        };
+        /** The room currently being viewed. */
         this.activeRoom = {
             id: null,
-            title: '',
-            users: []
+            title: ''
         };
+        
+        /** All rooms currently joined. */
         this.currentRooms = [];
+        
+        /** A subset of all rooms available to join, even those already joined. */
         this.joinableRooms = [];
+        
+        /** Loading tracking vars. */
         this.joinableRoomsLoading = true;
         this.createRoomLoading = false;
         this.loading = false;
@@ -34,41 +35,14 @@ var RoomStore = new Store({
     },
     
     onRoomSuccess: function(room) {
-        this.currentRoom = room;
         this.currentRooms[room.id] = room;
         this.activeRoom = room;
         this.loading = false;
-        console.log('hERE');
         this.emitChange();
     },
     
     onRoomError: function() {
         this.loading = false;
-        this.emitChange();
-    },
-    
-    /**
-     * USER JOINS ROOM
-     */
-    onRoomJoined: function(user) {
-        this.currentRoom.users.push(user);
-        this.emitChange();
-    },
-    
-    /**
-     * USER DEPARTS ROOMS
-     */
-    onRoomDeparted: function(userId) {
-        var indexOfUser = null;
-        this.currentRoom.users.forEach(function (roomUser, i) {
-            if (roomUser.id === userId) {
-                 indexOfUser = i;  
-            }
-        });
-        
-        if (indexOfUser !== null) {
-            this.currentRoom.users.splice(indexOfUser, 1);
-        }
         this.emitChange();
     },
     
@@ -108,6 +82,31 @@ var RoomStore = new Store({
     onCreateRoomError: function() {
         this.createRoomLoading = false;
         this.emitChange();
+    },
+    
+    /**
+     * SET ACTIVE ROOM
+     */
+    setActiveRoom: function(roomId) {
+        if (this.currentRooms[roomId]) {
+            this.activeRoom = this.currentRooms[roomId];
+            this.emitChange();
+        } else {
+            Alert.error('Lost connection with this room. Please rejoin.', function() {
+                console.log('here');
+            });
+        }
+    },
+    
+    /**
+     * UTILITY METHODS
+     */
+    hasRoom: function(roomId) {
+        if (this.currentRooms[roomId]) {
+            return true;   
+        } else {
+            return false;   
+        }
     }
 });
 
@@ -121,12 +120,6 @@ Dispatcher.register(function(action) {
             break;
         case constants.ROOM_ERROR:
             RoomStore.onRoomError();
-            break;
-        case constants.ROOM_JOINED:
-            RoomStore.onRoomJoined(action.action.user);
-            break;
-        case constants.ROOM_DEPARTED:
-            RoomStore.onRoomDeparted(action.action.userId);
             break;
         case constants.GET_JOINABLE_ROOMS_LOADING:
             RoomStore.onGetJoinableRoomsLoading();
@@ -145,6 +138,9 @@ Dispatcher.register(function(action) {
             break;
         case constants.CREATE_ROOM_ERROR:
             RoomStore.onCreateRoomError();
+            break;
+        case constants.SET_ACTIVE_ROOM:
+            RoomStore.setActiveRoom(action.action.roomId);
             break;
     }
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-var joinRoomResponse = function(user, roomId) {
+var joinRoomBroadcast = function(user, roomId) {
     return {
         user: user,
         roomId: roomId
@@ -14,6 +14,13 @@ var joinRoomAcknowledgement = function(user, room) {
     }
 }
 
+var getRoomAcknowledgement = function(error, room) {
+    return {
+        error: error,
+        room: room
+    }
+}
+
 var createRoomAcknowledgment = function(error, room) {
     return {
         error: error,
@@ -21,23 +28,41 @@ var createRoomAcknowledgment = function(error, room) {
     }
 }
 
-var listRoomsAcknowledgement = function(err, rooms) {
+var listRoomsAcknowledgement = function(error, rooms) {
     return {
-        error: err,
+        error: error,
         rooms: rooms
     }
 }
 
-var departRoomResponse = function(userId) {
+var departRoomBroadcast = function(userId, roomId) {
+    return {
+        userId: userId,
+        roomId: roomId
+    }
+}
+
+var departAllRoomsBroadcast = function(userId) {
     return {
         userId: userId
     }
 }
 
+var getUserListAcknowledgement = function(error, roomId, userList) {
+    return {
+        error: error,
+        roomId: roomId,
+        userList: userList
+    }
+}
+
 module.exports = {
-    joinRoomResponse: joinRoomResponse,
+    joinRoomBroadcast: joinRoomBroadcast,
     joinRoomAcknowledgement: joinRoomAcknowledgement,
+    getRoomAcknowledgement: getRoomAcknowledgement,
     createRoomAcknowledgment: createRoomAcknowledgment,
     listRoomsAcknowledgement: listRoomsAcknowledgement,
-    departRoomResponse: departRoomResponse
+    departRoomBroadcast: departRoomBroadcast,
+    departAllRoomsBroadcast: departAllRoomsBroadcast,
+    getUserListAcknowledgement: getUserListAcknowledgement
 };

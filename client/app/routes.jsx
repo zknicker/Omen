@@ -42,8 +42,10 @@ var routes = (
 
 module.exports = {
     startRouting: function() {
-        Router.run(routes, Router.HistoryLocation, function (Handler) {
+        var router = Router.create({ routes: routes, location: Router.HistoryLocation});
+        router.run(function (Handler) {
             React.render(<Handler/>, document.getElementById('app-wrapper'));
         });
+        return router;
     }
 };

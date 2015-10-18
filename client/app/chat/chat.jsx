@@ -7,6 +7,9 @@ var messageStore = require('../modules/message/message.store');
 var messageActions = require('../modules/message/message.actions');
 var roomActions = require('../modules/room/room.actions');
 var roomStore = require('../modules/room/room.store');
+var userListActions = require('../modules/userlist/userlist.actions');
+var userListStore = require('../modules/userlist/userlist.store');
+var joinRoomHelper = require('../helpers/joinroom.helper');
 var UserList = require('./userlist.jsx');
 var MessageList = require('./messageList.jsx');
 var MessageInput = require('./messageInput.jsx');
@@ -17,40 +20,47 @@ var getState = function () {
         currentRooms: roomStore.currentRooms,
         currentRoomLoading: roomStore.loading,
         messages: messageStore.messages,
-        currentRoomMessagesLoading: messageStore.loading
+        currentRoomMessagesLoading: messageStore.loading,
+        userList: userListStore.userList,
+        userListLoading: userListStore.loading
     };
 };
 
 var ChatComponent = React.createClass({
 
-    mixins: [Navigation, roomStore.mixin, messageStore.mixin],
+    mixins: [Navigation, roomStore.mixin, messageStore.mixin, userListStore.mixin],
 
     contextTypes: {
         router: React.PropTypes.func
-    },
-    
-    componentDidMount: function() {
-        var roomId = this.context.router.getCurrentParams().roomId;
-        
-        if (!this.state.currentRooms[roomId]) {
-            roomActions.join(roomId);
-        }
-        messageActions.getRecent(roomId);
     },
     
     getInitialState: function () {
         return getState();
     },
     
-    render: function () {
+    componentDidMount: function() {
         var roomId = this.context.router.getCurrentParams().roomId;
+        var self = this;
+    
+        if (roomStore.hasRoom(roomId)) {
+            roomActions.setActiveRoom(roomId);
+        } else {
+            joinRoomHelper(roomId, function(err) {
+                if (err) self.transitionTo('/rooms');
+            });
+        }
+    },
+    
+    render: function () {
+        var roomId = this.state.activeRoom.id;
         var messages = this.state.messages[roomId] || [];
+        var userList = this.state.userList[roomId] || [];
         
         return (
             /* jshint ignore:start */
             <div className="chat-room">
                 <MessageList messages={messages} loading={this.state.currentRoomMessagesLoading} />    
-                <UserList room={this.state.activeRoom} loading={this.state.currentRoomLoading} />
+                <UserList room={this.state.activeRoom} userList={userList} loading={this.state.userListLoading} />
                 <MessageInput room={this.state.activeRoom} />
             </div>
             /* jshint ignore:end */
@@ -58,13 +68,14 @@ var ChatComponent = React.createClass({
     },
 
     _onChange: function () {
-        console.log(roomStore.activeRoom);
         this.setState({
             activeRoom: roomStore.activeRoom,
             currentRooms: roomStore.currentRooms,
             currentRoomLoading: roomStore.loading,
             messages: messageStore.messages,
-            currentRoomMessagesLoading: messageStore.loading
+            currentRoomMessagesLoading: messageStore.loading,
+            userList: userListStore.userList,
+            userListLoading: userListStore.loading
         });
     }
 });

@@ -24,7 +24,7 @@ var UserListComponeont = React.createClass({
               <h5 className="chat-room-type">{this.props.room.type}</h5>
               <ul className="chat-room-users">
               {
-                  this.props.room.users.map(function(user, index) {
+                  this.props.userList.map(function(user, index) {
                       return <UserListUserComponent key={index} user={user} />
                   })
               }

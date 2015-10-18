@@ -17,6 +17,15 @@ var leaveRoom = function (socket, roomId) {
 }
 
 /**
+ * Emit a message to a room using the socket.io room-space feature.
+ * Since this is an emit, the message is sent to everyone, including
+ * the socket client.
+ */
+var emitToRoom = function (io, roomId, event, data) {
+    io.to('room-' + roomId).emit(event, data);
+}
+
+/**
  * Broadcast a message to a room using the socket.io room-space feature.
  * Note that, since this is a broadcast, the message won't be sent to the
  * socket client, only other socket clients.
@@ -68,6 +77,7 @@ var _getSocketsForNamespace = function (namespace) {
 module.exports = {
     joinRoom: joinRoom,
     leaveRoom: leaveRoom,
+    emitToRoom: emitToRoom,
     broadcastToRoom: broadcastToRoom,
     isAuthenticated: isAuthenticated,
     hasSpecialAdvancedAccessRights: hasSpecialAdvancedAccessRights,

@@ -3,11 +3,11 @@ $sidebarWidth: 300px;
 .sidebar {
     height: 100%;
     width: $sidebarWidth;
-    background-color: #003E57;
+    background-color: #2b353f;
     position: absolute;
     top: 0;
     left: 0;
-    border-right: 8px solid #E4E4E4;
+    border-right: 6px solid #E4E4E4;
     z-index: 10000;
 }
 
@@ -25,11 +25,11 @@ $sidebarWidth: 300px;
 }
 
 .sidebar-profile {
-    background-color: #003146;
+    background-color: #1d262f;
     padding: 36px 24px;
     margin-bottom: 34px;
-    border-top: 1px solid #002E41;
-    border-bottom: 1px solid #002B3C;
+    border-top: 1px solid #0e141a;
+    border-bottom: 1px solid #0e141a;
 }
 
 .sidebar-profile-avatar {
@@ -110,16 +110,16 @@ $sidebarWidth: 300px;
         color: #F5F5F5;
 
         &:hover {
-            background-color: #00212E;
-            border-right: 8px solid #C6C6C6;
+            background-color: #1d262f;
+            border-right: 6px solid #C6C6C6;
         }
     }
 }
 
 .sidebar-list-item.selected {
     a {
-        background-color: #00212E;
-        border-right: 8px solid #D6D6D6;
+        background-color: #1d262f;
+        border-right: 6px solid #D6D6D6;
     }
 }
 
