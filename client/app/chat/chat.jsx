@@ -42,13 +42,9 @@ var ChatComponent = React.createClass({
         var roomId = this.context.router.getCurrentParams().roomId;
         var self = this;
     
-        if (roomStore.hasRoom(roomId)) {
-            roomActions.setActiveRoom(roomId);
-        } else {
-            joinRoomHelper(roomId, function(err) {
-                if (err) self.transitionTo('/rooms');
-            });
-        }
+        joinRoomHelper(roomId, function(err) {
+            if (err) self.transitionTo('/rooms');
+        });
     },
     
     render: function () {
