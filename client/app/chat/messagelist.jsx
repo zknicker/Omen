@@ -12,29 +12,33 @@ var MessageListComponent = React.createClass({
 
     getInitialState: function () {
         return {
-            shouldUpdateScroll: true  
+            scrollToEndOnNewItem: true  
         };
     },
     
     componentDidMount: function () {
-        $('.nano').nanoScroller({ sliderMaxHeight: 1000 });
-        $('nano').scrollTop($(document).height());
-        
+        $('.nano').nanoScroller({ sliderMaxHeight: 800 });
         $('.nano').bind('update', function(e, values){
+            
+            // If users has scrolled up, do not auto-scroll on a new item.
+            var scrollToEndOnNewItem = true;
+            
+            // We need to check for max - 1 here to avoid issues with decimal
+            // scrollTop values in Chrome and Firefox.
+            //
+            // A fix has been pending for a very long time:
+            // https://github.com/jamesflorentino/nanoScrollerJS/pull/270
+            if (values.position < values.maximum - 1) {
+                scrollToEndOnNewItem = false;   
+            }
             this.setState({
-                shouldUpdateScroll: false
+                scrollToEndOnNewItem: scrollToEndOnNewItem
             });
-        }.bind(this));
-        
-        $('.nano').bind('scrollend', function(e){
-            this.setState({
-                shouldUpdateScroll: true
-            }); 
         }.bind(this));
     },
     
     componentDidUpdate: function () {
-        if (this.state.shouldUpdateScroll) {
+        if (this.state.scrollToEndOnNewItem) {
             $('.nano-content').scrollTop($('.nano-content').height())
         }
     },

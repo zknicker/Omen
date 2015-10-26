@@ -2,11 +2,11 @@
 
 var React = require('react');
 var Router = require('react-router');
+var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
-var SidebarLogo = require('./sidebarLogo.jsx');
 var SidebarProfile = require('./sidebarProfile.jsx');
 var SidebarItem = require('./sidebarItem.jsx');
-var JoinedRoomsList = require('./joinedRoomsList.jsx');
+var RoomsList = require('./sidebarRoomsList.jsx');
 var userStore = require('../modules/user/user.store');
 
 var SidebarComponent = React.createClass({
@@ -31,9 +31,28 @@ var SidebarComponent = React.createClass({
         return (
             /* jshint ignore:start */
             <div className="sidebar">
-                <SidebarLogo />
                 <SidebarProfile user={this.state.user} />
-                <JoinedRoomsList />
+                <RoomsList />
+                <ul className="room-list">
+                    <li className="room-list-title">
+                        Private Chats
+                        <Link to="/rooms" className="room-list-new-button">New chat</Link>
+                    </li>
+                    <li className="room-list-private-room"><Link to="/">
+                        <div className="tiny-avatar" 
+                            style={{backgroundImage: 'url(../images/avatars/1.gif)'}}>
+                            <div className="status online"></div>
+                        </div>
+                        HaveAMagicalDay
+                    </Link></li>
+                    <li className="room-list-private-room"><Link to="/">
+                        <div className="tiny-avatar" 
+                            style={{backgroundImage: 'url(../images/avatars/1.gif)'}}>
+                            <div className="status online"></div>
+                        </div>
+                        WhitePanther
+                    </Link></li>
+                </ul>
             </div>
             /* jshint ignore:end */
         );

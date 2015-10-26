@@ -55,9 +55,11 @@ var ChatComponent = React.createClass({
         return (
             /* jshint ignore:start */
             <div className="chat-room">
-                <MessageList messages={messages} loading={this.state.currentRoomMessagesLoading} />    
-                <UserList room={this.state.activeRoom} userList={userList} loading={this.state.userListLoading} />
-                <MessageInput room={this.state.activeRoom} />
+                <div className="chat-room-main">
+                    <MessageList messages={messages} loading={this.state.currentRoomMessagesLoading} />    
+                    <MessageInput room={this.state.activeRoom} />
+                </div>
+                <UserList className="chat-room-users" room={this.state.activeRoom} userList={userList} loading={this.state.userListLoading} />
             </div>
             /* jshint ignore:end */
         );

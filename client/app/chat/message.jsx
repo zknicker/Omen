@@ -11,12 +11,14 @@ var Message = React.createClass({
         var message = this.props.message;
         var date = new Date(message.datetime);
         
+        var avatarStyleMapping = {
+            backgroundImage: 'url(' + userAvatarPath + ')'
+        }
+        
         return (
             /* jshint ignore:start */
             <li className="message group">
-                <div className="message-icon">
-                    <img className="message-user-avatar" src={userAvatarPath} />
-                </div>
+                <div className="message-icon small-avatar" style={avatarStyleMapping}></div>
                 <div className="message-content">
                     <span className="message-user-username">{user.username}</span>:&nbsp;
                     <span className="message-content-text">{message.message}</span>
