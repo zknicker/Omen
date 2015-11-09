@@ -92,6 +92,7 @@ var defaults = {
         writeBackIntervalMilliseconds: 1000
     },
     root: path.normalize(__dirname + '/../../..'),
+    assets: 'assets',
     staticAssets: 'client',
     serverImageAssets: 'images',
     serverAvatarAssets: 'images/avatars',

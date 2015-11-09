@@ -11,9 +11,6 @@ var taskConfig = function(grunt) {
     compile: [
       'sass:dist',
       'browserify:dist'
-    ],
-    docs: [
-      'jsdoc:dist',
     ]
   });
 

@@ -11,7 +11,7 @@ module.exports = function (app) {
     /**
      * This is a final check for error passed down via next. These will
      * generally be database errors, or other errors with dependent modules.
-     * We don't want to show the user these messages, so we just show them
+     * We don't want to show the users these messages, so we just show them
      * a generic server error instead.
      */
     app.use(function (err, req, res, next) {

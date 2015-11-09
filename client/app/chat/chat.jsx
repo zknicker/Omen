@@ -13,6 +13,7 @@ var joinRoomHelper = require('../helpers/joinroom.helper');
 var UserList = require('./userlist.jsx');
 var MessageList = require('./messageList.jsx');
 var MessageInput = require('./messageInput.jsx');
+var StoreListenerMixin = require('../lib/storeListenerMixin');
 
 var getState = function () {
     return {
@@ -28,7 +29,8 @@ var getState = function () {
 
 var ChatComponent = React.createClass({
 
-    mixins: [Navigation, roomStore.mixin, messageStore.mixin, userListStore.mixin],
+    mixins: [
+        Navigation, roomStore.mixin, messageStore.mixin, userListStore.mixin],
 
     contextTypes: {
         router: React.PropTypes.func

@@ -1,6 +1,6 @@
 'use strict';
 
-var swal = require('swal');
+var swal = require('sweetalert');
 
 /**
  * Encapsulation for throwing pop-up alerts onto the page using the

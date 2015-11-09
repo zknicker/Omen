@@ -6,18 +6,21 @@ var taskConfig = function (grunt) {
 
     grunt.config.set('browserify', {
         server: {
+            files: {
+                '<%= yeogurt.tmp %>/scripts/main.js': ['<%= yeogurt.client %>/app/main.js']
+            },
             options: {
                 transform: [require('grunt-react').browserify],
                 browserifyOptions: {
                     debug: true
                 },
                 watch: true
-            },
-            files: {
-                '<%= yeogurt.tmp %>/scripts/main.js': ['<%= yeogurt.client %>/app/main.js']
             }
         },
         dist: {
+            files: {
+                '<%= yeogurt.dist %>/client/scripts/main.js': ['<%= yeogurt.client %>/app/main.js']
+            },
             options: {
                 transform: [require('grunt-react').browserify],
                 browserifyOptions: {
@@ -30,9 +33,6 @@ var taskConfig = function (grunt) {
                         output: 'dist/client/scripts/main.js.map'
                     });
                 }
-            },
-            files: {
-                '<%= yeogurt.dist %>/client/scripts/main.js': ['<%= yeogurt.client %>/app/main.js']
             }
         },
     });

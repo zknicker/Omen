@@ -1,5 +1,7 @@
 'use strict';
 
+require('../styles/main.scss');
+
 var routes = require('./routes.jsx');
 var userActions = require('./modules/user/user.actions');
 var sessionStore = require('./modules/session/session.store');

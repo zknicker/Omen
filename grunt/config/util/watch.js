@@ -76,35 +76,7 @@ var taskConfig = function (grunt) {
         }
     };
 
-    // Documentation specific configuration
-    var docsConfig = {
-        js: {
-            files: [
-        'README.md'
-      ],
-            tasks: [
-        'jsdoc:server'
-      ]
-        },
-        react: {
-            tasks: [
-        'jsdoc:server'
-      ]
-        },
-    };
-
     grunt.config.set('watch', config);
-
-    grunt.registerTask('listen:docs', function () {
-        // Merge docsConfig object with the config object without overwriting arrays
-        // Instead concatenate all arrays with each other
-        grunt.config('watch', _.merge(config, docsConfig, function (a, b) {
-            return _.isArray(a) ? a.concat(b) : undefined;
-        }));
-        grunt.task.run('watch');
-    });
-
-
 };
 
 module.exports = taskConfig;

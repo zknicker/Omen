@@ -5,9 +5,12 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
-// Constructs a Store object.
-// Extends itself with supplied methods parameter, attaches EventEmitter to itself,
-// and creates a mixin property for use in components.
+/**
+ * Constructs a Store object.
+ *
+ * Extends itself with supplied methods parameter, attaches EventEmitter to itself,
+ * and creates a mixin property for use in components.
+ */
 var Store = function (methods) {
 
     var self = this;

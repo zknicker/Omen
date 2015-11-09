@@ -44,7 +44,7 @@ module.exports = function (app, express, database) {
     // Live reload and dev static assets.
     if ('development' === env) {
         app.use(require('connect-livereload')());
-        app.use(express.static(path.join(settings.root, '.tmp')));
+        app.use('/assets', express.static(path.join(settings.root, settings.assets)));
         app.use('/bower_components', express.static(path.join(settings.root, 'client/bower_components')));
     }
 

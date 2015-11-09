@@ -30,7 +30,6 @@ var taskConfig = function (grunt) {
             'wiredep',
             'browserify:server',
             'sass:server',
-            'jsdoc:server',
             'autoprefixer:server'
         ]);
 

@@ -20,11 +20,4 @@ module.exports = function (app) {
     app.get('/*', function (req, res) {
         res.sendFile(path.join(config.root, config.staticAssets) + '/');
     });
-    
-    // Global error handler at the router level. Necessary in order for
-    // the normal express error handling middleware to be called (located
-    // in the express config).
-    //app.all('*', function (err, req, res, next) {
-    //    return next(err); 
-    //});
 };

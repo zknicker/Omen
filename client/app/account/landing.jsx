@@ -6,15 +6,6 @@ var Link = Router.Link;
 var Navigation = Router.Navigation;
 var userActions = require('../modules/user/user.actions');
 var sessionStore = require('../modules/session/session.store');
-var Trianglify = require('Trianglify');
-
-function getBackgroundPattern() {
-    return Trianglify({
-        width: window.innerWidth,
-        height: 960,
-        x_colors: ["#9ecae1","#6baed6","#1596CC","#1d77a6","#07568e","#003f6b", "#002a48"]
-    });
-}
 
 var LandingComponent = React.createClass({
     mixins: [Navigation],
