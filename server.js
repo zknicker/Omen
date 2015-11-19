@@ -44,7 +44,8 @@ database.initialize(function(err) {
         
         // Start Express server.
         server.listen(app.get('port'), function () {
-            console.log('✔ Express server listening on port '.green + '%d'.blue + ' in '.green + '%s'.blue + ' mode'.green, app.get('port'), app.get('env'));
+            console.log('✔ Express server listening on port '.green + '%d'.blue + 
+                        ' in '.green + '%s'.blue + ' mode'.green, app.get('port'), app.get('env'));
         });
     };
 });

@@ -20,6 +20,9 @@ gulp.task('clean', del.bind(null, [
     dirs.assets
 ]));
 
+/**
+ * Webpack task to package client files.
+ */
 gulp.task('webpack', function(callback) {
     var compiler = webpack({
         entry: dirs.main,
@@ -76,18 +79,24 @@ gulp.task('webpack', function(callback) {
     });
 });
 
-gulp.task('server', function() {
+/**
+ * Serve client files with express server.
+ *
+ * Also starts other services like connecting to redis, MySQL,
+ * and starting the socket.io server.
+ */
+gulp.task('serve', function() {
     var server = gls.new('server.js', undefined, 9010);
     server.start();
+    
+    gulp.watch(['server/**/*.js', 'server/**/*.html'], function (file) {
+        server.notify.apply(server, [file]);
+    });
 });
 
 /**
- * Local server for testing.
+ * Run server.
  */
-gulp.task('serve', ['webpack'], function () {
-    gulp.start('server');
-});
-
-gulp.task('default', ['clean'], () => {
+gulp.task('default', ['clean', 'webpack'], () => {
     gulp.start('serve');
 });
