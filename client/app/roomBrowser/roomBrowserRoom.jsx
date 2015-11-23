@@ -6,6 +6,14 @@ var roomActions = require('../modules/room/room.actions');
 var messageActions = require('../modules/message/message.actions');
 var Navigation = Router.Navigation;
 
+// Credit to motoboi at http://stackoverflow.com/questions/43044.
+function getRandomPastelColor(){
+    var r = (Math.round(Math.random()* 70) + 30).toString(16);
+    var g = (Math.round(Math.random()* 70) + 90).toString(16);
+    var b = (Math.round(Math.random()* 127) + 127).toString(16);
+    return '#' + r + g + b;
+}
+
 var RoomBrowserRoomComponent = React.createClass({
     
     mixins: [ Navigation ],
@@ -19,10 +27,18 @@ var RoomBrowserRoomComponent = React.createClass({
     },
     
     render: function () {
+        var color = getRandomPastelColor();
+        var styleMap = {
+            backgroundColor: color   
+        }
+        
         return (
             /* jshint ignore:start */
-            <li>
-                {this.props.room.title}: <a href="#" onClick={this.handleJoinRoomClick}>Join</a>
+            <li className="room-browser-room">
+                <div className="room-browser-room-background" style={styleMap}></div>
+                <a href="#" onClick={this.handleJoinRoomClick}>
+                    {this.props.room.title}
+                </a>
             </li>
             /* jshint ignore:end */
         );

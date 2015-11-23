@@ -31,10 +31,12 @@ var RoomBrowserComponent = React.createClass({
     render: function () {
         return (
             /* jshint ignore:start */
-            <div>
-                <b>Select a room:</b>
-                <br />
-                <ul>
+            <div className="room-browser">
+                <div className="room-browser-hero">
+                    <div className="room-browser-hero-logo"></div>
+                    <input type="text" className="room-browser-search" placeholder="Search" />
+                </div>
+                <ul className="room-browser-list group">
                 {
                     this.state.joinableRooms.map(function(room, index) {
                         return <RoomBrowserRoom key={index} room={room} />

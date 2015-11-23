@@ -1,6 +1,5 @@
 'use strict';
 
-var Login = require('../account/login.jsx');
 var userStore = require('../modules/user/user.store');
 
 /**

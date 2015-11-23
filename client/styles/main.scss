@@ -164,15 +164,9 @@ img {
     padding: 0.5em 0;
 }
 
-// Injects all bower_component files automatically
-// bower:scss
-// endbower
-
-// Injects all import files automatically
-// [injector]
 @import 'admin';
 @import 'chat';
 @import 'header';
 @import 'login';
 @import 'sidebar';
-// [endinjector]
+@import 'roombrowser';

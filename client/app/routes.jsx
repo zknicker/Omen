@@ -4,9 +4,7 @@ var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
 var App = require('./app.jsx');
-var IndexPage = require('./index/index.jsx');
 var LandingPage = require('./account/landing.jsx');
-var LoginPage = require('./account/login.jsx');
 var ForgotPage = require('./account/forgot.jsx');
 var SignupPage = require('./account/signup.jsx');
 var SettingsPage = require('./account/settings.jsx');
@@ -20,16 +18,15 @@ var routes = (
   <Route name="app" path="/" handler={App}>
     
     // User Routes
-    <DefaultRoute handler={IndexPage} />
+    <DefaultRoute handler={RoomBrowserPage} />
     <Route name="landing" handler={LandingPage} />
-    <Route name="login" handler={LoginPage} />
-    <Route name="logout" handler={IndexPage} />
+    <Route name="logout" handler={LandingPage} />
     <Route name="forgot" handler={ForgotPage} />
     <Route name="signup" handler={SignupPage} />
     <Route name="settings" handler={SettingsPage} />
     <Route name="chat" path="/chat/:roomId" handler={ChatPage} />
     <Route name="rooms" handler={RoomBrowserPage} />
-    <NotFoundRoute handler={IndexPage} />
+    <NotFoundRoute handler={RoomBrowserPage} />
     
     // Admin Routes
     <Route name="admin" handler={AdminWrapperPage}>

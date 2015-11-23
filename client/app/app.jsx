@@ -9,25 +9,33 @@ var userStore = require('./modules/user/user.store');
 
 var getState = function () {
     return {
-        title: 'Omen',
         user: userStore.getUser()
     };
 };
 
 var App = React.createClass({
-    mixins: [userStore.mixin],
+    mixins: [userStore.mixin, Router.State],  
+    
     componentDidMount: function () {
         userStore.emitChange();
     },
+    
     getInitialState: function () {
         return getState();
     },
+    
     render: function () {
+        var routeName = this.getRoutes()[this.getRoutes().length-1].name;
+        var sidebar = null;
+        if (routeName !== 'landing') {
+            sidebar = (<Sidebar />);
+        }
+        
         return (
             /* jshint ignore:start */
             <div className="wrapper">
                 <div className="page">
-                    <Sidebar />
+                    {sidebar}
                     <div className="page-content">
                         <RouteHandler />
                     </div>
