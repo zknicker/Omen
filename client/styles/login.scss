@@ -4,19 +4,51 @@
     background-color: #2b353f;
 }
 
-.login-logo {
+.landing-logo {
     height: 280px;
     width: 100%;
     background: transparent url('../images/logo-landing.png') no-repeat 50% 132px;
 }
 
-.login-forms {
-    height: 500px;
+.landing-forms {
+    height: 400px;
     width: 850px;
     margin: 0 auto;
+    perspective: 850px;
+    perspective-origin: 50% 0%;
+    
+    &.state-register {
+        .login-forms {
+            transform: translateZ(-200px) rotateX(90deg);
+            opacity: 0;
+        }
+        .register-forms {
+            transform: translate3d(0px, -100%, 0px) rotateX(0deg);
+            opacity: 1;
+        }
+    }
+    
+    .login-forms {
+        height: 400px;
+        position: relative;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        transform-origin: 50% 0%;
+        transform-style: preserve-3d;
+        opacity: 1;
+    }
+    
+    .register-forms {
+        height: 400px;
+        transition: all 0.3s ease;
+        transform-origin: 50% 0%;
+        transform: translate3d(0px, 0px, -800px) rotateX(-90deg);
+        opacity: 0;
+    }
 }
 
 .login-form {
+    height: 400px;
     width: 450px;
     float: left;
 }
@@ -96,39 +128,47 @@
     }
 }
 
-.login-form .buttons {
+.landing-button {
+    height: 50px;
+    background-color: #3D464F;
+    display: block;
+    border: 1px solid #262F39;
+    border-radius: 4px;
+    padding: 0 20px;
+    margin-right: 14px;
+    line-height: 49px;
     float: left;
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 14px;
+    @include transition-quick(all);
 
-    button {
-        height: 50px;
-        background-color: #3D464F;
-        display: block;
-        border: 1px solid #262F39;
-        border-radius: 4px;
-        padding: 0 20px;
-        margin-right: 14px;
-        line-height: 49px;
-        float: left;
-        color: #FFFFFF;
-        text-transform: uppercase;
-        font-size: 14px;
-        @include transition-quick(all);
-    }
-    
-    .login:hover {
+    &:hover {
         background-color: #045977;
+        color: #FFF;
+        cursor: pointer;
         @include transition-none(all);
     }
     
-    .create-account {
+    &.transparent {
         background-color: transparent;
         border-color: #6C7986;
+        
+        &:hover {
+            background-color: #045977;
+            border-color: #262F39;
+        }
     }
+}
+
+.login-forgot-password {
+    margin-top: 16px;
+    display: block;
+    color: #828F94;
+    font-size: 14px;
     
-    .create-account:hover {
-        background-color: #045977;
-        border-color: #262F39;
-        @include transition-none(all);
+    &:hover {
+        color: #D3DAE2;   
     }
 }
 

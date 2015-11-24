@@ -47,6 +47,10 @@ strong {
 a {
     color: #1596CC;
     text-decoration: none;
+    
+    &:hover {
+        color: #045977;   
+    }
 }
 
 button {

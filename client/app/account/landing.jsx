@@ -10,32 +10,52 @@ var sessionStore = require('../modules/session/session.store');
 var LandingComponent = React.createClass({
     mixins: [Navigation],
         
+    getInitialState: function () {
+        return {
+            landingStateClass: 'landing-forms group'   
+        }
+    },
+    
     render: function () {
         return (
             /* jshint ignore:start */
             <div className="landing">
-                <div className="login-logo"></div>
-                <div className="login-forms">
-                    <div className="login-socials-form">
-                        <h3>Or sign in with...</h3>
-                        <ul className="login-socials group">
-                            <li className="login-social login-social-facebook"></li>
-                            <li className="login-social login-social-google"></li>
-                            <li className="login-social login-social-twitter"></li>
-                            <li className="login-social login-social-reddit"></li>
-                        </ul>
+                <div className="landing-logo"></div>
+                <div className={this.state.landingStateClass}>
+                    <div className="login-forms">
+                        <div className="login-socials-form">
+                            <h3>Or sign in with...</h3>
+                            <ul className="login-socials group">
+                                <li className="login-social login-social-facebook"></li>
+                                <li className="login-social login-social-google"></li>
+                                <li className="login-social login-social-twitter"></li>
+                                <li className="login-social login-social-reddit"></li>
+                            </ul>
+                        </div>
+                        <div className="login-form">
+                            <form method="post" action="/login" onSubmit={this.handleSubmit}>
+                                <input type="text" name="email" id="email" placeholder="Username" autofocus="autofocus"></input>
+                                <input type="password" name="password" id="password" placeholder="Password"></input>
+                                <div className="group">
+                                    <button className="landing-button">Sign In</button>
+                                    <a className="landing-button transparent" onClick={this.handleRegisterClicked}>Create Account</a>
+                                </div>
+                                <Link to="forgot" className="login-forgot-password">Forgot your password?</Link>
+                            </form>
+                        </div>
                     </div>
-                    <div className="login-form">
-                        <form method="post" action="/login" onSubmit={this.handleSubmit}>
-                            <input type="text" name="email" id="email" placeholder="Username" autofocus="autofocus"></input>
-                            <input type="password" name="password" id="password" placeholder="Password"></input>
-                            <div className="buttons">
-                                <button className="login">Sign In</button>
-                                <button className="create-account">Create Account</button>
-                            </div>
-                        </form>
+                    <div className="register-forms">
+                        <div className="login-form">
+                            <form method="post" action="/login" onSubmit={this.handleSubmit}>
+                                <input type="text" name="email" id="email" placeholder="Username" autofocus="autofocus"></input>
+                                <input type="password" name="password" id="password" placeholder="Password"></input>
+                                <div className="group">
+                                    <button className="landing-button">All done, become a Regular!</button>
+                                    <a className="landing-button transparent" onClick={this.handleNevermindClicked}>Nevermind</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <p><Link to="forgot">Forgot your password?</Link></p>
                 </div>
             </div>
             /* jshint ignore:end */
@@ -59,6 +79,18 @@ var LandingComponent = React.createClass({
                 // Post some warning...
                 alert('error');
             }
+        });
+    },
+    
+    handleRegisterClicked: function () {
+        this.setState({
+            landingStateClass: 'landing-forms group state-register'   
+        });
+    },
+    
+    handleNevermindClicked: function () {
+        this.setState({
+            landingStateClass: 'landing-forms group'   
         });
     }
 });
