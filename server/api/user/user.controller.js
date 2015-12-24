@@ -65,9 +65,9 @@ var readCachedAccount = function (userId, cb) {
  * @param confirmPassword
  */
 var createAccount = function (req, res, next) {
-    req.assert('email', 'Email is not valid').isEmail();
+    console.log('here');
+    req.assert('username', 'Username must be at least 6 characters long').len(6);
     req.assert('password', 'Password must be at least 6 characters long').len(6);
-    req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
 
     if (req.validationErrors()) {
         return res.status(400).json({
@@ -76,19 +76,19 @@ var createAccount = function (req, res, next) {
     }
 
     var user = {
-        email: req.body.email,
+        username: req.body.username,
         password: req.body.password
     };
 
     User.findOne({
-        email: req.body.email
+        username: user.username
     }).then(function (existingUser) {
         if (existingUser) {
             // User already exists. Send error.
             res.status(400).json({
                 errors: [{
-                    param: 'email',
-                    msg: 'Account with that email address already exists.'
+                    param: 'username',
+                    msg: 'Account with that username already exists.'
                 }]
             });
         } else {

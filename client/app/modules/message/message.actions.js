@@ -1,6 +1,6 @@
 'use strict';
 
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var socket = require('../../sockets');
 var messageAjax = require('./message.ajax');
 var messageConstants = require('./message.constants');
@@ -14,16 +14,16 @@ module.exports = {
     
     // Loads all of the recent messages for a chat room.
     getRecent: function(roomId) {
-        Dispatcher.handleViewAction({ actionType: messageConstants.MESSAGE_RECENT_LOADING });
+        Dispatcher.dispatch({ type: messageConstants.MESSAGE_RECENT_LOADING });
         
         messageAjax.loadRecentMessagesForRoom(roomId, function(data) {
-            Dispatcher.handleViewAction({ 
-                actionType: messageConstants.MESSAGE_RECENT_SUCCESS,
+            Dispatcher.dispatch({ 
+                type: messageConstants.MESSAGE_RECENT_SUCCESS,
                 roomId: data.roomId,
                 messages: data.messages
             });
         }.bind(this), function() {
-            Dispatcher.handleViewAction({ actionType: messageConstants.MESSAGE_RECENT_ERROR });
+            Dispatcher.dispatch({ type: messageConstants.MESSAGE_RECENT_ERROR });
         }.bind(this));
     }
 };

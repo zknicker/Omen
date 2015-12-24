@@ -1,6 +1,6 @@
 'use strict';
 
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var userConstants = require('./user.constants');
 var sessionActions = require('../session/session.actions');
 var sessionStore = require('../session/session.store');
@@ -15,15 +15,15 @@ module.exports = {
      * Dispatch an event to the set the app's user.
      */
     setUser: function (user) {
-        Dispatcher.handleViewAction({
-            actionType: userConstants.SET_CURRENT_USER,
+        Dispatcher.dispatch({
+            type: userConstants.SET_CURRENT_USER,
             user: user
         });
     },
     
     setSocket: function(socket) {
-        Dispatcher.handleViewAction({
-            actionType: userConstants.SET_CURRENT_USER_SOCKET,
+        Dispatcher.dispatch({
+            type: userConstants.SET_CURRENT_USER_SOCKET,
             socket: socket
         });
     },
@@ -180,12 +180,12 @@ module.exports = {
      * [ADMIN ONLY]
      */
     getAllUsers: function() {
-        Dispatcher.handleViewAction({ actionType: userConstants.ALL_USERS_LOADING });
+        Dispatcher.dispatch({ type: userConstants.ALL_USERS_LOADING });
         socket.emit('users:list', null, function(res) {
             if (res.errors) {
-                Dispatcher.handleViewAction({ actionType: userConstants.ALL_USERS_ERROR });
+                Dispatcher.dispatch({ type: userConstants.ALL_USERS_ERROR });
             }
-            Dispatcher.handleViewAction({ actionType: userConstants.ALL_USERS_SUCCESS, users: res.users });
+            Dispatcher.dispatch({ type: userConstants.ALL_USERS_SUCCESS, users: res.users });
         });
     },
 };

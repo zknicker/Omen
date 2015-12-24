@@ -1,16 +1,22 @@
 'use strict';
 
-var Dispatcher = require('flux').Dispatcher;
-var assign = require('object-assign');
-var PayloadSources = require('./constants').dispatcherPayloadSources;
+import {Dispatcher} from 'flux';
+import Flux from './lib/flux';
 
-var DefaultDispatcher = assign(new Dispatcher(), {
-    handleViewAction: function (action) {
-        this.dispatch({
-            source: PayloadSources.VIEW_ACTION,
-            action: action
-        });
-    },
-});
+class ImprovedDispatcher extends Dispatcher {
 
-module.exports = DefaultDispatcher;
+    /** 
+     * Every time the dispatcher finishes, hook into it to emit
+     * changes from our stores. This way, we don't need to do manual
+     * emits in each store method.
+     */
+    _stopDispatching(...args) {
+        try {
+            Flux.Store.emitChanges();
+        } finally {
+            super._stopDispatching(...args);
+        }
+    }
+}
+
+export default new ImprovedDispatcher;

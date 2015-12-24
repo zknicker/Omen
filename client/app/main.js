@@ -9,6 +9,10 @@ var joinRoomHelper = require('./helpers/joinroom.helper');
 var routerContainer = require('./lib/routerContainer');
 var socket = require('./sockets');
 
+import Flux from './lib/flux';
+
+Flux.initialize();
+
 // Bootstrap the app with the current user.
 // Do not route or do anything else until a user is set.
 userActions.bootstrap({

@@ -1,6 +1,6 @@
 'use strict';
 
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var sessionConstants = require('./session.constants');
 
 module.exports = {
@@ -10,8 +10,8 @@ module.exports = {
      */
     setAuthToken: function (token) {
         localStorage.setItem('token', token);
-        Dispatcher.handleViewAction({
-            actionType: sessionConstants.SET_AUTH_TOKEN,
+        Dispatcher.dispatch({
+            type: sessionConstants.SET_AUTH_TOKEN,
             token: token
         });
     },
@@ -21,8 +21,8 @@ module.exports = {
      * after a successful login.
      */
     setLoginRedirectRoute: function (route) {
-        Dispatcher.handleViewAction({
-            actionType: sessionConstants.SET_LOGIN_REDIRECT_ROUTE,
+        Dispatcher.dispatch({
+            type: sessionConstants.SET_LOGIN_REDIRECT_ROUTE,
             route: route
         });
     }

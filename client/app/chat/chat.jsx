@@ -13,7 +13,6 @@ var joinRoomHelper = require('../helpers/joinroom.helper');
 var UserList = require('./userlist.jsx');
 var MessageList = require('./messageList.jsx');
 var MessageInput = require('./messageInput.jsx');
-var StoreListenerMixin = require('../lib/storeListenerMixin');
 
 var getState = function () {
     return {

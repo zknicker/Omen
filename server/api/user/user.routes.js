@@ -8,9 +8,9 @@ var userController = require('./user.controller');
 var auth = require('../../auth');
 
 var routes = function (app) {
-
+console.log('creating routes for user...');
     // Create
-    app.post('/user', userController.createAccount);
+    app.post('/user/register', userController.createAccount);
 
     // Read
     app.get('/user', auth.isAuthenticated, userController.readAccountSensitive);

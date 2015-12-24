@@ -1,6 +1,6 @@
 'use strict';
 
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var socket = require('../../sockets');
 var roomAjax = require('./room.ajax');
 var roomConstants = require('./room.constants');
@@ -13,12 +13,12 @@ module.exports = {
      * meta-data (ie. excludes messages, user list).
      */
     join: function(roomId) {
-        Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_LOADING });
+        Dispatcher.dispatch({ type: roomConstants.ROOM_LOADING });
         socket.emit('room:join', roomId, function(res) {
             if (res.error) {
-                Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_ERROR });
+                Dispatcher.dispatch({ type: roomConstants.ROOM_ERROR });
             }
-            Dispatcher.handleViewAction({ actionType: roomConstants.ROOM_SUCCESS, room: res.room });
+            Dispatcher.dispatch({ type: roomConstants.ROOM_SUCCESS, room: res.room });
         });   
     },
     
@@ -26,12 +26,12 @@ module.exports = {
      * Creates a room given a room title. The newly created room is returned.
      */
     create: function(roomTitle) {
-        Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_LOADING });
+        Dispatcher.dispatch({ type: roomConstants.CREATE_ROOM_LOADING });
         socket.emit('room:create', roomTitle, function(res) {
             if (res.error) {
-                Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_ERROR });
+                Dispatcher.dispatch({ type: roomConstants.CREATE_ROOM_ERROR });
             }
-            Dispatcher.handleViewAction({ actionType: roomConstants.CREATE_ROOM_SUCCESS, room: res.room });
+            Dispatcher.dispatch({ type: roomConstants.CREATE_ROOM_SUCCESS, room: res.room });
         });   
     },
     
@@ -39,12 +39,12 @@ module.exports = {
      * Retrieves a list of all joinable rooms.
      */
     getJoinable: function() {
-        Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_LOADING });
+        Dispatcher.dispatch({ actionType: roomConstants.GET_JOINABLE_ROOMS_LOADING });
         socket.emit('rooms:joinable', null, function(res) {
             if (res.error) {
-                Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_ERROR });
+                Dispatcher.dispatch({ type: roomConstants.GET_JOINABLE_ROOMS_ERROR });
             }
-            Dispatcher.handleViewAction({ actionType: roomConstants.GET_JOINABLE_ROOMS_SUCCESS, rooms: res.rooms });
+            Dispatcher.dispatch({ type: roomConstants.GET_JOINABLE_ROOMS_SUCCESS, rooms: res.rooms });
         });
     },
     
@@ -52,6 +52,6 @@ module.exports = {
      * Sets the active room to the roomId parameter.
      */
     setActiveRoom: function(roomId) {
-        Dispatcher.handleViewAction({ actionType: roomConstants.SET_ACTIVE_ROOM, roomId: roomId });
+        Dispatcher.dispatch({ type: roomConstants.SET_ACTIVE_ROOM, roomId: roomId });
     }
 };

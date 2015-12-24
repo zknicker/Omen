@@ -4,6 +4,7 @@
  * React mixin for triggering state updates on changes from stores.
  *
  * Credit to discord.gg.
+ */
 export default function (...stores) {
 
     return {
@@ -26,4 +27,3 @@ export default function (...stores) {
         }
     };
 }
- */

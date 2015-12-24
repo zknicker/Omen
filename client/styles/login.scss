@@ -10,37 +10,50 @@
     background: transparent url('../images/logo-landing.png') no-repeat 50% 132px;
 }
 
-.landing-forms {
+.landing-auth {
     height: 400px;
     width: 850px;
     margin: 0 auto;
     perspective: 850px;
     perspective-origin: 50% 0%;
     
+    h3 {
+        margin-bottom: 32px;
+        color: #D4DCE4;
+        font-size: 30px;
+        text-align: center;
+        font-weight: 300;
+        
+        &.register-header {
+            font-size: 40px;
+            margin-bottom: 64px;   
+        }
+    }
+    
     &.state-register {
-        .login-forms {
+        .login-container {
             transform: translateZ(-200px) rotateX(90deg);
             opacity: 0;
         }
-        .register-forms {
+        .register-container {
             transform: translate3d(0px, -100%, 0px) rotateX(0deg);
             opacity: 1;
         }
     }
     
-    .login-forms {
+    .login-container {
         height: 400px;
         position: relative;
         z-index: 1000;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         transform-origin: 50% 0%;
         transform-style: preserve-3d;
         opacity: 1;
     }
     
-    .register-forms {
+    .register-container {
         height: 400px;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         transform-origin: 50% 0%;
         transform: translate3d(0px, 0px, -800px) rotateX(-90deg);
         opacity: 0;
@@ -50,24 +63,22 @@
 .login-form {
     height: 400px;
     width: 450px;
+    margin-right: 70px;
+    float: left;
+}
+
+.register-form {
+    height: 400px;
+    width: 100%;
+    padding: 0 160px;
     float: left;
 }
 
 .login-socials-form {
     float: left;
-    margin-right: 70px;
-    
-    h3 {
-        color: #C9D3DC;
-        font-size: 30px;
-        text-align: center;
-        font-weight: 400;
-    }
 }
 
-.login-socials {
-    margin-top: 26px;
-    
+.login-socials {    
     li {
         float: left;
         margin-right: 14px;
@@ -89,42 +100,63 @@
     height: 69px;
     width: 69px;
     background-repeat: no-repeat;
+
+    &.login-social-facebook {
+        background-image: url('../images/login-facebook.png');   
+    }
+
+    &.login-social-google {
+        background-image: url('../images/login-google.png');   
+    }
+
+    &.login-social-twitter {
+        background-image: url('../images/login-twitter.png');   
+    }
+
+    &.login-social-reddit {
+        background-image: url('../images/login-reddit.png');   
+    }
 }
 
-.login-social-facebook {
-    background-image: url('../images/login-facebook.png');   
-}
-
-.login-social-google {
-    background-image: url('../images/login-google.png');   
-}
-
-.login-social-twitter {
-    background-image: url('../images/login-twitter.png');   
-}
-
-.login-social-reddit {
-    background-image: url('../images/login-reddit.png');   
-}
-
-.login-social-info {
-    font-size: 15px;
-    color: #9CD6EA;
-}
-
-.login-form input[type="text"], .login-form input[type="password"] {
-    height: 60px;
-    width: 100%;
-    background-color: #F9F9F9;
-    padding: 0 20px;
-    margin-bottom: 16px;
-    border-radius: 4px;
-    border: 2px solid #F9F9F9;
-    border-right-color: #F9F9F9;
-    font-size: 20px;
+.landing-input {
+    position: relative;
     
-    &:focus {
-        outline: 0;   
+    &.landing-input-register {
+        label {
+            width: 400px;
+            position: absolute;
+            top: 12px;
+            left: 550px;
+            color: #BBC0C5;
+            
+            &:before {
+                height: 24px;
+                width: 24px;
+                content: '';
+                background: url('../images/cross.svg') no-repeat 0 50%;   
+                background-size: 100% 100%;
+                display: inline-block;
+                margin-right: 12px;
+                position: relative;
+                top: 6px;
+            }
+        }
+    }
+    
+    input {
+        height: 60px;
+        width: 100%;
+        background-color: #F9F9F9;
+        padding: 0 20px;
+        margin-bottom: 16px;
+        border-radius: 4px;
+        border: 2px solid #F9F9F9;
+        border-right-color: #F9F9F9;
+        font-size: 20px;
+
+        &:focus {
+            outline: 0;   
+        }
     }
 }
 
@@ -135,9 +167,9 @@
     border: 1px solid #262F39;
     border-radius: 4px;
     padding: 0 20px;
-    margin-right: 14px;
+    margin-left: 14px;
     line-height: 49px;
-    float: left;
+    float: right;
     color: #FFF;
     text-transform: uppercase;
     font-size: 14px;
@@ -166,26 +198,9 @@
     display: block;
     color: #828F94;
     font-size: 14px;
+    text-align: right;
     
     &:hover {
         color: #D3DAE2;   
-    }
-}
-
-.landing-sell {
-    width: 80%;
-    min-width: 900px;
-    max-width: 1100px;
-    margin: 0 auto;
-    text-align: center;
-    color: #333333;
-    
-    h1 {
-        padding: 50px 0 6px 0;   
-    }
-    
-    u {
-        text-decoration: none;
-        border-bottom: 1px dashed #333333;
     }
 }

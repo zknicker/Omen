@@ -1,7 +1,7 @@
 'use strict';
 
 var Store = require('../../lib/store');
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var Alert = require('../../lib/alert');
 var constants = require('./room.constants');
 
@@ -111,12 +111,12 @@ var RoomStore = new Store({
 });
 
 Dispatcher.register(function(action) {
-    switch(action.action.actionType) {
+    switch(action.type) {
         case constants.ROOM_LOADING:
             RoomStore.onRoomLoading();
             break;
         case constants.ROOM_SUCCESS:
-            RoomStore.onRoomSuccess(action.action.room);
+            RoomStore.onRoomSuccess(action.room);
             break;
         case constants.ROOM_ERROR:
             RoomStore.onRoomError();
@@ -125,7 +125,7 @@ Dispatcher.register(function(action) {
             RoomStore.onGetJoinableRoomsLoading();
             break;
         case constants.GET_JOINABLE_ROOMS_SUCCESS:
-            RoomStore.onGetJoinableRoomsSuccess(action.action.rooms);
+            RoomStore.onGetJoinableRoomsSuccess(action.rooms);
             break;
         case constants.GET_JOINABLE_ROOMS_ERROR:
             RoomStore.onGetJoinableRoomsError();
@@ -134,13 +134,13 @@ Dispatcher.register(function(action) {
             RoomStore.onCreateRoomLoading();
             break;
         case constants.CREATE_ROOM_SUCCESS:
-            RoomStore.onCreateRoomSuccess(action.action.room);
+            RoomStore.onCreateRoomSuccess(action.room);
             break;
         case constants.CREATE_ROOM_ERROR:
             RoomStore.onCreateRoomError();
             break;
         case constants.SET_ACTIVE_ROOM:
-            RoomStore.setActiveRoom(action.action.roomId);
+            RoomStore.setActiveRoom(action.roomId);
             break;
     }
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 var Store = require('../../lib/store');
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var userConstants = require('./user.constants');
 var userDefaults = require('./user.constants').unauthenticatedUser;
 var Alert = require('../../lib/alert');
@@ -69,31 +69,29 @@ var UserStore = new Store({
     }
 });
 
-UserStore.dispatcherToken = Dispatcher.register(function (payload) {
+UserStore.dispatcherToken = Dispatcher.register(function (action) {
 
-    var action = payload.action;
-
-    if (action.actionType === userConstants.SET_CURRENT_USER) {
+    if (action.type === userConstants.SET_CURRENT_USER) {
         UserStore.handleSetCurrentUser(action.user);
     }
     
-    if (action.actionType === userConstants.SET_CURRENT_USER_SOCKET) {
+    if (action.type === userConstants.SET_CURRENT_USER_SOCKET) {
         UserStore.handleSetUserSocket(action.socket);
     }
     
-    if (action.actionType === userConstants.SET_ALL_USERS_LIST) {
+    if (action.type === userConstants.SET_ALL_USERS_LIST) {
         UserStore.handleSetAllUsers(action.users);
     }
     
-    if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_SUCCESS) {
+    if (action.type === userConstants.UPDATE_SETTINGS_AVATAR_SUCCESS) {
         UserStore.handleUpdateAvatar.success(action.payload);
     }
     
-    if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_ERROR) {
+    if (action.type === userConstants.UPDATE_SETTINGS_AVATAR_ERROR) {
         UserStore.handleUpdateAvatar.error(action.payload);
     }
     
-    if (action.actionType === userConstants.UPDATE_SETTINGS_AVATAR_LOADING) {
+    if (action.type === userConstants.UPDATE_SETTINGS_AVATAR_LOADING) {
         UserStore.handleUpdateAvatar.loading();
     }
 });

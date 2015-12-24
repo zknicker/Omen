@@ -19,15 +19,13 @@ var auth = require('../../auth');
  * Sign in via email and password using the passport authentication module.
  */
 var login = function (req, res, next) {
+    console.log('loggin in..');
+    req.assert('username', 'Please enter a valid username.').len(6);
+    req.assert('password', 'Please enter a valid password.').len(6);
 
-    req.assert('email', 'Please enter a valid email address.').isEmail();
-
-    // Run validation
-    var errors = req.validationErrors();
-
-    if (errors) {
+    if (req.validationErrors()) {
         return res.status(400).json({
-            errors: errors
+            errors: req.validationErrors()
         });
     }
 

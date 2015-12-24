@@ -1,19 +1,12 @@
 'use strict';
 
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var sessionActions = require('../session/session.actions');
 var sessionStore = require('../session/session.store');
 var request = require('superagent');
 var serialize = require('form-serialize');
 var socket = require('../../sockets');
 var constants = require('./user.constants');
-
-function dispatch(actionType, payload) {
-    Dispatcher.handleViewAction({
-        actionType: actionType,
-        payload: payload
-    });
-}
 
 module.exports = {
 
@@ -36,15 +29,23 @@ module.exports = {
     },
 
     updateAvatar: function (file) {
-        dispatch(constants.UPDATE_SETTINGS_AVATAR_LOADING);
+        Dispatcher.dispatch({
+            type: constants.UPDATE_SETTINGS_AVATAR_LOADING 
+        });
         var data = {};
         var endpoint = constants.AVATAR_UPLOAD_ENDPOINT;
         var callback = {
             success: function (res) {
-                dispatch(constants.UPDATE_SETTINGS_AVATAR_SUCCESS, res.avatar);
+                Dispatcher.dispatch({
+                    type: constants.UPDATE_SETTINGS_AVATAR_SUCCESS,
+                    payload: res.avatar
+                });
             },
             error: function (res) {
-                dispatch(constants.UPDATE_SETTINGS_AVATAR_ERROR, res.error);
+                Dispatcher.dispatch({
+                    type: constants.UPDATE_SETTINGS_AVATAR_ERROR,
+                    payload: res.error
+                });
             }
         };
 

@@ -1,7 +1,7 @@
 'use strict';
 
 var Store = require('../../lib/store');
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var constants = require('./userlist.constants');
 
 var UserListStore = new Store({
@@ -100,25 +100,24 @@ var UserListStore = new Store({
 });
 
 Dispatcher.register(function(action) {
-    var a = action.action;
-    switch(a.actionType) {
+    switch(action.actionType) {
         case constants.USERLIST_CURRENT_LOADING:
             UserListStore.onGetCurrentUserListLoading();
             break;
         case constants.USERLIST_CURRENT_SUCCESS:
-            UserListStore.onGetUserListSuccess(a.roomId, a.userList);
+            UserListStore.onGetUserListSuccess(action.roomId, action.userList);
             break;
         case constants.USERLIST_CURRENT_ERROR:
             UserListStore.onGetUserListError();
             break;
         case constants.USERLIST_ADD:
-            UserListStore.add(a.roomId, a.user);
+            UserListStore.add(action.roomId, action.user);
             break;
         case constants.USERLIST_REMOVE:
-            UserListStore.remove(a.roomId, a.userId);
+            UserListStore.remove(action.roomId, action.userId);
             break;
         case constants.USERLIST_REMOVE_FROM_ALL:
-            UserListStore.removeFromAll(a.userId);
+            UserListStore.removeFromAll(action.userId);
             break;
     }
 });

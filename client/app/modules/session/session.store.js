@@ -1,7 +1,7 @@
 'use strict';
 
 var Store = require('../../lib/store');
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var sessionConstants = require('./session.constants');
 
 var SessionStore = new Store({
@@ -22,9 +22,8 @@ var SessionStore = new Store({
     }
 });
 
-SessionStore.dispatcherToken = Dispatcher.register(function (payload) {
-    var action = payload.action;
-    switch (action.actionType) {
+SessionStore.dispatcherToken = Dispatcher.register(function (action) {
+    switch (action.type) {
         case sessionConstants.SET_AUTH_TOKEN:
             SessionStore.setAuthToken(action.token);
             break;

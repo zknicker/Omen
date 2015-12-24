@@ -16,10 +16,20 @@ var User = Waterline.Collection.extend({
             unique: true,
             autoIncrement: true
         },
+        
+        username: {
+            type: 'string',
+            unique: true,
+            notNull: true
+        },
 
+        password: {
+            type: 'string',
+            notNull: true
+        },
+        
         email: {
             type: 'string',
-            notNull: true,
             unique: true,
             lowercase: true
         },
@@ -29,15 +39,6 @@ var User = Waterline.Collection.extend({
             defaultsTo: 'user'
         },
 
-        password: {
-            type: 'string',
-            notNull: true
-        },
-        
-        username: {
-            type: 'string',  
-        },
-        
         avatar: {
             type: 'string',
             defaultsTo: 'default.png'

@@ -1,7 +1,7 @@
 'use strict';
 
 var Store = require('../../lib/store');
-var Dispatcher = require('../../dispatcher');
+import Dispatcher from '../../Dispatcher';
 var constants = require('./message.constants');
 
 var MessageStore = new Store({
@@ -49,19 +49,18 @@ var MessageStore = new Store({
 });
 
 Dispatcher.register(function(action) {
-    var a = action.action;
-    switch(a.actionType) {
+    switch(action.type) {
         case constants.MESSAGE_RECENT_LOADING:
             MessageStore.onGetRecentMessagesLoading();
             break;
         case constants.MESSAGE_RECENT_SUCCESS:
-            MessageStore.onGetRecentMessagesSuccess(a.roomId, a.messages);
+            MessageStore.onGetRecentMessagesSuccess(action.roomId, action.messages);
             break;
         case constants.MESSAGE_RECENT_ERROR:
             MessageStore.onGetRecentMessagesError();
             break;
         case constants.CREATE_MESSAGE:
-            MessageStore.onCreateMessage(a.roomId, a.message);
+            MessageStore.onCreateMessage(action.roomId, action.message);
             break;
     }
 });
