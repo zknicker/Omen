@@ -2,9 +2,9 @@
 
 var Store = require('../../lib/store');
 import Dispatcher from '../../Dispatcher';
-var userConstants = require('./user.constants');
+import {ActionType, Endpoint} from '../../constants';
+import Alert from '../../lib/alert';
 var userDefaults = require('./user.constants').unauthenticatedUser;
-var Alert = require('../../lib/alert');
 
 var UserStore = new Store({
 
@@ -22,7 +22,7 @@ var UserStore = new Store({
             email: this._user.email,
             username: this._user.username,
             loggedIn: this._user.loggedIn, // TODO: wtf?
-            avatar: userConstants.AVATAR_URL + this._user.avatar,
+            avatar: Endpoint.AVATAR + this._user.avatar,
             
             isAdmin: function() {
                 return this._user.role === 'admin';   
@@ -71,27 +71,27 @@ var UserStore = new Store({
 
 UserStore.dispatcherToken = Dispatcher.register(function (action) {
 
-    if (action.type === userConstants.SET_CURRENT_USER) {
+    if (action.type === ActionType.SET_CURRENT_USER) {
         UserStore.handleSetCurrentUser(action.user);
     }
     
-    if (action.type === userConstants.SET_CURRENT_USER_SOCKET) {
+    if (action.type === ActionType.SET_CURRENT_USER_SOCKET) {
         UserStore.handleSetUserSocket(action.socket);
     }
     
-    if (action.type === userConstants.SET_ALL_USERS_LIST) {
+    if (action.type === ActionType.SET_ALL_USERS_LIST) {
         UserStore.handleSetAllUsers(action.users);
     }
     
-    if (action.type === userConstants.UPDATE_SETTINGS_AVATAR_SUCCESS) {
+    if (action.type === ActionType.UPDATE_SETTINGS_AVATAR_SUCCESS) {
         UserStore.handleUpdateAvatar.success(action.payload);
     }
     
-    if (action.type === userConstants.UPDATE_SETTINGS_AVATAR_ERROR) {
+    if (action.type === ActionType.UPDATE_SETTINGS_AVATAR_ERROR) {
         UserStore.handleUpdateAvatar.error(action.payload);
     }
     
-    if (action.type === userConstants.UPDATE_SETTINGS_AVATAR_LOADING) {
+    if (action.type === ActionType.UPDATE_SETTINGS_AVATAR_LOADING) {
         UserStore.handleUpdateAvatar.loading();
     }
 });

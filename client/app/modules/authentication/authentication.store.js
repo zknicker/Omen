@@ -10,25 +10,29 @@ let loginRedirectRoute = null;
 let loggingIn = false;
 
 function handleShowCreateAccountFields() {
-    showCreateAccountFields = true;   
+    showCreateAccountFields = true;
 }
 
 function handleShowLoginFields() {
-    showCreateAccountFields = false;   
+    showCreateAccountFields = false;
 }
 
 function handleLogin() {
     loggingIn = true;
 }
 
-function handleLoginSuccess(token, user) {
+function handleLoginSuccess({token}) {
     localStorage.setItem('token', token);
     loginRedirectRoute = null;
     loggingIn = false;
 }
 
+function handleLogout() {
+    localStorage.removeItem('token');
+}
+
 function setLoginRedirectRoute({route}) {
-    this.loginRedirectRoute = route;   
+    this.loginRedirectRoute = route;
 }
 
 class AuthenticationStore extends Flux.Store {
@@ -38,18 +42,19 @@ class AuthenticationStore extends Flux.Store {
         this.onAction(ActionType.SHOW_LOGIN_FIELDS, handleShowLoginFields);
         this.onAction(ActionType.LOGIN_IN_PROGRESS, handleLogin);
         this.onAction(ActionType.LOGIN_SUCCESS, handleLoginSuccess);
+        this.onAction(ActionType.LOGOUT, handleLogout);
     }
-    
+
     getCreateAccountFieldsStatus() {
-        return showCreateAccountFields;   
+        return showCreateAccountFields;
     }
-    
+
     isAuthenticated() {
         return localStorage.getItem('token') != null;
     }
-    
+
     getToken() {
-        return localStorage.getItem('token');   
+        return localStorage.getItem('token');
     }
 }
 

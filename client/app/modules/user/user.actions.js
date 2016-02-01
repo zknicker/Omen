@@ -2,6 +2,7 @@
 
 import Dispatcher from '../../Dispatcher';
 var userConstants = require('./user.constants');
+import {ActionType} from '../../constants';
 import AuthenticationActions from '../authentication/authentication.actions';
 import AuthenticationStore from '../authentication/authentication.store';
 var request = require('superagent');
@@ -51,13 +52,18 @@ module.exports = {
                         userData.loggedIn = true;
                         self.setUser(userData);
                     } else {
-                        self.logout();
+                        Dispatcher.dispatch({
+                            type: ActionType.LOGOUT
+                        });
                     }
                     if (callback && callback.success) {
                         callback.success(res);
                     }
                 } else {
-                    self.logout();
+                    Dispatcher.dispatch({
+                        type: ActionType.LOGOUT
+                    });
+                    
                     if (callback && callback.error) {
                         callback.error(res);
                     }
@@ -122,11 +128,6 @@ module.exports = {
             updateUser: true
         };
         this.postForm(form, cb);
-    },
-
-    logout: function () {
-        // Reset user to defaults
-        this.setUser(userConstants.unauthenticatedUser);
     },
 
     signup: function (form, callback) {
