@@ -5,47 +5,38 @@ var Router = require('react-router');
 var Link = Router.Link;
 var LandingTextInput = require('./landingTextInput.jsx');
 var LandingButton = require('./landingButton.jsx');
-var LoginSocial = require('./loginSocial.jsx');
+
+import AuthenticationActions from '../modules/authentication/authentication.actions';
 
 var LandingRegisterForm = React.createClass({
-    renderTextInput: function (type, name, placeholder, labelText, props={}) {        
-        return (
-            /* jshint ignore:start */
-            <div className="landing-input landing-input-register group">
-                <input type={type}
-                    name={name}
-                    ref={name}
-                    id={name} 
-                    placeholder={placeholder}
-                    {...props} />
-                <label for={name}>{labelText}</label>
-            </div>
-            /* jshint ignore:end */
-        );
-    },
     
     render: function () {
         return (
             /* jshint ignore:start */
-            <div className="register-container">
-                <h3 className="register-header">Hey, welcome to the club!</h3>
-                <div className="register-form">
-                    <form method="post" action="/login" onSubmit={this.handleRegisterFormSubmit}>
-                        {this.renderTextInput('text', 'rusername', 'Username',
-                                'Must be longer than 3 characters.', {autofocus:'autofocus'})}
-                        {this.renderTextInput('password', 'rpassword', 'Password', 
-                                'Must be longer than 6 characters.')}
-                        {this.renderTextInput('password_confirm', 'rpassword_confirm', 'Password (confirm)',
-                                'Your passwords do not match.')}
-                        <div className="group">
-                            <LandingButton text="Become a regular!" submit={true} />
-                            <LandingButton text="Nevermind" trans={true} onClick={this.nevermindClicked} />
-                        </div>
-                    </form>
+            <form method="post" action="/login" onSubmit={this.handleRegisterFormSubmit}>
+                <div className="landing-input group">
+                    <label for="username">Welcome! Just choose a name!</label>
+                    <input type="text" name="username" ref="username" placeholder="username" />
                 </div>
-            </div>
+                <div className="landing-input group">
+                    <label for="password">And carefully choose a password.</label>
+                    <input type="password" name="password" ref="password" placeholder="password" />
+                </div>
+                <div className="landing-input optional group">
+                    <label for="email">Finally, in case we need to contact you.</label>
+                    <input type="text" name="email" ref="email" placeholder="email (optional)" />
+                </div>
+                <div className="landing-buttons group">
+                    <LandingButton text="Nevermind" additionalClass="nevermind" onClick={this.nevermindClicked} />
+                    <LandingButton text="Become a regular!" submit={true} />
+                </div>
+            </form>
             /* jshint ignore:end */
         );
+    },
+    
+    nevermindClicked: function () {
+        AuthenticationActions.showLoginFields();
     }
 });
 

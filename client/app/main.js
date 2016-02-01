@@ -4,7 +4,7 @@ require('../styles/main.scss');
 
 var routes = require('./routes.jsx');
 var userActions = require('./modules/user/user.actions');
-var sessionStore = require('./modules/session/session.store');
+import AuthenticationStore from './modules/authentication/authentication.store';
 var joinRoomHelper = require('./helpers/joinroom.helper');
 var routerContainer = require('./lib/routerContainer');
 var socket = require('./sockets');
@@ -24,8 +24,8 @@ userActions.bootstrap({
         userActions.setSocket(socket);
         
         // If the user is authenticated, authenticate the socket.
-        if (sessionStore.token) {
-            socket.authenticate(sessionStore.token); 
+        if (AuthenticationStore.isAuthenticated()) {
+            socket.authenticate(AuthenticationStore.getToken()); 
         }
 
         // Authenticate to previously joined rooms.

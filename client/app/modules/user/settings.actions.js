@@ -1,8 +1,7 @@
 'use strict';
 
 import Dispatcher from '../../Dispatcher';
-var sessionActions = require('../session/session.actions');
-var sessionStore = require('../session/session.store');
+import AuthenticationStore from '../authentication/authentication.store';
 var request = require('superagent');
 var serialize = require('form-serialize');
 var socket = require('../../sockets');
@@ -12,7 +11,7 @@ module.exports = {
 
     sendData: function (data, endpoint, callback) {
         var self = this;
-        var token = sessionStore.token;
+        var token = AuthenticationStore.getToken();
 
         request
             .post(endpoint)

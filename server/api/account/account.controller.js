@@ -20,8 +20,8 @@ var auth = require('../../auth');
  */
 var login = function (req, res, next) {
     console.log('loggin in..');
-    req.assert('username', 'Please enter a valid username.').len(6);
-    req.assert('password', 'Please enter a valid password.').len(6);
+    req.assert('username', 'Please enter a valid username.').len(4);
+    req.assert('password', 'Please enter a valid password.').len(4);
 
     if (req.validationErrors()) {
         return res.status(400).json({

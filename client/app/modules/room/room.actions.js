@@ -18,6 +18,7 @@ module.exports = {
             if (res.error) {
                 Dispatcher.dispatch({ type: roomConstants.ROOM_ERROR });
             }
+            console.log(res);
             Dispatcher.dispatch({ type: roomConstants.ROOM_SUCCESS, room: res.room });
         });   
     },

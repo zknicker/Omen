@@ -9,10 +9,12 @@ var orm = new Waterline();
 
 // Waterline config.
 var mysqlAdapter = require('sails-mysql');
+var postgreSQLAdapter = require('sails-postgresql');
 var redisAdapter = require('sails-redis');
 var config = {
     adapters: {
         mysql: mysqlAdapter,
+        postgresql: postgreSQLAdapter,
         redis: redisAdapter
     },
 
@@ -26,6 +28,17 @@ var config = {
             database: 'omen_db',
             charset: 'utf8',
             collation: 'utf8_general_ci'
+        },
+        
+        localPostgreSQL: {
+            adapter: 'postgresql',
+            host: 'localhost',
+            port: 5432,
+            user: 'zknicker',
+            password: 'zknicker',
+            database: 'omen_db',
+            poolSize: 10,
+            ssl: false
         },
 
         localRedis: {

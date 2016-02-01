@@ -2,8 +2,8 @@
 
 import Dispatcher from '../../Dispatcher';
 var userConstants = require('./user.constants');
-var sessionActions = require('../session/session.actions');
-var sessionStore = require('../session/session.store');
+import AuthenticationActions from '../authentication/authentication.actions';
+import AuthenticationStore from '../authentication/authentication.store';
 var request = require('superagent');
 var serialize = require('form-serialize');
 var cookie = require('cookie');
@@ -37,7 +37,7 @@ module.exports = {
      */
     bootstrap: function (callback) {
         var self = this;
-        var token = sessionStore.token;
+        var token = AuthenticationStore.getToken();
         request
             .get('/user')
             .type('json')
@@ -73,7 +73,7 @@ module.exports = {
         var self = this;
         var postData = serialize(form);
         var postUrl = form.getAttribute('action') || window.location.pathname;
-        var token = sessionStore.token;
+        var token = AuthenticationStore.getToken();
         var options = callback.options || {};
 
         request
@@ -89,7 +89,7 @@ module.exports = {
 
                     // Store the new token.
                     if (res.body.token) {
-                        sessionActions.setAuthToken(res.body.token);
+                        //AuthenticationActions.setAuthToken(res.body.token);
                         socket.authenticate(res.body.token);
                     }
                     
@@ -125,9 +125,6 @@ module.exports = {
     },
 
     logout: function () {
-        // Remove token
-        sessionActions.setAuthToken(null);
-
         // Reset user to defaults
         this.setUser(userConstants.unauthenticatedUser);
     },

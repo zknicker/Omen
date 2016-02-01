@@ -100,7 +100,7 @@ var UserListStore = new Store({
 });
 
 Dispatcher.register(function(action) {
-    switch(action.actionType) {
+    switch(action.type) {
         case constants.USERLIST_CURRENT_LOADING:
             UserListStore.onGetCurrentUserListLoading();
             break;

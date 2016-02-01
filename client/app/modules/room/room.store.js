@@ -35,6 +35,7 @@ var RoomStore = new Store({
     },
     
     onRoomSuccess: function(room) {
+        console.log(room);
         this.currentRooms[room.id] = room;
         this.activeRoom = room;
         this.loading = false;
@@ -116,6 +117,7 @@ Dispatcher.register(function(action) {
             RoomStore.onRoomLoading();
             break;
         case constants.ROOM_SUCCESS:
+            console.log(action);
             RoomStore.onRoomSuccess(action.room);
             break;
         case constants.ROOM_ERROR:

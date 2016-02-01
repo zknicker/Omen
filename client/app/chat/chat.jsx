@@ -28,8 +28,7 @@ var getState = function () {
 
 var ChatComponent = React.createClass({
 
-    mixins: [
-        Navigation, roomStore.mixin, messageStore.mixin, userListStore.mixin],
+    mixins: [Navigation, roomStore.mixin, messageStore.mixin, userListStore.mixin],
 
     contextTypes: {
         router: React.PropTypes.func

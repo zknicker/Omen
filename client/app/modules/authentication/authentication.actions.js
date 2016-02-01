@@ -2,10 +2,39 @@
 
 import Dispatcher from '../../Dispatcher';
 import {ActionType, Endpoint} from '../../constants';
-import SessionStore from '../session/session.store';
+import AuthenticationStore from '../authentication/authentication.store';
 import request from 'superagent';
 
 export default {
+    
+    /**
+     * Switch the landing page to the create account form.
+     */
+    showCreateAccountFields: function () {
+        Dispatcher.dispatch({ 
+            type: ActionType.SHOW_CREATE_ACCOUNT_FIELDS 
+        });  
+    },
+    
+    /**
+     * Switch the landing page to the login form.
+     */
+    showLoginFields: function () {
+        Dispatcher.dispatch({ 
+            type: ActionType.SHOW_LOGIN_FIELDS 
+        });  
+    },
+    
+    /**
+     * Sets the route that the user should be redirected to
+     * after a successful login.
+     */
+    setLoginRedirectRoute: function (route) {
+        Dispatcher.dispatch({
+            type: ActionType.SET_LOGIN_REDIRECT_ROUTE,
+            route: route
+        });
+    },
     
     /**
      * Register a new user to the application.
@@ -18,7 +47,7 @@ export default {
         request
             .post(Endpoint.REGISTER)
             .send({
-                authorization: 'Bearer ' + SessionStore.token,
+                authorization: 'Bearer ' + AuthenticationStore.getToken(),
                 username: username,
                 password: password
             })
@@ -54,7 +83,7 @@ export default {
         request
             .post(Endpoint.LOGIN)
             .send({
-                authorization: 'Bearer ' + SessionStore.token,
+                authorization: 'Bearer ' + AuthenticationStore.getToken(),
                 username: username,
                 password: password
             })

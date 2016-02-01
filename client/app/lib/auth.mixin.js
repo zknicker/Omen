@@ -1,13 +1,14 @@
 'use strict';
 
-var userStore = require('../modules/user/user.store');
-var sessionStore = require('../modules/session/session.store');
+import UserStore from '../modules/user/user.store';
+import AuthenticationActions from '../modules/authentication/authentication.actions';
+import AuthenticationStore from '../modules/authentication/authentication.store';
 
 var AuthenticationMixin = {
     statics: {
         willTransitionTo: function(transition) {
-            if (!userStore.getUser().loggedIn) {
-                sessionStore.setLoginRedirectRoute(transition.path);
+            if (!AuthenticationStore.isAuthenticated()) {
+                AuthenticationActions.setLoginRedirectRoute(transition.path);
                 transition.redirect('/landing');
             } 
         }
