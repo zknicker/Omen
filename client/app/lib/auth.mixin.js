@@ -9,7 +9,7 @@ var AuthenticationMixin = {
         willTransitionTo: function(transition) {
             if (!AuthenticationStore.isAuthenticated()) {
                 AuthenticationActions.setLoginRedirectRoute(transition.path);
-                transition.redirect('/landing');
+                //transition.redirect('/landing');
             } 
         }
     }

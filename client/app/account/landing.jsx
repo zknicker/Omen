@@ -1,20 +1,18 @@
 'use strict';
 
-var React = require('react');
-var Router = require('react-router');
-var Link = Router.Link;
-var LandingTextInput = require('./landingTextInput.jsx');
-var LandingButton = require('./landingButton.jsx');
-var LandingLoginForm = require('./landingLoginForm.jsx');
-var LandingRegisterForm = require('./landingRegisterForm.jsx');
-
+import React from 'react';
+import Flux from '../lib/flux';
+import {Link, Navigation} from 'react-router';
+import LandingTextInput from './landingTextInput.jsx';
+import LandingButton from './landingButton.jsx';
+import LandingLoginForm from './landingLoginForm.jsx';
+import LandingRegisterForm from './landingRegisterForm.jsx';
 import AuthenticationStore from '../modules/authentication/authentication.store';
 import AuthenticationActions from '../modules/authentication/authentication.actions';
-import Flux from '../lib/flux';
 
 var LandingComponent = React.createClass({
     mixins: [
-        Router.Navigation,
+        Navigation,
         Flux.StoreListenerMixin(AuthenticationStore)
     ],
     
@@ -73,20 +71,6 @@ var LandingComponent = React.createClass({
             </div>
             /* jshint ignore:end */
         );
-    },
-
-    handleLoginFormSubmit: function (e) {
-        e.preventDefault();
-        var username = React.findDOMNode(this.refs.lusername).value;
-        var password = React.findDOMNode(this.refs.lpassword).value;
-        AuthenticationActions.login(username, password);
-    },
-    
-    handleRegisterFormSubmit: function (e) {
-        e.preventDefault();
-        var username = React.findDOMNode(this.refs.rusername).value;
-        var password = React.findDOMNode(this.refs.rpassword).value;
-        AuthenticationActions.register(username, password);
     }
 });
 

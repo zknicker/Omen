@@ -1,11 +1,13 @@
 'use strict';
 
-var React = require('react/addons');
-var Router = require('react-router');
-var Link = Router.Link;
+import React from 'react/addons';
+import {Link, Navigation} from 'react-router';
+import AuthenticationActions from '../modules/authentication/authentication.actions';
 
 var SidebarProfileComponent = React.createClass({
 
+    mixins: [ Navigation ],
+    
     render: function () {
         var avatarStyleMapping = {
             backgroundImage: 'url(' + this.props.user.avatar + ')'
@@ -20,7 +22,7 @@ var SidebarProfileComponent = React.createClass({
                     {this.props.user.username}
                 </div>
                 <div className="sidebar-profile-actions group">
-                    <Link to="/logout" className="sidebar-profile-action profile-action-logout" />
+                    <a className="sidebar-profile-action profile-action-logout" href="javascript:;" onClick={this.handleLogout}></a>
                     <Link to="/settings" className="sidebar-profile-action profile-action-settings" />
                     { (this.props.user.isAdmin()) &&
                         <Link to="/admin" className="sidebar-profile-action profile-action-admin" />
@@ -28,6 +30,12 @@ var SidebarProfileComponent = React.createClass({
                 </div>
             </div>
         );
+    },
+    
+    handleLogout: function (e) {
+        e.preventDefault();
+        AuthenticationActions.logout();
+        //this.transitionTo('landing');
     }
 });
 
