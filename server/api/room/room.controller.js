@@ -55,7 +55,7 @@ var joinRoom = function (roomId, userId, cb) {
         .catch(cb);
 }
 
-var getJoinableRooms = function (userId, cb) {
+var getJoinableRooms = function (cb) {
     Room.find()
         .then(function(rooms) {
             cb(null, rooms);

@@ -3,6 +3,7 @@
 var socketHelper = require('../../helpers/socket.helper');
 var constants = require('../../helpers/constants.helper');
 var UserController = require('./user.controller');
+var UserResponse = require('../../data/userResponse');
 
 // Socket listeners to react to client messages for each user.
 exports.register = function (io, socket) {
@@ -23,6 +24,21 @@ exports.register = function (io, socket) {
                 error: constants.get('SOCKET_NO_AUTH'),
                 room: null
             });
+        }
+    });
+    
+    /**
+     * Retrieves the currently authenticated user (or guest info if unauthenticated).
+     */
+    socket.on('user:current', function (req, acknowledgement) {
+        if (socketHelper.isAuthenticated(socket)) {
+            UserController.readCachedAccount(socket.userId, function (err, user) {
+                acknowledgement(UserResponse.getCurrentUserAcknowledgement(err, user));
+            });
+        } else {
+            var error = constants.get('SOCKET_NO_AUTH');
+            var user = null;
+            acknowledgement(UserResponse.getCurrentUserAcknowledgement(err, user));
         }
     });
 

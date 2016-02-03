@@ -52,10 +52,10 @@ exports.register = function (io, socket) {
     });
     
     /**
-     * Retrieves a list of joinable rooms by user ID.
+     * Retrieves a list of joinable rooms.
      */
     socket.on('rooms:joinable', function(req, acknowledgement) {
-        RoomController.getJoinableRooms(socket.userId, function(err, rooms) {
+        RoomController.getJoinableRooms(function(err, rooms) {
             acknowledgement(roomResponse.listRoomsAcknowledgement(err, rooms));
         });
     });

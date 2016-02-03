@@ -67,8 +67,7 @@ gulp.task('webpack', function(callback) {
     
     compiler.run(function(err, stats) {
         if(err) {
-            console.log('[webpack] ERROR: ' + err);
-            throw new gutil.PluginError('webpack', err);
+            throw new gutil.PluginError('[webpack]', err);
         }
         gutil.log('[webpack] completed startup compile.');
         callback();
@@ -77,7 +76,10 @@ gulp.task('webpack', function(callback) {
     compiler.watch({
         aggregateTimeout: 300,
     }, function (err, stats) {
-        if(err) throw new gutil.PluginError('webpack', err);
+        if (stats.compilation.errors && stats.compilation.errors.length > 0) {
+            gutil.log('[webpack error] ' + stats.compilation.errors[0].message);
+        }
+        if(err) throw new gutil.PluginError('[webpack]', err);
         gutil.log('[webpack] live updated.');
     });
 });
@@ -94,6 +96,7 @@ gulp.task('serve', function() {
     
     gulp.watch(['server/**/*.js', 'server/**/*.html'], function (file) {
         server.notify.apply(server, [file]);
+        server.start.bind(server)()
     });
 });
 
